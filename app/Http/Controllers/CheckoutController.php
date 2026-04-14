@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class CheckoutController extends Controller
@@ -41,8 +42,15 @@ class CheckoutController extends Controller
             'items.*.catatan' => ['nullable', 'string', 'max:500'],
         ]);
 
+        $midtransServerKey = (string) config('midtrans.server_key');
+        if ($midtransServerKey === '') {
+            return response()->json([
+                'message' => 'Konfigurasi pembayaran Midtrans belum lengkap. Periksa MIDTRANS_SERVER_KEY.',
+            ], 500);
+        }
+
         try {
-            $payload = DB::transaction(function () use ($validated) {
+            $payload = DB::transaction(function () use ($validated, $midtransServerKey) {
                 $guestUser = User::create([
                     'name' => $validated['nama_customer'],
                     'role' => 'guest',
@@ -91,7 +99,7 @@ class CheckoutController extends Controller
                     ]);
                 }
 
-                Config::$serverKey = config('midtrans.server_key');
+                Config::$serverKey = $midtransServerKey;
                 Config::$isProduction = (bool) config('midtrans.is_production');
                 Config::$isSanitized = true;
                 Config::$is3ds = false;
@@ -138,10 +146,18 @@ class CheckoutController extends Controller
 
             return response()->json($payload);
         } catch (Throwable $exception) {
+            $statusCode = $exception instanceof HttpExceptionInterface
+                ? $exception->getStatusCode()
+                : 500;
+
+            $message = $statusCode >= 500
+                ? 'Gagal memproses checkout.'
+                : $exception->getMessage();
+
             return response()->json([
-                'message' => 'Gagal memproses checkout.',
+                'message' => $message,
                 'error' => $exception->getMessage(),
-            ], 500);
+            ], $statusCode);
         }
     }
 

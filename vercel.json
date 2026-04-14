@@ -13,8 +13,8 @@
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
-        "APP_URL": "https://yourproductionurl.com",
+        "APP_DEBUG": "true",
+        "APP_URL": "https://kantin-kita.vercel.app",
         "APP_KEY": "base64:1K5/Y0uyV96A58Qf1NtKszavYonURBo/fiqkUy7gQK4=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",

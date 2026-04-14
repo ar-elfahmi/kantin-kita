@@ -1304,10 +1304,10 @@
 </head>
 
 <body
-    data-checkout-endpoint="{{ url('/api/checkout') }}"
-    data-update-status-endpoint="{{ url('/api/checkout/update-status') }}"
-    data-vendor-list-url="{{ route('vendor') }}"
-    data-menu-url-template="{{ url('/vendor/__ID__/menu') }}"
+    data-checkout-endpoint="/api/checkout"
+    data-update-status-endpoint="/api/checkout/update-status"
+    data-vendor-list-url="/vendor"
+    data-menu-url-template="/vendor/__ID__/menu"
     data-server-vendor-id="{{ $vendor?->id ?? '' }}"
     data-server-vendor-name="{{ $vendor?->nama_vendor ?? '' }}"
     data-server-vendor-rating="{{ $vendor ? number_format((float) $vendor->rating, 1) : '' }}"
@@ -1678,13 +1678,15 @@
 
     </div><!-- /page-wrapper -->
 
-    <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    @if (config('midtrans.client_key'))
+        <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    @endif
     <script>
         const CART_KEY = 'kantin_cart';
         const CUSTOMER_NAME_KEY = 'kantin_customer_name';
         const PICKUP_TIME_KEY = 'kantin_pickup_time';
-        const CHECKOUT_ENDPOINT = document.body.dataset.checkoutEndpoint || '';
-        const UPDATE_STATUS_ENDPOINT = document.body.dataset.updateStatusEndpoint || '';
+        const CHECKOUT_ENDPOINT = document.body.dataset.checkoutEndpoint || '/api/checkout';
+        const UPDATE_STATUS_ENDPOINT = document.body.dataset.updateStatusEndpoint || '/api/checkout/update-status';
         const VENDOR_LIST_URL = document.body.dataset.vendorListUrl || '/vendor';
         const MENU_URL_TEMPLATE = document.body.dataset.menuUrlTemplate || '/vendor/__ID__/menu';
         const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
