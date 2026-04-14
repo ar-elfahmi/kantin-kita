@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Your Cart — Kantin Kita</title>
     <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1210,48 +1209,12 @@
                 padding: 0 16px;
             }
 
-            .navbar {
-                height: auto;
-            }
-
-            .navbar-inner {
-                height: auto;
-                min-height: 72px;
-                padding: 10px 0;
-            }
-
             .nav-links {
                 display: none;
             }
 
-            .nav-actions {
-                gap: 10px;
-            }
-
             .page-title {
                 font-size: 28px;
-            }
-
-            .page-header-top {
-                align-items: flex-start;
-            }
-
-            .vendor-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .vendor-meta {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .open-badge {
-                align-self: flex-start;
-            }
-
-            .cart-item-card {
-                padding: 16px;
             }
 
             .suggestions-grid {
@@ -1275,43 +1238,11 @@
                 width: 100%;
                 height: 180px;
             }
-
-            .cart-item-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .item-price-block {
-                text-align: left;
-            }
-
-            .qty-stepper {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .summary-card {
-                padding: 20px;
-                gap: 20px;
-            }
-
-            .place-order-btn {
-                min-height: 48px;
-            }
         }
     </style>
 </head>
 
-<body
-    data-checkout-endpoint="{{ url('/api/checkout') }}"
-    data-update-status-endpoint="{{ url('/api/checkout/update-status') }}"
-    data-vendor-list-url="{{ route('vendor') }}"
-    data-menu-url-template="{{ url('/vendor/__ID__/menu') }}"
-    data-server-vendor-id="{{ $vendor?->id ?? '' }}"
-    data-server-vendor-name="{{ $vendor?->nama_vendor ?? '' }}"
-    data-server-vendor-rating="{{ $vendor ? number_format((float) $vendor->rating, 1) : '' }}"
-    data-server-vendor-lokasi="{{ $vendor?->lokasi ?? '' }}">
+<body>
     <div class="page-wrapper">
 
         <!-- ══════════════════ NAVBAR ══════════════════ -->
@@ -1330,9 +1261,9 @@
 
                     <div class="nav-links">
                         <a href="/" class="nav-link">Home</a>
-                        <a href="{{ route('vendor') }}" class="nav-link">Menu</a>
-                        <a href="{{ route('checkout', ['vendor_id' => $vendor?->id]) }}" class="nav-link active">Cart</a>
-                        <a href="{{ route('login') }}" class="nav-link">Orders</a>
+                        <a href="/menu" class="nav-link">Menu</a>
+                        <a href="/cart" class="nav-link active">Cart</a>
+                        <a href="/orders" class="nav-link">Orders</a>
                     </div>
 
                     <div class="nav-actions">
@@ -1357,14 +1288,14 @@
                 <!-- Page header -->
                 <div class="page-header reveal">
                     <div class="page-header-top">
-                        <a href="{{ $vendor ? route('menu', ['id' => $vendor->id]) : route('vendor') }}" class="back-btn" aria-label="Go back" id="backToMenuBtn">
+                        <a href="/" class="back-btn" aria-label="Go back">
                             <svg width="14" height="14" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M.293701 7.29365C-.0969238 7.68428-.0969238 8.31865.293701 8.70928L5.2937 13.7093C5.68433 14.0999 6.3187 14.0999 6.70933 13.7093C7.09995 13.3187 7.09995 12.6843 6.70933 12.2937L3.41245 8.9999H13C13.5531 8.9999 14 8.55303 14 7.9999C14 7.44678 13.5531 6.9999 13 6.9999H3.41558L6.7062 3.70615C7.09683 3.31553 7.09683 2.68115 6.7062 2.29053C6.31558 1.8999 5.6812 1.8999 5.29058 2.29053L.290576 7.29053L.293701 7.29365Z" fill="#744622" />
                             </svg>
                         </a>
                         <h1 class="page-title">Your Cart</h1>
                     </div>
-                    <p class="page-subtitle">Review your order from <strong id="vendorNameHeading">{{ $vendor?->nama_vendor ?? 'Pilih vendor' }}</strong></p>
+                    <p class="page-subtitle">Review your order from <strong>Warung Mbok Sri</strong></p>
                 </div>
 
                 <!-- Two-column checkout grid -->
@@ -1373,6 +1304,7 @@
                     <!-- ── Left: Cart items ────────────────── -->
                     <div class="cart-column">
 
+                        <!-- Vendor info -->
                         <div class="card vendor-card reveal">
                             <div class="vendor-inner">
                                 <div class="vendor-icon">
@@ -1381,42 +1313,161 @@
                                     </svg>
                                 </div>
                                 <div class="vendor-details">
-                                    <div class="vendor-name" id="vendorNameCard">{{ $vendor?->nama_vendor ?? 'Pilih vendor' }}</div>
+                                    <div class="vendor-name">Warung Mbok Sri</div>
                                     <div class="vendor-meta">
                                         <div class="vendor-rating">
                                             <span class="star-icon">★</span>
-                                            <span id="vendorRating">{{ $vendor ? number_format((float) $vendor->rating, 1) : '-' }}</span>
+                                            <span>4.8</span>
                                         </div>
-                                        <span class="vendor-location" id="vendorLocation">{{ $vendor?->lokasi ?? 'Area Kantin UNAIR' }}</span>
+                                        <span class="vendor-location">Building A, Ground Floor</span>
                                     </div>
                                 </div>
                                 <div class="open-badge">Open</div>
                             </div>
                         </div>
 
-                        <div id="cartItemsContainer"></div>
-
-                        <div class="card cart-item-card reveal" id="emptyCartCard" style="display:none;">
+                        <!-- Cart Item 1: Nasi Goreng Special -->
+                        <div class="card cart-item-card reveal">
                             <div class="cart-item-body">
+                                <div class="cart-item-img-wrap">
+                                    <img class="cart-item-photo"
+                                        src="https://api.builder.io/api/v1/image/assets/TEMP/380bed0567199f34eb9a7dc12c4cc32ad40d3f2d?width=224"
+                                        alt="Nasi Goreng Special" />
+                                </div>
                                 <div class="cart-item-info">
                                     <div class="cart-item-top">
                                         <div class="cart-item-meta">
-                                            <div class="cart-item-name">Keranjang masih kosong</div>
-                                            <div class="cart-item-desc">Tambahkan menu dari halaman vendor untuk melanjutkan checkout.</div>
+                                            <div class="cart-item-name">Nasi Goreng Special</div>
+                                            <div class="cart-item-desc">With chicken, egg &amp; crackers</div>
+                                        </div>
+                                        <button class="remove-btn" aria-label="Remove item">
+                                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3.69687.483984L3.5.875H.875C.391016.875 0 1.26602 0 1.75C0 2.23398.391016 2.625.875 2.625H11.375C11.859 2.625 12.25 2.23398 12.25 1.75C12.25 1.26602 11.859.875 11.375.875H8.75L8.55312.483984C8.40547.185938 8.10195 0 7.77109 0H4.47891C4.14805 0 3.84453.185938 3.69687.483984ZM11.375 3.5H.875L1.45469 12.7695C1.49844 13.4613 2.07266 14 2.76445 14H9.48555C10.1773 14 10.7516 13.4613 10.7953 12.7695L11.375 3.5Z" fill="#744622" fill-opacity="0.6" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="cart-item-bottom">
+                                        <div class="qty-stepper">
+                                            <button class="qty-btn qty-btn-minus" aria-label="Decrease quantity">
+                                                <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
+                                                    <path d="M11.375 1C11.375 1.48398 10.984 1.875 10.5 1.875H.875C.391016 1.875 0 1.48398 0 1C0 .516016.391016.125.875.125H10.5C10.984.125 11.375.516016 11.375 1Z" fill="black" />
+                                                </svg>
+                                            </button>
+                                            <span class="qty-value">2</span>
+                                            <button class="qty-btn qty-btn-plus" aria-label="Increase quantity">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                    <path d="M6.875.6875C6.875.203516 6.48398-.1875 6-.1875C5.51602-.1875 5.125.203516 5.125.6875V5.25H.5625C.078516 5.25-.3125 5.641-.3125 6.125C-.3125 6.609.078516 7 .5625 7H5.125V11.5625C5.125 12.0465 5.51602 12.4375 6 12.4375C6.48398 12.4375 6.875 12.0465 6.875 11.5625V7H10.5625C11.0465 7 11.4375 6.609 11.4375 6.125C11.4375 5.641 11.0465 5.25 10.5625 5.25H6.875V.6875Z" fill="white" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="item-price-block">
+                                            <div class="item-price">Rp 30.000</div>
+                                            <div class="item-unit-price">Rp 15.000 each</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="instructions-block">
+                                <div class="instructions-label">Special Instructions:</div>
+                                <input class="instructions-input" type="text"
+                                    placeholder="Add notes (e.g., less spicy, no onions)" />
+                            </div>
+                        </div>
+
+                        <!-- Cart Item 2: Soto Ayam -->
+                        <div class="card cart-item-card reveal">
+                            <div class="cart-item-body">
+                                <div class="cart-item-img-wrap">
+                                    <img class="cart-item-photo"
+                                        src="https://api.builder.io/api/v1/image/assets/TEMP/8dd6b11ac60c3256f51a737de58d6b4ebfb7d45b?width=224"
+                                        alt="Soto Ayam" />
+                                </div>
+                                <div class="cart-item-info">
+                                    <div class="cart-item-top">
+                                        <div class="cart-item-meta">
+                                            <div class="cart-item-name">Soto Ayam</div>
+                                            <div class="cart-item-desc">Traditional chicken soup</div>
+                                        </div>
+                                        <button class="remove-btn" aria-label="Remove item">
+                                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3.69687.483984L3.5.875H.875C.391016.875 0 1.26602 0 1.75C0 2.23398.391016 2.625.875 2.625H11.375C11.859 2.625 12.25 2.23398 12.25 1.75C12.25 1.26602 11.859.875 11.375.875H8.75L8.55312.483984C8.40547.185938 8.10195 0 7.77109 0H4.47891C4.14805 0 3.84453.185938 3.69687.483984ZM11.375 3.5H.875L1.45469 12.7695C1.49844 13.4613 2.07266 14 2.76445 14H9.48555C10.1773 14 10.7516 13.4613 10.7953 12.7695L11.375 3.5Z" fill="#744622" fill-opacity="0.6" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="cart-item-bottom">
+                                        <div class="qty-stepper">
+                                            <button class="qty-btn qty-btn-minus" aria-label="Decrease quantity">
+                                                <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
+                                                    <path d="M11.375 1C11.375 1.48398 10.984 1.875 10.5 1.875H.875C.391016 1.875 0 1.48398 0 1C0 .516016.391016.125.875.125H10.5C10.984.125 11.375.516016 11.375 1Z" fill="black" />
+                                                </svg>
+                                            </button>
+                                            <span class="qty-value">1</span>
+                                            <button class="qty-btn qty-btn-plus" aria-label="Increase quantity">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                    <path d="M6.875.6875C6.875.203516 6.48398-.1875 6-.1875C5.51602-.1875 5.125.203516 5.125.6875V5.25H.5625C.078516 5.25-.3125 5.641-.3125 6.125C-.3125 6.609.078516 7 .5625 7H5.125V11.5625C5.125 12.0465 5.51602 12.4375 6 12.4375C6.48398 12.4375 6.875 12.0465 6.875 11.5625V7H10.5625C11.0465 7 11.4375 6.609 11.4375 6.125C11.4375 5.641 11.0465 5.25 10.5625 5.25H6.875V.6875Z" fill="white" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="item-price-block">
+                                            <div class="item-price">Rp 12.000</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <a class="add-more-btn reveal" id="addMoreBtn" href="{{ $vendor ? route('menu', ['id' => $vendor->id]) : route('vendor') }}">
+                        <!-- Cart Item 3: Es Teh Manis -->
+                        <div class="card cart-item-card reveal">
+                            <div class="cart-item-body">
+                                <div class="cart-item-img-wrap">
+                                    <img class="cart-item-photo"
+                                        src="https://api.builder.io/api/v1/image/assets/TEMP/a5474736444ffa098df0a98d625b38a179610dfb?width=224"
+                                        alt="Es Teh Manis" />
+                                </div>
+                                <div class="cart-item-info">
+                                    <div class="cart-item-top">
+                                        <div class="cart-item-meta">
+                                            <div class="cart-item-name">Es Teh Manis</div>
+                                            <div class="cart-item-desc">Sweet iced tea</div>
+                                        </div>
+                                        <button class="remove-btn" aria-label="Remove item">
+                                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3.69687.483984L3.5.875H.875C.391016.875 0 1.26602 0 1.75C0 2.23398.391016 2.625.875 2.625H11.375C11.859 2.625 12.25 2.23398 12.25 1.75C12.25 1.26602 11.859.875 11.375.875H8.75L8.55312.483984C8.40547.185938 8.10195 0 7.77109 0H4.47891C4.14805 0 3.84453.185938 3.69687.483984ZM11.375 3.5H.875L1.45469 12.7695C1.49844 13.4613 2.07266 14 2.76445 14H9.48555C10.1773 14 10.7516 13.4613 10.7953 12.7695L11.375 3.5Z" fill="#744622" fill-opacity="0.6" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="cart-item-bottom">
+                                        <div class="qty-stepper">
+                                            <button class="qty-btn qty-btn-minus" aria-label="Decrease quantity">
+                                                <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
+                                                    <path d="M11.375 1C11.375 1.48398 10.984 1.875 10.5 1.875H.875C.391016 1.875 0 1.48398 0 1C0 .516016.391016.125.875.125H10.5C10.984.125 11.375.516016 11.375 1Z" fill="black" />
+                                                </svg>
+                                            </button>
+                                            <span class="qty-value">3</span>
+                                            <button class="qty-btn qty-btn-plus" aria-label="Increase quantity">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                                    <path d="M6.875.6875C6.875.203516 6.48398-.1875 6-.1875C5.51602-.1875 5.125.203516 5.125.6875V5.25H.5625C.078516 5.25-.3125 5.641-.3125 6.125C-.3125 6.609.078516 7 .5625 7H5.125V11.5625C5.125 12.0465 5.51602 12.4375 6 12.4375C6.48398 12.4375 6.875 12.0465 6.875 11.5625V7H10.5625C11.0465 7 11.4375 6.609 11.4375 6.125C11.4375 5.641 11.0465 5.25 10.5625 5.25H6.875V.6875Z" fill="white" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="item-price-block">
+                                            <div class="item-price">Rp 9.000</div>
+                                            <div class="item-unit-price">Rp 3.000 each</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add more items -->
+                        <button class="add-more-btn reveal">
                             <div class="add-more-icon">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.5.5C7.5-.0531 7.053-.5 6.5-.5C5.947-.5 5.5-.0531 5.5.5V5.5H.5C-.0531 5.5-.5 5.947-.5 6.5C-.5 7.053-.0531 7.5.5 7.5H5.5V12.5C5.5 13.053 5.947 13.5 6.5 13.5C7.053 13.5 7.5 13.053 7.5 12.5V7.5H12.5C13.053 7.5 13.5 7.053 13.5 6.5C13.5 5.947 13.053 5.5 12.5 5.5H7.5V.5Z" fill="#42766A" />
                                 </svg>
                             </div>
                             Add More Items
-                        </a>
+                        </button>
                     </div>
 
                     <!-- ── Right: Order summary ─────────────── -->
@@ -1424,23 +1475,24 @@
                         <div class="card summary-card reveal">
                             <div class="summary-title">Order Summary</div>
 
+                            <!-- Breakdown rows -->
                             <div class="summary-rows">
                                 <div class="summary-row">
-                                    <button class="subtotal-chevron" type="button">
-                                        Subtotal (<span id="summaryItemCount">0 items</span>)
+                                    <button class="subtotal-chevron">
+                                        Subtotal (6 items)
                                         <svg width="16" height="16" viewBox="0 0 30 30" fill="none">
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.845 10.815a.9.9 0 011.29.03L15 16.752l5.565-5.907a.9.9 0 011.275 1.26L15.81 19.155a.9.9 0 01-1.62 0L7.815 12.405a.9.9 0 01.03-1.59z" fill="#744622" />
                                         </svg>
                                     </button>
-                                    <span class="summary-row-value" id="summarySubtotal">Rp 0</span>
+                                    <span class="summary-row-value">Rp 51.000</span>
                                 </div>
                                 <div class="summary-row">
                                     <span class="summary-row-label">Service Fee</span>
-                                    <span class="summary-row-value" id="summaryServiceFee">Rp 0</span>
+                                    <span class="summary-row-value">Rp 1.000</span>
                                 </div>
                                 <div class="summary-row">
-                                    <span class="summary-row-label">Tax</span>
-                                    <span class="summary-row-value" id="summaryTax">Rp 0</span>
+                                    <span class="summary-row-label">Tax (10%)</span>
+                                    <span class="summary-row-value">Rp 5.100</span>
                                 </div>
                             </div>
 
@@ -1448,14 +1500,16 @@
 
                             <div class="summary-total-row">
                                 <span class="total-label">Total</span>
-                                <span class="total-value" id="summaryTotal">Rp 0</span>
+                                <span class="total-value">Rp 57.100</span>
                             </div>
 
+                            <!-- Promo code -->
                             <div class="promo-row">
-                                <input class="promo-input" type="text" id="customerNameInput" placeholder="Masukkan nama pemesan" />
-                                <button class="promo-apply-btn" type="button">Nama</button>
+                                <input class="promo-input" type="text" placeholder="Enter promo code" />
+                                <button class="promo-apply-btn">Apply</button>
                             </div>
 
+                            <!-- Pickup time -->
                             <div class="form-group">
                                 <label class="form-label">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1463,7 +1517,7 @@
                                     </svg>
                                     Pickup Time
                                 </label>
-                                <select class="pickup-select" id="pickupTimeSelect">
+                                <select class="pickup-select">
                                     <option value="asap">ASAP (15–20 mins)</option>
                                     <option value="30">In 30 minutes</option>
                                     <option value="45">In 45 minutes</option>
@@ -1471,32 +1525,47 @@
                                 </select>
                             </div>
 
+                            <!-- Payment method -->
                             <div class="payment-section">
                                 <div class="payment-title">Payment Method</div>
                                 <div class="payment-options">
+                                    <!-- Campus Wallet (selected) -->
                                     <label class="payment-option selected">
-                                        <input type="radio" name="payment" value="midtrans" checked style="display:none" />
+                                        <input type="radio" name="payment" value="wallet" checked style="display:none" />
                                         <div class="payment-radio"></div>
                                         <div class="payment-label">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M2.25 1.125C1.00898 1.125 0 2.13398 0 3.375V14.625C0 15.866 1.00898 16.875 2.25 16.875H15.75C16.991 16.875 18 15.866 18 14.625V6.75C18 5.50898 16.991 4.5 15.75 4.5H2.8125C2.50312 4.5 2.25 4.24688 2.25 3.9375C2.25 3.62812 2.50312 3.375 2.8125 3.375H15.75C16.3723 3.375 16.875 2.87227 16.875 2.25C16.875 1.62773 16.3723 1.125 15.75 1.125H2.25ZM14.625 9.5625C14.9234 9.5625 15.2095 9.68103 15.4205 9.892C15.6315 10.103 15.75 10.3891 15.75 10.6875C15.75 10.9859 15.6315 11.272 15.4205 11.483C15.2095 11.694 14.9234 11.8125 14.625 11.8125C14.3266 11.8125 14.0405 11.694 13.8295 11.483C13.6185 11.272 13.5 10.9859 13.5 10.6875C13.5 10.3891 13.6185 10.103 13.8295 9.892C14.0405 9.68103 14.3266 9.5625 14.625 9.5625Z" fill="#42766A" />
                                             </svg>
-                                            <span class="payment-name">Midtrans (QRIS / E-Wallet)</span>
+                                            <span class="payment-name">Campus Wallet</span>
+                                            <span class="wallet-balance">Rp 125.000</span>
+                                        </div>
+                                    </label>
+                                    <!-- Cash -->
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment" value="cash" style="display:none" />
+                                        <div class="payment-radio"></div>
+                                        <div class="payment-label">
+                                            <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.25 2.25C1.00898 2.25 0 3.25898 0 4.5V13.5C0 14.741 1.00898 15.75 2.25 15.75H18C19.241 15.75 20.25 14.741 20.25 13.5V4.5C20.25 3.25898 19.241 2.25 18 2.25H2.25ZM4.5 13.5H2.25V11.25C3.49102 11.25 4.5 12.259 4.5 13.5ZM2.25 6.75V4.5H4.5C4.5 5.74102 3.49102 6.75 2.25 6.75ZM15.75 13.5C15.75 12.259 16.759 11.25 18 11.25V13.5H15.75ZM18 6.75C16.759 6.75 15.75 5.74102 15.75 4.5H18V6.75ZM10.125 5.625C11.0201 5.625 11.8786 5.98058 12.5115 6.61351C13.1444 7.24645 13.5 8.10489 13.5 9C13.5 9.89511 13.1444 10.7536 12.5115 11.3865C11.8786 12.0194 11.0201 12.375 10.125 12.375C9.22989 12.375 8.37145 12.0194 7.73851 11.3865C7.10558 10.7536 6.75 9.89511 6.75 9C6.75 8.10489 7.10558 7.24645 7.73851 6.61351C8.37145 5.98058 9.22989 5.625 10.125 5.625Z" fill="#744622" fill-opacity="0.6" />
+                                            </svg>
+                                            <span class="payment-name">Cash</span>
                                         </div>
                                     </label>
                                 </div>
                             </div>
 
-                            <button class="place-order-btn" id="placeOrderBtn" type="button">
+                            <!-- Place Order -->
+                            <button class="place-order-btn">
                                 Place Order
                                 <svg width="14" height="14" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.7063 8.70615C14.0969 8.31553 14.0969 7.68115 13.7063 7.29053L8.70625 2.29053C8.31563 1.8999 7.68125 1.8999 7.29063 2.29053C6.9 2.68115 6.9 3.31553 7.29063 3.70615L10.5875 6.9999H1C.446875 6.9999 0 7.44678 0 7.9999C0 8.55303.446875 8.9999 1 8.9999H10.5844L7.29375 12.2937C6.90312 12.6843 6.90312 13.3187 7.29375 13.7093C7.68437 14.0999 8.31875 14.0999 8.70938 13.7093L13.7094 8.70928L13.7063 8.70615Z" fill="white" />
                                 </svg>
                             </button>
 
-                            <div class="order-legal" id="checkoutMessage">
+                            <div class="order-legal">
                                 By placing order, you agree to our
-                                <a href="{{ route('home') }}#contact">Terms &amp; Conditions</a>
+                                <a href="/terms">Terms &amp; Conditions</a>
                             </div>
                         </div>
                     </div>
@@ -1506,7 +1575,7 @@
                 <div class="suggestions-section">
                     <div class="section-header reveal">
                         <h2 class="section-title">You Might Also Like</h2>
-                        <a href="{{ route('vendor') }}" class="view-all-link">
+                        <a href="/menu" class="view-all-link">
                             View All
                             <svg width="12" height="12" viewBox="0 0 13 14" fill="none">
                                 <path d="M11.993 7.61807C12.3348 7.27627 12.3348 6.72119 11.993 6.3794L7.61797 2.00439C7.27617 1.6626 6.72109 1.6626 6.3793 2.00439C6.0375 2.34619 6.0375 2.90127 6.3793 3.24307L9.26406 6.1251H.875C.391016 6.1251 0 6.51611 0 7.0001C0 7.48408.391016 7.8751.875 7.8751H9.26133L6.38203 10.7571C6.04023 11.0989 6.04023 11.654 6.38203 11.9958C6.72383 12.3376 7.27891 12.3376 7.6207 11.9958L11.9957 7.6208L11.993 7.61807Z" fill="#42766A" />
@@ -1621,17 +1690,17 @@
                         </a>
                         <p class="footer-brand-text">Delicious meals for our campus community, made with love and care.</p>
                         <div class="social-icons">
-                            <a href="{{ route('home') }}" class="social-btn" aria-label="Instagram">
+                            <a href="#" class="social-btn" aria-label="Instagram">
                                 <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.00303 4.40635C5.01553 4.40635 3.4124 6.00947 3.4124 7.99697C3.4124 9.98447 5.01553 11.5876 7.00303 11.5876C8.99053 11.5876 10.5937 9.98447 10.5937 7.99697C10.5937 6.00947 8.99053 4.40635 7.00303 4.40635ZM13.9562 5.10947C13.903 3.9876 13.6468 2.99385 12.8249 2.1751C12.0062 1.35635 11.0124 1.1001 9.89053 1.04385C8.73428.978223 5.26865.978223 4.1124 1.04385C2.99365 1.09697 1.9999 1.35322 1.17803 2.17197C.356152 2.99072.103027 3.98447.0467773 5.10635C-.0188477 6.2626-.0188477 9.72822.0467773 10.8845C.0999023 12.0063.356152 13.0001 1.17803 13.8188C1.9999 14.6376 2.99053 14.8938 4.1124 14.9501C5.26865 15.0157 8.73428 15.0157 9.89053 14.9501C11.0124 14.897 12.0062 14.6407 12.8249 13.8188C13.6437 13.0001 13.8999 12.0063 13.9562 10.8845C14.0218 9.72822 14.0218 6.26572 13.9562 5.10947Z" fill="#744622" />
                                 </svg>
                             </a>
-                            <a href="{{ route('home') }}" class="social-btn" aria-label="Facebook">
+                            <a href="#" class="social-btn" aria-label="Facebook">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.75 8C15.75 3.71875 12.2812.25 8 .25C3.71875.25.25 3.71875.25 8C.25 11.8681 3.08406 15.0744 6.78906 15.6562V10.2403H4.82031V8H6.78906V6.2925C6.78906 4.35031 7.94531 3.2775 9.71625 3.2775C10.5644 3.2775 11.4513 3.42875 11.4513 3.42875V5.335H10.4738C9.51125 5.335 9.21094 5.9325 9.21094 6.54531V8H11.3603L11.0166 10.2403H9.21094V15.6562C12.9159 15.0744 15.75 11.8681 15.75 8Z" fill="#744622" />
                                 </svg>
                             </a>
-                            <a href="{{ route('home') }}" class="social-btn" aria-label="Twitter">
+                            <a href="#" class="social-btn" aria-label="Twitter">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.3553 4.741C14.3655 4.88313 14.3655 5.02529 14.3655 5.16741C14.3655 9.50241 11.066 14.4973 5.03553 14.4973C3.17766 14.4973 1.45178 13.9593 0 13.0253C.263969 13.0557.51775 13.0659.791875 13.0659C2.32484 13.0659 3.73603 12.5481 4.86294 11.6649C3.42131 11.6344 2.21319 10.6903 1.79694 9.39075C2 9.42119 2.20303 9.4415 2.41625 9.4415C2.71066 9.4415 3.00509 9.40088 3.27919 9.32985C1.77666 9.02525.649719 7.70547.649719 6.11157V6.07097C1.08625 6.31463 1.59391 6.46691 2.13194 6.48719C1.24869 5.89835.670031 4.89329.670031 3.75622C.670031 3.1471.832438 2.58872 1.11672 2.10141C2.73094 4.09125 5.15734 5.39072 7.87813 5.53288C7.82738 5.28922 7.79691 5.03544 7.79691 4.78163C7.79691 2.9745 9.25884 1.50244 11.0761 1.50244C12.0203 1.50244 12.873 1.89838 13.472 2.53797C14.2131 2.39585 14.9238 2.12172 15.5533 1.7461C15.3096 2.50754 14.7918 3.14713 14.1116 3.55319C14.7715 3.48216 15.4111 3.29938 15.9999 3.0456C15.5533 3.69532 14.9949 4.27397 14.3553 4.741Z" fill="#744622" />
                                 </svg>
@@ -1643,10 +1712,10 @@
                     <div>
                         <div class="footer-col-title">Quick Links</div>
                         <div class="footer-links">
-                            <a href="{{ route('home') }}" class="footer-link">Home</a>
-                            <a href="{{ route('vendor') }}" class="footer-link">Menu</a>
-                            <a href="{{ route('login') }}" class="footer-link">My Orders</a>
-                            <a href="{{ route('login') }}" class="footer-link">Profile</a>
+                            <a href="/" class="footer-link">Home</a>
+                            <a href="/menu" class="footer-link">Menu</a>
+                            <a href="/orders" class="footer-link">My Orders</a>
+                            <a href="/profile" class="footer-link">Profile</a>
                         </div>
                     </div>
 
@@ -1654,10 +1723,10 @@
                     <div>
                         <div class="footer-col-title">Support</div>
                         <div class="footer-links">
-                            <a href="{{ route('home') }}#contact" class="footer-link">Help Center</a>
-                            <a href="{{ route('home') }}#contact" class="footer-link">Terms &amp; Conditions</a>
-                            <a href="{{ route('home') }}#contact" class="footer-link">Privacy Policy</a>
-                            <a href="{{ route('home') }}#contact" class="footer-link">Contact Us</a>
+                            <a href="/help" class="footer-link">Help Center</a>
+                            <a href="/terms" class="footer-link">Terms &amp; Conditions</a>
+                            <a href="/privacy" class="footer-link">Privacy Policy</a>
+                            <a href="/contact" class="footer-link">Contact Us</a>
                         </div>
                     </div>
 
@@ -1678,497 +1747,54 @@
 
     </div><!-- /page-wrapper -->
 
-    <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
     <script>
-        const CART_KEY = 'kantin_cart';
-        const CUSTOMER_NAME_KEY = 'kantin_customer_name';
-        const PICKUP_TIME_KEY = 'kantin_pickup_time';
-        const CHECKOUT_ENDPOINT = document.body.dataset.checkoutEndpoint || '';
-        const UPDATE_STATUS_ENDPOINT = document.body.dataset.updateStatusEndpoint || '';
-        const VENDOR_LIST_URL = document.body.dataset.vendorListUrl || '/vendor';
-        const MENU_URL_TEMPLATE = document.body.dataset.menuUrlTemplate || '/vendor/__ID__/menu';
-        const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-        const DEFAULT_MENU_IMAGE = 'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=224&h=224&fit=crop';
-
-        const serverVendorId = Number(document.body.dataset.serverVendorId || 0);
-        const serverVendor = serverVendorId > 0 ? {
-            id: serverVendorId,
-            nama_vendor: document.body.dataset.serverVendorName || 'Vendor',
-            rating: document.body.dataset.serverVendorRating || '-',
-            lokasi: document.body.dataset.serverVendorLokasi || 'Area Kantin UNAIR',
-        } : null;
-
-        const state = {
-            cart: null,
-        };
-
-        function formatRupiah(value) {
-            return 'Rp ' + Number(value || 0).toLocaleString('id-ID');
-        }
-
-        function escapeHtml(text) {
-            return String(text || '')
-                .replaceAll('&', '&amp;')
-                .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;')
-                .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#039;');
-        }
-
-        function parseCart() {
-            try {
-                const raw = localStorage.getItem(CART_KEY);
-                if (!raw) {
-                    return null;
-                }
-
-                const parsed = JSON.parse(raw);
-                if (!parsed || !Array.isArray(parsed.items)) {
-                    return null;
-                }
-
-                return {
-                    vendor_id: parsed.vendor_id ? Number(parsed.vendor_id) : null,
-                    vendor_name: parsed.vendor_name || '',
-                    items: parsed.items.map((item) => ({
-                        menu_id: Number(item.menu_id),
-                        nama_menu: item.nama_menu || 'Menu',
-                        harga: Number(item.harga || 0),
-                        jumlah: Math.max(1, Number(item.jumlah || 1)),
-                        catatan: item.catatan || '',
-                        path_gambar: item.path_gambar || '',
-                    })).filter((item) => Number.isFinite(item.menu_id) && item.menu_id > 0),
-                };
-            } catch (error) {
-                return null;
-            }
-        }
-
-        function getDefaultCart() {
-            return {
-                vendor_id: serverVendor ? Number(serverVendor.id) : null,
-                vendor_name: serverVendor ? serverVendor.nama_vendor : '',
-                items: [],
-            };
-        }
-
-        function persistCart() {
-            localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-        }
-
-        function menuUrlByVendor(vendorId) {
-            return MENU_URL_TEMPLATE.replace('__ID__', String(vendorId));
-        }
-
-        function resolveVendorContext() {
-            if (state.cart?.vendor_id) {
-                const sameAsServer = serverVendor && Number(serverVendor.id) === Number(state.cart.vendor_id);
-                return {
-                    id: Number(state.cart.vendor_id),
-                    nama_vendor: state.cart.vendor_name || serverVendor?.nama_vendor || 'Vendor',
-                    rating: sameAsServer ? serverVendor.rating : '-',
-                    lokasi: sameAsServer ? (serverVendor.lokasi || 'Area Kantin UNAIR') : 'Area Kantin UNAIR',
-                };
-            }
-
-            if (serverVendor) {
-                return {
-                    id: Number(serverVendor.id),
-                    nama_vendor: serverVendor.nama_vendor,
-                    rating: serverVendor.rating,
-                    lokasi: serverVendor.lokasi || 'Area Kantin UNAIR',
-                };
-            }
-
-            return {
-                id: null,
-                nama_vendor: 'Pilih vendor',
-                rating: '-',
-                lokasi: 'Area Kantin UNAIR',
-            };
-        }
-
-        function setCheckoutMessage(message, isError = false) {
-            const messageEl = document.getElementById('checkoutMessage');
-            if (!messageEl) {
-                return;
-            }
-
-            messageEl.textContent = message;
-            messageEl.style.color = isError ? '#B91C1C' : 'rgba(116,70,34,.7)';
-        }
-
-        function renderVendorHeader() {
-            const vendor = resolveVendorContext();
-            const menuUrl = vendor.id ? menuUrlByVendor(vendor.id) : VENDOR_LIST_URL;
-
-            document.getElementById('vendorNameHeading').textContent = vendor.nama_vendor;
-            document.getElementById('vendorNameCard').textContent = vendor.nama_vendor;
-            document.getElementById('vendorRating').textContent = vendor.rating;
-            document.getElementById('vendorLocation').textContent = vendor.lokasi;
-
-            document.getElementById('addMoreBtn').setAttribute('href', menuUrl);
-            document.getElementById('backToMenuBtn').setAttribute('href', menuUrl);
-        }
-
-        function updateSummary() {
-            const items = state.cart.items;
-            const qty = items.reduce((sum, item) => sum + Number(item.jumlah), 0);
-            const subtotal = items.reduce((sum, item) => sum + Number(item.harga) * Number(item.jumlah), 0);
-            const serviceFee = 0;
-            const tax = 0;
-            const total = subtotal + serviceFee + tax;
-
-            document.getElementById('summaryItemCount').textContent = `${qty} item${qty === 1 ? '' : 's'}`;
-            document.getElementById('summarySubtotal').textContent = formatRupiah(subtotal);
-            document.getElementById('summaryServiceFee').textContent = formatRupiah(serviceFee);
-            document.getElementById('summaryTax').textContent = formatRupiah(tax);
-            document.getElementById('summaryTotal').textContent = formatRupiah(total);
-
-            return {
-                qty,
-                subtotal,
-                total,
-            };
-        }
-
-        function renderCartItems() {
-            const container = document.getElementById('cartItemsContainer');
-            const emptyCard = document.getElementById('emptyCartCard');
-            const placeOrderBtn = document.getElementById('placeOrderBtn');
-
-            if (!state.cart.items.length) {
-                container.innerHTML = '';
-                emptyCard.style.display = 'block';
-                placeOrderBtn.disabled = true;
-                placeOrderBtn.style.opacity = '0.6';
-            } else {
-                emptyCard.style.display = 'none';
-                placeOrderBtn.disabled = false;
-                placeOrderBtn.style.opacity = '1';
-
-                container.innerHTML = state.cart.items.map((item) => {
-                    const subtotal = Number(item.harga) * Number(item.jumlah);
-
-                    return `
-                        <div class="card cart-item-card reveal visible" data-menu-id="${item.menu_id}">
-                            <div class="cart-item-body">
-                                <div class="cart-item-img-wrap">
-                                    <img class="cart-item-photo" src="${escapeHtml(item.path_gambar || DEFAULT_MENU_IMAGE)}" alt="${escapeHtml(item.nama_menu)}" />
-                                </div>
-                                <div class="cart-item-info">
-                                    <div class="cart-item-top">
-                                        <div class="cart-item-meta">
-                                            <div class="cart-item-name">${escapeHtml(item.nama_menu)}</div>
-                                            <div class="cart-item-desc">Menu pilihan Anda</div>
-                                        </div>
-                                        <button class="remove-btn" type="button" data-action="remove" aria-label="Remove item">
-                                            <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M3.69687.483984L3.5.875H.875C.391016.875 0 1.26602 0 1.75C0 2.23398.391016 2.625.875 2.625H11.375C11.859 2.625 12.25 2.23398 12.25 1.75C12.25 1.26602 11.859.875 11.375.875H8.75L8.55312.483984C8.40547.185938 8.10195 0 7.77109 0H4.47891C4.14805 0 3.84453.185938 3.69687.483984ZM11.375 3.5H.875L1.45469 12.7695C1.49844 13.4613 2.07266 14 2.76445 14H9.48555C10.1773 14 10.7516 13.4613 10.7953 12.7695L11.375 3.5Z" fill="#744622" fill-opacity="0.6" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <div class="cart-item-bottom">
-                                        <div class="qty-stepper">
-                                            <button class="qty-btn qty-btn-minus" type="button" data-action="decrease" aria-label="Decrease quantity">
-                                                <svg width="12" height="2" viewBox="0 0 12 2" fill="none">
-                                                    <path d="M11.375 1C11.375 1.48398 10.984 1.875 10.5 1.875H.875C.391016 1.875 0 1.48398 0 1C0 .516016.391016.125.875.125H10.5C10.984.125 11.375.516016 11.375 1Z" fill="black" />
-                                                </svg>
-                                            </button>
-                                            <span class="qty-value">${item.jumlah}</span>
-                                            <button class="qty-btn qty-btn-plus" type="button" data-action="increase" aria-label="Increase quantity">
-                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                                    <path d="M6.875.6875C6.875.203516 6.48398-.1875 6-.1875C5.51602-.1875 5.125.203516 5.125.6875V5.25H.5625C.078516 5.25-.3125 5.641-.3125 6.125C-.3125 6.609.078516 7 .5625 7H5.125V11.5625C5.125 12.0465 5.51602 12.4375 6 12.4375C6.48398 12.4375 6.875 12.0465 6.875 11.5625V7H10.5625C11.0465 7 11.4375 6.609 11.4375 6.125C11.4375 5.641 11.0465 5.25 10.5625 5.25H6.875V.6875Z" fill="white" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="item-price-block">
-                                            <div class="item-price">${formatRupiah(subtotal)}</div>
-                                            <div class="item-unit-price">${formatRupiah(item.harga)} each</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="instructions-block">
-                                <div class="instructions-label">Special Instructions:</div>
-                                <input class="instructions-input" type="text" data-action="note" value="${escapeHtml(item.catatan || '')}" placeholder="Add notes (e.g., less spicy, no onions)" />
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            updateSummary();
-            renderVendorHeader();
-        }
-
-        function updateItem(menuId, updater) {
-            const index = state.cart.items.findIndex((item) => Number(item.menu_id) === Number(menuId));
-            if (index < 0) {
-                return;
-            }
-
-            updater(state.cart.items[index], index);
-            state.cart.items = state.cart.items.filter((item) => Number(item.jumlah) > 0);
-            persistCart();
-            renderCartItems();
-        }
-
-        async function updatePaymentStatus(pesananId, status, result) {
-            try {
-                await fetch(UPDATE_STATUS_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': CSRF_TOKEN,
-                    },
-                    body: JSON.stringify({
-                        pesanan_id: pesananId,
-                        transaction_id: result?.transaction_id || null,
-                        payment_type: result?.payment_type || null,
-                        status,
-                        result,
-                    }),
-                });
-            } catch (error) {
-                // Keep UI responsive even if status callback fails.
-            }
-        }
-
-        async function handleCheckout() {
-            const placeOrderBtn = document.getElementById('placeOrderBtn');
-            const customerNameInput = document.getElementById('customerNameInput');
-            const pickupTimeSelect = document.getElementById('pickupTimeSelect');
-            const vendor = resolveVendorContext();
-
-            const customerName = (customerNameInput.value || '').trim();
-            const pickupTime = (pickupTimeSelect?.value || '').trim();
-            if (!customerName) {
-                setCheckoutMessage('Nama pemesan wajib diisi.', true);
-                customerNameInput.focus();
-                return;
-            }
-
-            if (!state.cart.items.length || !vendor.id) {
-                setCheckoutMessage('Keranjang kosong atau vendor belum dipilih.', true);
-                return;
-            }
-
-            if (typeof window.snap === 'undefined') {
-                setCheckoutMessage('Midtrans Snap belum terkonfigurasi. Periksa MIDTRANS_CLIENT_KEY.', true);
-                return;
-            }
-
-            const payload = {
-                nama_customer: customerName,
-                vendor_id: Number(vendor.id),
-                waktu_pengambilan: pickupTime || null,
-                items: state.cart.items.map((item) => ({
-                    menu_id: Number(item.menu_id),
-                    jumlah: Number(item.jumlah),
-                    catatan: item.catatan || null,
-                })),
-            };
-
-            placeOrderBtn.disabled = true;
-            placeOrderBtn.style.opacity = '0.6';
-            const originalLabel = placeOrderBtn.innerHTML;
-            placeOrderBtn.innerHTML = 'Processing...';
-            setCheckoutMessage('Mempersiapkan pembayaran...');
-
-            try {
-                localStorage.setItem(CUSTOMER_NAME_KEY, customerName);
-                if (pickupTime) {
-                    localStorage.setItem(PICKUP_TIME_KEY, pickupTime);
-                }
-
-                const response = await fetch(CHECKOUT_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': CSRF_TOKEN,
-                    },
-                    body: JSON.stringify(payload),
-                });
-
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.message || 'Checkout gagal diproses.');
-                }
-
-                const pesananId = data.pesanan_id;
-                window.snap.pay(data.snap_token, {
-                    onSuccess: function(result) {
-                        updatePaymentStatus(pesananId, 'success', result).finally(() => {
-                            localStorage.removeItem(CART_KEY);
-                            state.cart = getDefaultCart();
-                            renderCartItems();
-                            setCheckoutMessage('Pembayaran berhasil. Pesanan Anda sedang diproses.');
-                            placeOrderBtn.disabled = false;
-                            placeOrderBtn.style.opacity = '1';
-                            placeOrderBtn.innerHTML = originalLabel;
-                        });
-                    },
-                    onPending: function(result) {
-                        updatePaymentStatus(pesananId, 'pending', result).finally(() => {
-                            setCheckoutMessage('Pembayaran pending. Selesaikan pembayaran untuk memproses pesanan.');
-                            placeOrderBtn.disabled = false;
-                            placeOrderBtn.style.opacity = '1';
-                            placeOrderBtn.innerHTML = originalLabel;
-                        });
-                    },
-                    onError: function(result) {
-                        updatePaymentStatus(pesananId, 'error', result).finally(() => {
-                            setCheckoutMessage('Pembayaran gagal. Silakan coba lagi.', true);
-                            placeOrderBtn.disabled = false;
-                            placeOrderBtn.style.opacity = '1';
-                            placeOrderBtn.innerHTML = originalLabel;
-                        });
-                    },
-                    onClose: function() {
-                        setCheckoutMessage('Pembayaran dibatalkan sebelum selesai.', true);
-                        placeOrderBtn.disabled = false;
-                        placeOrderBtn.style.opacity = '1';
-                        placeOrderBtn.innerHTML = originalLabel;
-                    },
-                });
-            } catch (error) {
-                setCheckoutMessage(error.message || 'Terjadi kesalahan saat checkout.', true);
-                placeOrderBtn.disabled = false;
-                placeOrderBtn.style.opacity = '1';
-                placeOrderBtn.innerHTML = originalLabel;
-            }
-        }
-
-        function initScrollReveal() {
-            const revealEls = document.querySelectorAll('.reveal');
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => entry.target.classList.add('visible'), index * 60);
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.12,
-            });
-
-            revealEls.forEach((el) => revealObserver.observe(el));
-        }
-
-        function initPaymentToggle() {
-            document.querySelectorAll('.payment-option').forEach((option) => {
-                option.addEventListener('click', () => {
-                    document.querySelectorAll('.payment-option').forEach((item) => item.classList.remove('selected'));
-                    option.classList.add('selected');
-                    const input = option.querySelector('input[type=radio]');
-                    if (input) {
-                        input.checked = true;
-                    }
-                });
-            });
-        }
-
-        function initCartActions() {
-            const container = document.getElementById('cartItemsContainer');
-
-            container.addEventListener('click', (event) => {
-                const actionButton = event.target.closest('[data-action]');
-                if (!actionButton) {
-                    return;
-                }
-
-                const card = actionButton.closest('[data-menu-id]');
-                if (!card) {
-                    return;
-                }
-
-                const menuId = Number(card.dataset.menuId);
-                const action = actionButton.dataset.action;
-
-                if (action === 'remove') {
-                    updateItem(menuId, (item) => {
-                        item.jumlah = 0;
-                    });
-                }
-
-                if (action === 'increase') {
-                    updateItem(menuId, (item) => {
-                        item.jumlah = Number(item.jumlah) + 1;
-                    });
-                }
-
-                if (action === 'decrease') {
-                    updateItem(menuId, (item) => {
-                        item.jumlah = Math.max(1, Number(item.jumlah) - 1);
-                    });
+        /* ── Scroll-reveal observer ────────────────────── */
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 60);
+                    revealObserver.unobserve(entry.target);
                 }
             });
+        }, {
+            threshold: 0.12
+        });
+        revealEls.forEach(el => revealObserver.observe(el));
 
-            container.addEventListener('input', (event) => {
-                const noteInput = event.target.closest('input[data-action="note"]');
-                if (!noteInput) {
-                    return;
-                }
-
-                const card = noteInput.closest('[data-menu-id]');
-                if (!card) {
-                    return;
-                }
-
-                const menuId = Number(card.dataset.menuId);
-                updateItem(menuId, (item) => {
-                    item.catatan = noteInput.value;
-                });
+        /* ── Payment option toggle ─────────────────────── */
+        document.querySelectorAll('.payment-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                opt.querySelector('input[type=radio]').checked = true;
             });
-        }
+        });
 
-        function initSuggestionButtons() {
-            document.querySelectorAll('.add-item-btn').forEach((button) => {
-                button.addEventListener('click', function() {
-                    this.style.background = '#2d5248';
-                    setTimeout(() => {
-                        this.style.background = '';
-                    }, 300);
-                });
+        /* ── Quantity steppers ─────────────────────────── */
+        document.querySelectorAll('.qty-stepper').forEach(stepper => {
+            const minus = stepper.querySelector('.qty-btn-minus');
+            const plus = stepper.querySelector('.qty-btn-plus');
+            const val = stepper.querySelector('.qty-value');
+            minus.addEventListener('click', () => {
+                const n = parseInt(val.textContent);
+                if (n > 1) val.textContent = n - 1;
             });
-        }
+            plus.addEventListener('click', () => {
+                const n = parseInt(val.textContent);
+                val.textContent = n + 1;
+            });
+        });
 
-        function initCustomerName() {
-            const input = document.getElementById('customerNameInput');
-            const cachedName = localStorage.getItem(CUSTOMER_NAME_KEY);
-            if (input && cachedName) {
-                input.value = cachedName;
-            }
-        }
-
-        function initPickupTime() {
-            const select = document.getElementById('pickupTimeSelect');
-            const cachedPickupTime = localStorage.getItem(PICKUP_TIME_KEY);
-            if (select && cachedPickupTime) {
-                const hasOption = Array.from(select.options).some((option) => option.value === cachedPickupTime);
-                if (hasOption) {
-                    select.value = cachedPickupTime;
-                }
-            }
-        }
-
-        function init() {
-            state.cart = parseCart() || getDefaultCart();
-            renderCartItems();
-            initScrollReveal();
-            initPaymentToggle();
-            initCartActions();
-            initSuggestionButtons();
-            initCustomerName();
-            initPickupTime();
-
-            document.getElementById('placeOrderBtn').addEventListener('click', handleCheckout);
-        }
-
-        init();
+        /* ── Add-to-cart micro-feedback ────────────────── */
+        document.querySelectorAll('.add-item-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.background = '#2d5248';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 300);
+            });
+        });
     </script>
 </body>
 

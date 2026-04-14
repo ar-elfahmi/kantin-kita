@@ -11,6 +11,8 @@ class VendorController extends Controller
     {
         $vendors = Vendor::query()
             ->where('is_open', true)
+            ->withMin('menus', 'harga')
+            ->withCount('menus')
             ->orderByDesc('rating')
             ->get();
 

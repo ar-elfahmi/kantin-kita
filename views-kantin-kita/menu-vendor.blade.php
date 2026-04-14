@@ -254,32 +254,6 @@
             width: 100%;
         }
 
-        .page-toolbar {
-            display: flex;
-            align-items: center;
-        }
-
-        .back-vendors-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            border-radius: var(--radius-btn);
-            background: var(--white);
-            color: var(--brown);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: -0.4px;
-            box-shadow: var(--shadow-sm);
-            transition: transform .2s, box-shadow .2s, background .2s;
-        }
-
-        .back-vendors-btn:hover {
-            background: var(--cream);
-            transform: translateX(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
         /* ─── Vendor Header Card ─────────────────────────────────── */
         .vendor-card {
             background: var(--white);
@@ -592,7 +566,6 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            line-clamp: 2;
             overflow: hidden;
         }
 
@@ -600,7 +573,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
             margin-top: auto;
         }
 
@@ -612,26 +584,11 @@
             line-height: 1.4;
         }
 
-        .menu-item-cta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .menu-qty-controls {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px;
-            border-radius: var(--radius-pill);
-            background: #f2e9d8;
-            border: 1px solid rgba(116, 70, 34, .14);
-        }
-
-        .menu-qty-btn {
+        .add-to-cart-btn {
             width: 32px;
             height: 32px;
             border-radius: var(--radius-btn);
+            background: var(--sage);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -639,44 +596,14 @@
             transition: background .2s, transform .2s, box-shadow .2s;
         }
 
-        .menu-qty-btn-plus {
-            background: var(--sage);
-        }
-
-        .menu-qty-btn-minus {
-            background: var(--white);
-        }
-
-        .menu-qty-btn-minus.is-disabled {
-            opacity: .45;
-            pointer-events: none;
-        }
-
-        .menu-qty-btn-minus svg path {
-            fill: var(--brown);
-        }
-
-        .menu-qty-btn:hover {
+        .add-to-cart-btn:hover {
             background: var(--sage-dark);
             transform: scale(1.12) rotate(3deg);
             box-shadow: 0 4px 12px rgba(66, 118, 106, .4);
         }
 
-        .menu-qty-btn-minus:hover {
-            background: #f7f2e7;
-            box-shadow: 0 2px 8px rgba(116, 70, 34, .18);
-        }
-
-        .menu-qty-btn:active {
+        .add-to-cart-btn:active {
             transform: scale(.95);
-        }
-
-        .menu-qty-value {
-            min-width: 22px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--brown);
         }
 
         /* ─── Load More ──────────────────────────────────────────── */
@@ -774,96 +701,14 @@
                 padding: 0 20px;
             }
 
-            .brand-text-sub {
-                display: none;
-            }
-
             .main-content {
                 padding: 20px;
                 gap: 24px;
             }
 
             .menu-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .menu-card {
-                flex-direction: row;
-                align-items: stretch;
-                min-height: 126px;
-                border-radius: 16px;
-            }
-
-            .menu-card-image-wrap {
-                width: 126px;
-                min-width: 126px;
-                height: auto;
-                min-height: 126px;
-                border-radius: 0;
-            }
-
-            .menu-card-image-wrap::after {
-                background: linear-gradient(to left, rgba(116, 70, 34, .12) 0%, transparent 45%);
-            }
-
-            .wishlist-btn {
-                top: 8px;
-                right: 8px;
-                width: 28px;
-                height: 28px;
-            }
-
-            .item-badge {
-                left: 8px;
-                bottom: 8px;
-                font-size: 10px;
-                line-height: 14px;
-                padding: 3px 7px;
-            }
-
-            .menu-card-body {
-                padding: 12px;
-                gap: 8px;
-                min-width: 0;
-            }
-
-            .menu-item-name {
-                font-size: 16px;
-                line-height: 1.35;
-            }
-
-            .menu-item-desc {
-                font-size: 12px;
-                line-height: 1.35;
-                -webkit-line-clamp: 2;
-                line-clamp: 2;
-            }
-
-            .menu-item-price {
-                font-size: 17px;
-                line-height: 1.2;
-            }
-
-            .menu-item-footer {
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .menu-item-cta {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .menu-qty-btn {
-                width: 34px;
-                height: 34px;
-            }
-
-            .menu-card:hover {
-                transform: none;
-                box-shadow: var(--shadow-sm);
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }
 
             .vendor-card-inner {
@@ -874,17 +719,6 @@
             .vendor-info {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-
-            .vendor-actions {
-                width: 100%;
-                align-items: stretch;
-            }
-
-            .follow-btn {
-                width: 100%;
-                justify-content: center;
-                min-height: 44px;
             }
 
             .vendor-name {
@@ -899,43 +733,11 @@
             .search-wrapper {
                 display: none;
             }
-
-            .category-filter {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 4px;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .category-btn {
-                white-space: nowrap;
-            }
         }
 
         @media (max-width: 480px) {
-            .main-content {
-                padding: 16px;
-                gap: 20px;
-            }
-
-            .back-vendors-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .vendor-card {
-                padding: 20px;
-            }
-
-            .vendor-meta {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .menu-card-image-wrap {
-                width: 110px;
-                min-width: 110px;
-                min-height: 110px;
+            .menu-grid {
+                grid-template-columns: 1fr;
             }
 
             .category-filter {
@@ -946,35 +748,11 @@
                 padding: 10px 18px;
                 font-size: 14px;
             }
-
-            .menu-card-body {
-                padding: 16px;
-            }
-
-            .menu-item-cta {
-                width: 100%;
-                justify-content: flex-start;
-            }
-
-            .menu-qty-btn {
-                width: 36px;
-                height: 36px;
-            }
-
-            .floating-cart {
-                bottom: 16px;
-                right: 16px;
-            }
-
-            .floating-cart-btn {
-                width: 56px;
-                height: 56px;
-            }
         }
     </style>
 </head>
 
-<body data-vendor-id="{{ $vendor->id }}" data-vendor-name="{{ $vendor->nama_vendor }}">
+<body>
 
     <div class="page-wrapper">
 
@@ -1011,7 +789,7 @@
 
                 <!-- Actions -->
                 <div class="navbar-actions">
-                    <button class="cart-btn" aria-label="View cart" data-checkout-url="{{ route('checkout', ['vendor_id' => $vendor->id]) }}">
+                    <button class="cart-btn" aria-label="View cart">
                         <svg width="23" height="20" viewBox="0 0 23 20" fill="none">
                             <g clip-path="url(#ci)">
                                 <path d="M0 0.9375C0 0.417969 0.417969 0 0.9375 0H2.71484C3.57422 0 4.33594 0.5 4.69141 1.25H20.7461C21.7734 1.25 22.5234 2.22656 22.2539 3.21875L20.6523 9.16797C20.3203 10.3945 19.207 11.25 17.9375 11.25H6.66797L6.87891 12.3633C6.96484 12.8047 7.35156 13.125 7.80078 13.125H19.0625C19.582 13.125 20 13.543 20 14.0625C20 14.582 19.582 15 19.0625 15H7.80078C6.44922 15 5.28906 14.0391 5.03906 12.7148L3.02344 2.12891C2.99609 1.98047 2.86719 1.875 2.71484 1.875H0.9375C0.417969 1.875 0 1.45703 0 0.9375ZM5 18.125C5 17.0859 5.85547 16.25 6.875 16.25C7.89453 16.25 8.75 17.0859 8.75 18.125C8.75 19.1445 7.89453 20 6.875 20C5.85547 20 5 19.1445 5 18.125ZM18.125 16.25C19.1641 16.25 20 17.0859 20 18.125C20 19.1445 19.1641 20 18.125 20C17.1055 20 16.25 19.1445 16.25 18.125C16.25 17.0859 17.1055 16.25 18.125 16.25Z" fill="#744622" />
@@ -1022,7 +800,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        <span class="cart-badge">0</span>
+                        <span class="cart-badge">3</span>
                     </button>
                     <div class="user-avatar">
                         <img src="https://api.builder.io/api/v1/image/assets/TEMP/4b742a08a0e2996ba119657d8de2de18ce6703b2?width=80" alt="User profile" />
@@ -1033,15 +811,6 @@
 
         <!-- ── Main ── -->
         <main class="main-content">
-
-            <div class="page-toolbar reveal">
-                <a href="{{ route('vendor') }}" class="back-vendors-btn" aria-label="Kembali ke daftar vendor">
-                    <svg width="14" height="14" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M.293701 7.29365C-.0969238 7.68428-.0969238 8.31865.293701 8.70928L5.2937 13.7093C5.68433 14.0999 6.3187 14.0999 6.70933 13.7093C7.09995 13.3187 7.09995 12.6843 6.70933 12.2937L3.41245 8.9999H13C13.5531 8.9999 14 8.55303 14 7.9999C14 7.44678 13.5531 6.9999 13 6.9999H3.41558L6.7062 3.70615C7.09683 3.31553 7.09683 2.68115 6.7062 2.29053C6.31558 1.8999 5.6812 1.8999 5.29058 2.29053L.290576 7.29053L.293701 7.29365Z" fill="#744622" />
-                    </svg>
-                    Kembali ke daftar vendor
-                </a>
-            </div>
 
             <!-- Vendor Header -->
             <section class="vendor-card reveal">
@@ -1054,7 +823,7 @@
 
                     <div class="vendor-info">
                         <div class="vendor-details">
-                            <h1 class="vendor-name">{{ $vendor->nama_vendor }}</h1>
+                            <h1 class="vendor-name">Warung Bu Sari</h1>
                             <div class="vendor-meta">
                                 <div class="vendor-rating">
                                     <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
@@ -1067,8 +836,8 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <span class="rating-value">{{ number_format((float) $vendor->rating, 1) }}</span>
-                                    <span class="rating-count">({{ $vendor->menus->count() }} menu)</span>
+                                    <span class="rating-value">4.8</span>
+                                    <span class="rating-count">(124 reviews)</span>
                                 </div>
                                 <div class="vendor-time">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -1081,10 +850,10 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <span>{{ $vendor->lokasi ?: 'Area Kantin UNAIR' }}</span>
+                                    <span>15-25 min</span>
                                 </div>
                             </div>
-                            <p class="vendor-description">{{ $vendor->deskripsi ?: 'Pilihan menu favorit mahasiswa dengan cita rasa konsisten setiap hari.' }}</p>
+                            <p class="vendor-description">Authentic Indonesian cuisine with fresh ingredients and traditional recipes passed down through generations.</p>
                         </div>
 
                         <div class="vendor-actions">
@@ -1099,7 +868,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                {{ $vendor->is_open ? 'Open' : 'Closed' }}
+                                Open
                             </div>
                             <button class="follow-btn">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -1114,87 +883,212 @@
 
             <!-- Category Filter -->
             <nav class="category-filter reveal" aria-label="Menu categories">
-                <button class="category-btn category-btn--active" data-category="all">All Items</button>
-                @foreach ($kategoris as $kategori)
-                <button class="category-btn category-btn--inactive" data-category="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</button>
-                @endforeach
+                <button class="category-btn category-btn--active">All Items</button>
+                <button class="category-btn category-btn--inactive">Rice Dishes</button>
+                <button class="category-btn category-btn--inactive">Noodles</button>
+                <button class="category-btn category-btn--inactive">Snacks</button>
+                <button class="category-btn category-btn--inactive">Beverages</button>
+                <button class="category-btn category-btn--inactive">Desserts</button>
             </nav>
 
             <!-- Menu Grid -->
-            <section class="menu-grid" aria-label="Menu items" id="menuGrid">
-                @php
-                $menuImageFallbacks = [
-                'Nasi Gudeg Ayam' => 'https://api.builder.io/api/v1/image/assets/TEMP/b4868082f44d5fcae80353e16c295d3433235867?width=572',
-                'Mie Ayam Special' => 'https://api.builder.io/api/v1/image/assets/TEMP/e8073bad16f9206f6db4ed97a46992857a06c541?width=572',
-                'Gado-Gado' => 'https://api.builder.io/api/v1/image/assets/TEMP/90cd24b470a76a19da724907cb7eb0904ad6b86c?width=572',
-                'Sate Ayam' => 'https://api.builder.io/api/v1/image/assets/TEMP/a9bee7f0eaa15b4f21efae9546c2163920d61992?width=572',
-                'Es Teh Manis' => 'https://api.builder.io/api/v1/image/assets/TEMP/f54094bf7f4c4ebb7a73256c88f3d3e0bb240384?width=572',
-                'Bakso Special' => 'https://api.builder.io/api/v1/image/assets/TEMP/a4ff2add3eaa657d5f34fabe120343b77624de46?width=572',
-                'Pisang Goreng' => 'https://api.builder.io/api/v1/image/assets/TEMP/652fb0b468b9036c588a47020389155a651a3a58?width=572',
-                'Es Jeruk Segar' => 'https://api.builder.io/api/v1/image/assets/TEMP/a4ff2add3eaa657d5f34fabe120343b77624de46?width=572',
-                ];
-                $defaultMenuImage = 'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=572&h=320&fit=crop';
-                @endphp
+            <section class="menu-grid" aria-label="Menu items">
 
-                @forelse ($vendor->menus as $menu)
-                @php
-                $menuImage = $menu->path_gambar ?: ($menuImageFallbacks[$menu->nama_menu] ?? $defaultMenuImage);
-                $menuCategoryId = $menu->kategoriMenu?->id ?? 'other';
-                $menuCategoryName = $menu->kategoriMenu?->nama_kategori ?? 'Lainnya';
-                $isDrink = str_contains(strtolower($menuCategoryName), 'minuman');
-                @endphp
-                <article class="menu-card reveal"
-                    data-menu-id="{{ $menu->id }}"
-                    data-menu-label="{{ $menu->nama_menu }}"
-                    data-menu-price="{{ (int) $menu->harga }}"
-                    data-menu-image="{{ $menuImage }}"
-                    data-category="{{ $menuCategoryId }}"
-                    data-menu-name="{{ strtolower($menu->nama_menu) }}"
-                    data-menu-category="{{ strtolower($menuCategoryName) }}">
+                <!-- Card 1: Nasi Gudeg Ayam -->
+                <article class="menu-card reveal">
                     <div class="menu-card-image-wrap">
-                        <img class="menu-card-image" src="{{ $menuImage }}" alt="{{ $menu->nama_menu }}" />
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/b4868082f44d5fcae80353e16c295d3433235867?width=572" alt="Nasi Gudeg Ayam" />
                         <button class="wishlist-btn" aria-label="Add to wishlist">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M1.4875 9.38742L7.13438 14.6593C7.36875 14.878 7.67812 14.9999 8 14.9999C8.32187 14.9999 8.63125 14.878 8.86563 14.6593L14.5125 9.38742C15.4625 8.50305 16 7.26242 16 5.96555V5.7843C16 3.59992 14.4219 1.73742 12.2688 1.37805C10.8438 1.14055 9.39375 1.60617 8.375 2.62492L8 2.99992L7.625 2.62492C6.60625 1.60617 5.15625 1.14055 3.73125 1.37805C1.57812 1.73742 0 3.59992 0 5.7843V5.96555C0 7.26242 0.5375 8.50305 1.4875 9.38742Z" fill="#9CA3AF" />
                             </svg>
                         </button>
-                        @if ($loop->first || (int) $menu->harga >= 18000)
                         <span class="item-badge badge--popular">Popular</span>
-                        @elseif ($isDrink)
-                        <span class="item-badge badge--fresh">Fresh</span>
-                        @endif
                     </div>
                     <div class="menu-card-body">
-                        <h3 class="menu-item-name">{{ $menu->nama_menu }}</h3>
-                        <p class="menu-item-desc">{{ $menu->deskripsi ?: 'Menu favorit kampus dengan porsi pas dan rasa mantap.' }}</p>
+                        <h3 class="menu-item-name">Nasi Gudeg Ayam</h3>
+                        <p class="menu-item-desc">Traditional Javanese sweet jackfruit curry with tender chicken</p>
                         <div class="menu-item-footer">
-                            <span class="menu-item-price">Rp {{ number_format((int) $menu->harga, 0, ',', '.') }}</span>
-                            <div class="menu-item-cta">
-                                <div class="menu-qty-controls" data-menu-controls data-menu-id="{{ $menu->id }}">
-                                    <button class="menu-qty-btn menu-qty-btn-minus is-disabled" type="button" data-action="decrease" aria-label="Kurangi {{ $menu->nama_menu }}">
-                                        <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.375 1C11.375 1.48398 10.984 1.875 10.5 1.875H.875C.391016 1.875 0 1.48398 0 1C0 .516016.391016.125.875.125H10.5C10.984.125 11.375.516016 11.375 1Z" fill="#744622" />
-                                        </svg>
-                                    </button>
-                                    <span class="menu-qty-value" data-menu-qty>0</span>
-                                    <button class="menu-qty-btn menu-qty-btn-plus" type="button" data-action="increase" aria-label="Tambah {{ $menu->nama_menu }}">
-                                        <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                            <span class="menu-item-price">Rp 18,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Nasi Gudeg Ayam to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </article>
-                @empty
+
+                <!-- Card 2: Mie Ayam Special -->
                 <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/e8073bad16f9206f6db4ed97a46992857a06c541?width=572" alt="Mie Ayam Special" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38742L7.13438 14.6593C7.36875 14.878 7.67812 14.9999 8 14.9999C8.32187 14.9999 8.63125 14.878 8.86563 14.6593L14.5125 9.38742C15.4625 8.50305 16 7.26242 16 5.96555V5.7843C16 3.59992 14.4219 1.73742 12.2688 1.37805C10.8438 1.14055 9.39375 1.60617 8.375 2.62492L8 2.99992L7.625 2.62492C6.60625 1.60617 5.15625 1.14055 3.73125 1.37805C1.57812 1.73742 0 3.59992 0 5.7843V5.96555C0 7.26242 0.5375 8.50305 1.4875 9.38742Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                    </div>
                     <div class="menu-card-body">
-                        <h3 class="menu-item-name">Menu belum tersedia</h3>
-                        <p class="menu-item-desc">Vendor ini belum menambahkan menu. Silakan cek kembali nanti.</p>
+                        <h3 class="menu-item-name">Mie Ayam Special</h3>
+                        <p class="menu-item-desc">Fresh noodles with seasoned chicken, vegetables and savory broth</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 15,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Mie Ayam Special to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </article>
-                @endforelse
+
+                <!-- Card 3: Gado-Gado -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/90cd24b470a76a19da724907cb7eb0904ad6b86c?width=572" alt="Gado-Gado" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38742L7.13438 14.6593C7.36875 14.878 7.67812 14.9999 8 14.9999C8.32187 14.9999 8.63125 14.878 8.86563 14.6593L14.5125 9.38742C15.4625 8.50305 16 7.26242 16 5.96555V5.7843C16 3.59992 14.4219 1.73742 12.2688 1.37805C10.8438 1.14055 9.39375 1.60617 8.375 2.62492L8 2.99992L7.625 2.62492C6.60625 1.60617 5.15625 1.14055 3.73125 1.37805C1.57812 1.73742 0 3.59992 0 5.7843V5.96555C0 7.26242 0.5375 8.50305 1.4875 9.38742Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                        <span class="item-badge badge--healthy">Healthy</span>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Gado-Gado</h3>
+                        <p class="menu-item-desc">Fresh mixed vegetables with rich peanut sauce and crackers</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 12,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Gado-Gado to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: Sate Ayam -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/a9bee7f0eaa15b4f21efae9546c2163920d61992?width=572" alt="Sate Ayam" />
+                        <button class="wishlist-btn" aria-label="Remove from wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38742L7.13438 14.6593C7.36875 14.878 7.67812 14.9999 8 14.9999C8.32187 14.9999 8.63125 14.878 8.86563 14.6593L14.5125 9.38742C15.4625 8.50305 16 7.26242 16 5.96555V5.7843C16 3.59992 14.4219 1.73742 12.2688 1.37805C10.8438 1.14055 9.39375 1.60617 8.375 2.62492L8 2.99992L7.625 2.62492C6.60625 1.60617 5.15625 1.14055 3.73125 1.37805C1.57812 1.73742 0 3.59992 0 5.7843V5.96555C0 7.26242 0.5375 8.50305 1.4875 9.38742Z" fill="#EF4444" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Sate Ayam</h3>
+                        <p class="menu-item-desc">Grilled chicken skewers with spicy peanut sauce and rice cakes</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 20,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Sate Ayam to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5: Es Teh Manis -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/f54094bf7f4c4ebb7a73256c88f3d3e0bb240384?width=572" alt="Es Teh Manis" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38767L7.13438 14.6595C7.36875 14.8783 7.67812 15.0002 8 15.0002C8.32187 15.0002 8.63125 14.8783 8.86563 14.6595L14.5125 9.38767C15.4625 8.50329 16 7.26267 16 5.96579V5.78454C16 3.60017 14.4219 1.73767 12.2688 1.37829C10.8438 1.14079 9.39375 1.60642 8.375 2.62517L8 3.00017L7.625 2.62517C6.60625 1.60642 5.15625 1.14079 3.73125 1.37829C1.57812 1.73767 0 3.60017 0 5.78454V5.96579C0 7.26267 0.5375 8.50329 1.4875 9.38767Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Es Teh Manis</h3>
+                        <p class="menu-item-desc">Refreshing sweet iced tea, perfect companion for any meal</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 5,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Es Teh Manis to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6: Bakso Special -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/a4ff2add3eaa657d5f34fabe120343b77624de46?width=572" alt="Bakso Special" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38767L7.13438 14.6595C7.36875 14.8783 7.67812 15.0002 8 15.0002C8.32187 15.0002 8.63125 14.8783 8.86563 14.6595L14.5125 9.38767C15.4625 8.50329 16 7.26267 16 5.96579V5.78454C16 3.60017 14.4219 1.73767 12.2688 1.37829C10.8438 1.14079 9.39375 1.60642 8.375 2.62517L8 3.00017L7.625 2.62517C6.60625 1.60642 5.15625 1.14079 3.73125 1.37829C1.57812 1.73767 0 3.60017 0 5.78454V5.96579C0 7.26267 0.5375 8.50329 1.4875 9.38767Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                        <span class="item-badge badge--hot">Hot</span>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Bakso Special</h3>
+                        <p class="menu-item-desc">Hearty meatball soup with noodles and fresh vegetables</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 16,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Bakso Special to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 7: Pisang Goreng -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/652fb0b468b9036c588a47020389155a651a3a58?width=572" alt="Pisang Goreng" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38767L7.13438 14.6595C7.36875 14.8783 7.67812 15.0002 8 15.0002C8.32187 15.0002 8.63125 14.8783 8.86563 14.6595L14.5125 9.38767C15.4625 8.50329 16 7.26267 16 5.96579V5.78454C16 3.60017 14.4219 1.73767 12.2688 1.37829C10.8438 1.14079 9.39375 1.60642 8.375 2.62517L8 3.00017L7.625 2.62517C6.60625 1.60642 5.15625 1.14079 3.73125 1.37829C1.57812 1.73767 0 3.60017 0 5.78454V5.96579C0 7.26267 0.5375 8.50329 1.4875 9.38767Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Pisang Goreng</h3>
+                        <p class="menu-item-desc">Crispy fried banana fritters, perfect sweet snack</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 8,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Pisang Goreng to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 8: Es Jeruk Segar -->
+                <article class="menu-card reveal">
+                    <div class="menu-card-image-wrap">
+                        <img class="menu-card-image" src="https://api.builder.io/api/v1/image/assets/TEMP/a4ff2add3eaa657d5f34fabe120343b77624de46?width=572" alt="Es Jeruk Segar" />
+                        <button class="wishlist-btn" aria-label="Add to wishlist">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M1.4875 9.38767L7.13438 14.6595C7.36875 14.8783 7.67812 15.0002 8 15.0002C8.32187 15.0002 8.63125 14.8783 8.86563 14.6595L14.5125 9.38767C15.4625 8.50329 16 7.26267 16 5.96579V5.78454C16 3.60017 14.4219 1.73767 12.2688 1.37829C10.8438 1.14079 9.39375 1.60642 8.375 2.62517L8 3.00017L7.625 2.62517C6.60625 1.60642 5.15625 1.14079 3.73125 1.37829C1.57812 1.73767 0 3.60017 0 5.78454V5.96579C0 7.26267 0.5375 8.50329 1.4875 9.38767Z" fill="#9CA3AF" />
+                            </svg>
+                        </button>
+                        <span class="item-badge badge--fresh">Fresh</span>
+                    </div>
+                    <div class="menu-card-body">
+                        <h3 class="menu-item-name">Es Jeruk Segar</h3>
+                        <p class="menu-item-desc">Fresh squeezed orange juice with ice, vitamin-rich and refreshing</p>
+                        <div class="menu-item-footer">
+                            <span class="menu-item-price">Rp 8,000</span>
+                            <button class="add-to-cart-btn" aria-label="Add Es Jeruk Segar to cart">
+                                <svg width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                    <path d="M7 2.1875C7 1.70352 6.60898 1.3125 6.125 1.3125C5.64102 1.3125 5.25 1.70352 5.25 2.1875V6.125H1.3125C0.828516 6.125 0.4375 6.51602 0.4375 7C0.4375 7.48398 0.828516 7.875 1.3125 7.875H5.25V11.8125C5.25 12.2965 5.64102 12.6875 6.125 12.6875C6.60898 12.6875 7 12.2965 7 11.8125V7.875H10.9375C11.4215 7.875 11.8125 7.48398 11.8125 7C11.8125 6.51602 11.4215 6.125 10.9375 6.125H7V2.1875Z" fill="white" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
 
             </section>
 
@@ -1207,7 +1101,7 @@
 
         <!-- Floating Cart -->
         <div class="floating-cart">
-            <a class="floating-cart-btn" aria-label="Open cart" href="{{ route('checkout', ['vendor_id' => $vendor->id]) }}">
+            <a class="floating-cart-btn" aria-label="Open cart" href="{{ route('checkout') }}">
                 <svg width="23" height="20" viewBox="0 0 23 20" fill="none">
                     <g clip-path="url(#fci)">
                         <path d="M0 0.9375C0 0.417969 0.417969 0 0.9375 0H2.71484C3.57422 0 4.33594 0.5 4.69141 1.25H20.7461C21.7734 1.25 22.5234 2.22656 22.2539 3.21875L20.6523 9.16797C20.3203 10.3945 19.207 11.25 17.9375 11.25H6.66797L6.87891 12.3633C6.96484 12.8047 7.35156 13.125 7.80078 13.125H19.0625C19.582 13.125 20 13.543 20 14.0625C20 14.582 19.582 15 19.0625 15H7.80078C6.44922 15 5.28906 14.0391 5.03906 12.7148L3.02344 2.12891C2.99609 1.98047 2.86719 1.875 2.71484 1.875H0.9375C0.417969 1.875 0 1.45703 0 0.9375ZM5 18.125C5 17.0859 5.85547 16.25 6.875 16.25C7.89453 16.25 8.75 17.0859 8.75 18.125C8.75 19.1445 7.89453 20 6.875 20C5.85547 20 5 19.1445 5 18.125ZM18.125 16.25C19.1641 16.25 20 17.0859 20 18.125C20 19.1445 19.1641 20 18.125 20C17.1055 20 16.25 19.1445 16.25 18.125C16.25 17.0859 17.1055 16.25 18.125 16.25Z" fill="white" />
@@ -1218,27 +1112,22 @@
                         </clipPath>
                     </defs>
                 </svg>
-                <span class="floating-cart-badge">0</span>
+                <span class="floating-cart-badge">3</span>
             </a>
         </div>
 
     </div>
 
     <script>
-        const CART_KEY = 'kantin_cart';
-        const currentVendor = {
-            id: Number(document.body.dataset.vendorId || 0),
-            name: document.body.dataset.vendorName || 'Vendor',
-        };
-
         // ── Scroll-reveal ──────────────────────────────────────────
         (function() {
             const items = document.querySelectorAll('.reveal');
 
             const io = new IntersectionObserver(
                 (entries) => {
-                    entries.forEach((entry) => {
+                    entries.forEach((entry, i) => {
                         if (entry.isIntersecting) {
+                            // Stagger cards in menu grid
                             const delay = entry.target.closest('.menu-grid') ?
                                 Array.from(entry.target.parentElement.children).indexOf(entry.target) * 60 :
                                 0;
@@ -1254,233 +1143,41 @@
             items.forEach(el => io.observe(el));
         })();
 
-        function parseCart() {
-            try {
-                const raw = localStorage.getItem(CART_KEY);
-                if (!raw) {
-                    return null;
-                }
-                const cart = JSON.parse(raw);
-                if (!cart || !Array.isArray(cart.items)) {
-                    return null;
-                }
-                return cart;
-            } catch (error) {
-                return null;
-            }
-        }
-
-        function buildEmptyCart() {
-            return {
-                vendor_id: currentVendor.id,
-                vendor_name: currentVendor.name,
-                items: [],
-            };
-        }
-
-        function saveCart(cart) {
-            localStorage.setItem(CART_KEY, JSON.stringify(cart));
-            updateCartBadge();
-            syncMenuQuantityControls();
-        }
-
-        function getCart() {
-            return parseCart() || buildEmptyCart();
-        }
-
-        function updateCartBadge() {
-            const cart = getCart();
-            const totalQty = cart.items.reduce((sum, item) => sum + Number(item.jumlah || 0), 0);
-
-            document.querySelectorAll('.cart-badge, .floating-cart-badge').forEach((badge) => {
-                badge.textContent = String(totalQty);
-            });
-        }
-
-        function bounceCartBadge() {
-            const badge = document.querySelector('.floating-cart-badge');
-            if (!badge) {
-                return;
-            }
-            badge.style.transform = 'scale(1.4)';
-            setTimeout(() => {
-                badge.style.transform = 'scale(1)';
-                badge.style.transition = 'transform .2s';
-            }, 150);
-        }
-
-        function setMenuQuantity(menuData, nextQuantity) {
-            if (!menuData || !Number.isFinite(menuData.menu_id) || menuData.menu_id <= 0) {
-                return;
-            }
-
-            let cart = getCart();
-            const safeQuantity = Math.max(0, Number(nextQuantity || 0));
-
-            if (safeQuantity > 0 && cart.items.length > 0 && Number(cart.vendor_id) !== currentVendor.id) {
-                const shouldReplace = window.confirm('Keranjang berisi menu dari vendor lain. Ganti dengan vendor ini?');
-                if (!shouldReplace) {
-                    return;
-                }
-                cart = buildEmptyCart();
-            }
-
-            const index = cart.items.findIndex((item) => Number(item.menu_id) === menuData.menu_id);
-
-            if (safeQuantity <= 0) {
-                if (index >= 0) {
-                    cart.items.splice(index, 1);
-                }
-            } else {
-                if (index >= 0) {
-                    cart.items[index].jumlah = safeQuantity;
-                    cart.items[index].harga = Number(menuData.harga || cart.items[index].harga || 0);
-                    cart.items[index].nama_menu = menuData.nama_menu || cart.items[index].nama_menu;
-                    cart.items[index].path_gambar = menuData.path_gambar || cart.items[index].path_gambar || '';
-                } else {
-                    cart.items.push({
-                        menu_id: menuData.menu_id,
-                        nama_menu: menuData.nama_menu,
-                        harga: Number(menuData.harga || 0),
-                        jumlah: safeQuantity,
-                        catatan: '',
-                        path_gambar: menuData.path_gambar,
-                    });
-                }
-            }
-
-            cart.vendor_id = currentVendor.id;
-            cart.vendor_name = currentVendor.name;
-            saveCart(cart);
-
-            if (safeQuantity > 0) {
-                bounceCartBadge();
-            }
-        }
-
-        function syncMenuQuantityControls() {
-            const cart = getCart();
-            const isSameVendor = Number(cart.vendor_id || 0) === currentVendor.id;
-            const qtyMap = new Map();
-
-            if (isSameVendor) {
-                cart.items.forEach((item) => {
-                    qtyMap.set(Number(item.menu_id), Number(item.jumlah || 0));
-                });
-            }
-
-            document.querySelectorAll('[data-menu-controls]').forEach((control) => {
-                const menuId = Number(control.dataset.menuId || 0);
-                const qty = qtyMap.get(menuId) || 0;
-                const qtyEl = control.querySelector('[data-menu-qty]');
-                const minusBtn = control.querySelector('[data-action="decrease"]');
-
-                if (qtyEl) {
-                    qtyEl.textContent = String(qty);
-                }
-
-                if (minusBtn) {
-                    const isDisabled = qty <= 0;
-                    minusBtn.classList.toggle('is-disabled', isDisabled);
-                    minusBtn.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
-                }
-            });
-        }
-
-        // ── Category/search filter ────────────────────────────────
-        let activeCategory = 'all';
-
-        function normalizeValue(value) {
-            return (value || '').toLowerCase().trim();
-        }
-
-        function applyMenuFilters() {
-            const searchQuery = normalizeValue(document.querySelector('.search-input')?.value);
-            const cards = document.querySelectorAll('#menuGrid .menu-card[data-menu-name]');
-
-            cards.forEach((card) => {
-                const menuName = normalizeValue(card.dataset.menuName);
-                const menuCategory = normalizeValue(card.dataset.menuCategory);
-                const categoryId = String(card.dataset.category || 'other');
-
-                const matchCategory = activeCategory === 'all' || categoryId === activeCategory;
-                const matchSearch = !searchQuery || menuName.includes(searchQuery) || menuCategory.includes(searchQuery);
-                card.style.display = matchCategory && matchSearch ? '' : 'none';
-            });
-        }
-
-        document.querySelectorAll('.category-btn').forEach((btn) => {
+        // ── Category filter toggle ─────────────────────────────────
+        document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.category-btn').forEach((b) => {
+                document.querySelectorAll('.category-btn').forEach(b => {
                     b.classList.remove('category-btn--active');
                     b.classList.add('category-btn--inactive');
                 });
-
                 btn.classList.remove('category-btn--inactive');
                 btn.classList.add('category-btn--active');
-                activeCategory = String(btn.dataset.category || 'all');
-                applyMenuFilters();
             });
         });
 
-        const searchInput = document.querySelector('.search-input');
-        if (searchInput) {
-            searchInput.addEventListener('input', applyMenuFilters);
-        }
-
         // ── Wishlist toggle ────────────────────────────────────────
-        document.querySelectorAll('.wishlist-btn').forEach((btn) => {
-            btn.addEventListener('click', (event) => {
-                event.stopPropagation();
+        document.querySelectorAll('.wishlist-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const svg = btn.querySelector('path');
                 const isLiked = svg.getAttribute('fill') === '#EF4444';
                 svg.setAttribute('fill', isLiked ? '#9CA3AF' : '#EF4444');
             });
         });
 
-        // ── Realtime menu qty control ─────────────────────────────
-        document.querySelectorAll('[data-menu-controls]').forEach((control) => {
-            control.addEventListener('click', (event) => {
-                const actionBtn = event.target.closest('[data-action]');
-                if (!actionBtn) {
-                    return;
-                }
-
-                event.stopPropagation();
-
-                const card = control.closest('.menu-card');
-                if (!card) {
-                    return;
-                }
-
-                const menuId = Number(card.dataset.menuId || 0);
-                const currentCart = getCart();
-                const currentQty = Number(
-                    currentCart.items.find((item) => Number(item.menu_id) === menuId)?.jumlah || 0
-                );
-
-                const isIncrease = actionBtn.dataset.action === 'increase';
-                const nextQty = isIncrease ? currentQty + 1 : Math.max(0, currentQty - 1);
-
-                setMenuQuantity({
-                    menu_id: menuId,
-                    nama_menu: card.dataset.menuLabel || 'Menu',
-                    harga: Number(card.dataset.menuPrice || 0),
-                    path_gambar: card.dataset.menuImage || '',
-                }, nextQty);
+        // ── Add-to-cart micro-animation ────────────────────────────
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Bounce the floating cart badge
+                const badge = document.querySelector('.floating-cart-badge');
+                badge.style.transform = 'scale(1.4)';
+                setTimeout(() => {
+                    badge.style.transform = 'scale(1)';
+                    badge.style.transition = 'transform .2s';
+                }, 150);
             });
         });
-
-        const checkoutButton = document.querySelector('.cart-btn[data-checkout-url]');
-        if (checkoutButton) {
-            checkoutButton.addEventListener('click', () => {
-                window.location.href = checkoutButton.dataset.checkoutUrl;
-            });
-        }
-
-        applyMenuFilters();
-        updateCartBadge();
-        syncMenuQuantityControls();
     </script>
 </body>
 

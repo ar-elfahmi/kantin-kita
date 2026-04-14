@@ -601,6 +601,8 @@
             justify-content: space-between;
         }
 
+        .menu-header-text {}
+
         .menu-title {
             font-size: 48px;
             font-weight: 700;
@@ -1324,7 +1326,7 @@
     <!-- ================ NAVBAR ================ -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="{{ route('home') }}" class="brand">
+            <a href="#" class="brand">
                 <div class="brand-icon">
                     <img src="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" alt="Kantin Kita Logo" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
                 </div>
@@ -1335,7 +1337,7 @@
             </a>
 
             <ul class="nav-links">
-                <li><a href="{{ route('home') }}" class="nav-active">Beranda</a></li>
+                <li><a href="#" class="nav-active">Beranda</a></li>
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#about">Tentang</a></li>
                 <li><a href="#contact">Kontak</a></li>
@@ -1348,7 +1350,7 @@
                     </svg>
                     Masuk
                 </a>
-                <a href="{{ route('login') }}" class="btn-register">Daftar</a>
+                <a href="#" class="btn-register">Daftar</a>
             </div>
         </div>
     </nav>
@@ -1482,7 +1484,7 @@
                     <h2 class="menu-title">Menu Populer</h2>
                     <p class="menu-subtitle">Pilihan favorit mahasiswa setiap hari</p>
                 </div>
-                <a href="{{ route('vendor') }}" class="btn-view-all">Lihat Semua Menu</a>
+                <a href="#" class="btn-view-all">Lihat Semua Menu</a>
             </div>
 
             <div class="menu-grid">
@@ -1506,7 +1508,7 @@
                             <div class="menu-price-block">
                                 <span class="price-current">Rp 18.000</span>
                             </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
+                            <a href="#" class="btn-order">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
                                 </svg>
@@ -1535,7 +1537,7 @@
                             <div class="menu-price-block">
                                 <span class="price-current">Rp 15.000</span>
                             </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
+                            <a href="#" class="btn-order">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
                                 </svg>
@@ -1566,7 +1568,7 @@
                                 <span class="price-original">Rp 20.000</span>
                                 <span class="price-current">Rp 17.000</span>
                             </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
+                            <a href="#" class="btn-order">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                                     <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
                                 </svg>
@@ -1615,7 +1617,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('login') }}" class="btn-cta-white">Daftar Sekarang - Gratis!</a>
+                <a href="#" class="btn-cta-white">Daftar Sekarang — Gratis!</a>
             </div>
 
             <div class="cta-image-card reveal reveal-delay-2">
@@ -1736,17 +1738,17 @@
                     </div>
                     <p class="footer-desc">Solusi praktis untuk makan siang yang sibuk di kampus. Pesan online, ambil langsung.</p>
                     <div class="footer-socials">
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Instagram">
+                        <a href="#" class="social-btn" aria-label="Instagram">
                             <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
                                 <path d="M7.00312 4.40586C5.01562 4.40586 3.4125 6.00898 3.4125 7.99648C3.4125 9.98398 5.01562 11.5871 7.00312 11.5871C8.99062 11.5871 10.5938 9.98398 10.5938 7.99648C10.5938 6.00898 8.99062 4.40586 7.00312 4.40586ZM7.00312 10.3309C5.71875 10.3309 4.66875 9.28398 4.66875 7.99648C4.66875 6.70898 5.71562 5.66211 7.00312 5.66211C8.29062 5.66211 9.3375 6.70898 9.3375 7.99648C9.3375 9.28398 8.2875 10.3309 7.00312 10.3309ZM11.5781 4.25898C11.5781 4.72461 11.2031 5.09648 10.7406 5.09648C10.275 5.09648 9.90312 4.72148 9.90312 4.25898C9.90312 3.79648 10.2781 3.42148 10.7406 3.42148C11.2031 3.42148 11.5781 3.79648 11.5781 4.25898ZM13.9563 5.10898C13.9031 3.98711 13.6469 2.99336 12.825 2.17461C12.0062 1.35586 11.0125 1.09961 9.89062 1.04336C8.73438 0.977734 5.26875 0.977734 4.1125 1.04336C2.99375 1.09648 2 1.35273 1.17812 2.17148C0.35625 2.99023 0.103125 3.98398 0.0468746 5.10586C-0.0187504 6.26211-0.0187504 9.72773 0.0468746 10.884C0.0999996 12.0059 0.35625 12.9996 1.17812 13.8184C2 14.6371 2.99062 14.8934 4.1125 14.9496C5.26875 15.0152 8.73438 15.0152 9.89062 14.9496C11.0125 14.8965 12.0062 14.6402 12.825 13.8184C13.6438 12.9996 13.9 12.0059 13.9563 10.884C14.0219 9.72773 14.0219 6.26523 13.9563 5.10898ZM12.4625 12.1246C12.2188 12.7371 11.7469 13.209 11.1313 13.4559C10.2094 13.8215 8.02187 13.7371 7.00312 13.7371C5.98438 13.7371 3.79375 13.8184 2.875 13.4559C2.2625 13.2121 1.79062 12.7402 1.54375 12.1246C1.17812 11.2027 1.2625 9.01523 1.2625 7.99648C1.2625 6.97773 1.18125 4.78711 1.54375 3.86836C1.7875 3.25586 2.25937 2.78398 2.875 2.53711C3.79687 2.17148 5.98438 2.25586 7.00312 2.25586C8.02187 2.25586 10.2125 2.17461 11.1313 2.53711C11.7438 2.78086 12.2156 3.25273 12.4625 3.86836C12.8281 4.79023 12.7437 6.97773 12.7437 7.99648C12.7437 9.01523 12.8281 11.2059 12.4625 12.1246Z" fill="white" />
                             </svg>
                         </a>
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Facebook">
+                        <a href="#" class="social-btn" aria-label="Facebook">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M15.75 8C15.75 3.71875 12.2812 0.25 8 0.25C3.71875 0.25 0.25 3.71875 0.25 8C0.25 11.8681 3.08406 15.0744 6.78906 15.6562V10.2403H4.82031V8H6.78906V6.2925C6.78906 4.35031 7.94531 3.2775 9.71625 3.2775C10.5644 3.2775 11.4513 3.42875 11.4513 3.42875V5.335H10.4738C9.51125 5.335 9.21094 5.9325 9.21094 6.54531V8H11.3603L11.0166 10.2403H9.21094V15.6562C12.9159 15.0744 15.75 11.8681 15.75 8Z" fill="white" />
                             </svg>
                         </a>
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Twitter">
+                        <a href="#" class="social-btn" aria-label="Twitter">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M14.3553 4.74149C14.3655 4.88362 14.3655 5.02577 14.3655 5.1679C14.3655 9.5029 11.066 14.4978 5.03553 14.4978C3.17766 14.4978 1.45178 13.9597 0 13.0258C0.263969 13.0562 0.51775 13.0664 0.791875 13.0664C2.32484 13.0664 3.73603 12.5486 4.86294 11.6654C3.42131 11.6349 2.21319 10.6907 1.79694 9.39124C2 9.42168 2.20303 9.44199 2.41625 9.44199C2.71066 9.44199 3.00509 9.40137 3.27919 9.33034C1.77666 9.02574 0.649719 7.70596 0.649719 6.11205V6.07146C1.08625 6.31512 1.59391 6.4674 2.13194 6.48768C1.24869 5.89884 0.670031 4.89377 0.670031 3.75671C0.670031 3.14759 0.832438 2.58921 1.11672 2.1019C2.73094 4.09174 5.15734 5.39121 7.87813 5.53337C7.82738 5.28971 7.79691 5.03593 7.79691 4.78212C7.79691 2.97499 9.25884 1.50293 11.0761 1.50293C12.0203 1.50293 12.873 1.89887 13.472 2.53846C14.2131 2.39634 14.9238 2.12221 15.5533 1.74659C15.3096 2.50802 14.7918 3.14762 14.1116 3.55368C14.7715 3.48265 15.4111 3.29987 15.9999 3.04609C15.5533 3.6958 14.9949 4.27446 14.3553 4.74149Z" fill="white" />
                             </svg>
@@ -1757,20 +1759,20 @@
                 <div class="footer-col">
                     <h4 class="footer-col-title">Menu Cepat</h4>
                     <ul class="footer-links">
-                        <li><a href="{{ route('home') }}">Beranda</a></li>
+                        <li><a href="#">Beranda</a></li>
                         <li><a href="#menu">Menu</a></li>
-                        <li><a href="{{ route('vendor') }}">Promo</a></li>
-                        <li><a href="{{ route('home') }}#about">Tentang Kami</a></li>
+                        <li><a href="#">Promo</a></li>
+                        <li><a href="#">Tentang Kami</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4 class="footer-col-title">Bantuan</h4>
                     <ul class="footer-links">
-                        <li><a href="{{ route('home') }}#contact">FAQ</a></li>
-                        <li><a href="{{ route('home') }}#menu">Cara Pesan</a></li>
-                        <li><a href="{{ route('home') }}#contact">Syarat & Ketentuan</a></li>
-                        <li><a href="{{ route('home') }}#contact">Kebijakan Privasi</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Cara Pesan</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
                     </ul>
                 </div>
 
@@ -1804,9 +1806,9 @@
             <div class="footer-bottom">
                 <span class="footer-copyright">© 2024 Kantin Kita. All rights reserved.</span>
                 <div class="footer-legal">
-                    <a href="{{ route('home') }}#contact">Privacy Policy</a>
-                    <a href="{{ route('home') }}#contact">Terms of Service</a>
-                    <a href="{{ route('home') }}#contact">Cookie Policy</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
                 </div>
             </div>
         </div>

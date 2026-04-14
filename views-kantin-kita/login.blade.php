@@ -678,15 +678,9 @@
                 <form class="login-form" method="POST" action="/login">
                     @csrf
 
-                    @if ($errors->any())
-                    <div style="background:rgba(220,38,38,0.1);color:#991b1b;padding:12px 14px;border-radius:12px;border:1px solid rgba(220,38,38,0.2);font-size:14px;">
-                        {{ $errors->first() }}
-                    </div>
-                    @endif
-
                     <!-- Email / Username -->
                     <div class="field-group">
-                        <label class="field-label" for="email">Email</label>
+                        <label class="field-label" for="identifier">Email atau Username</label>
                         <div class="field-input-wrap">
                             <span class="field-icon">
                                 <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -695,11 +689,10 @@
                             </span>
                             <input
                                 class="field-input"
-                                id="email"
-                                name="email"
-                                type="email"
-                                value="{{ old('email') }}"
-                                placeholder="Masukkan email"
+                                id="identifier"
+                                name="identifier"
+                                type="text"
+                                placeholder="Masukkan email atau username"
                                 autocomplete="username"
                                 required />
                         </div>
@@ -736,7 +729,7 @@
                             <input class="remember-checkbox" type="checkbox" name="remember" />
                             <span class="remember-text">Ingat saya</span>
                         </label>
-                        <a class="forgot-link" href="{{ route('home') }}#contact">Lupa password?</a>
+                        <a class="forgot-link" href="#">Lupa password?</a>
                     </div>
 
                     <!-- CTA button -->
@@ -766,7 +759,7 @@
                 <!-- Signup link -->
                 <div class="signup-section">
                     <p class="signup-hint">Belum punya akun?</p>
-                    <a class="signup-link" href="{{ route('home') }}">Daftar sekarang</a>
+                    <a class="signup-link" href="#">Daftar sekarang</a>
                 </div>
 
             </div><!-- /form-wrapper -->
