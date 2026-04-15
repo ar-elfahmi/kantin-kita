@@ -253,6 +253,70 @@
             gap: 16px;
         }
 
+        .hamburger-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid rgba(116, 70, 34, .14);
+            background: var(--white);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .hamburger-btn span {
+            width: 18px;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--brown);
+            transition: transform .2s ease, opacity .2s ease;
+        }
+
+        .hamburger-btn.is-open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger-btn.is-open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.is-open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        .mobile-nav-panel {
+            display: none;
+            background: rgba(255, 255, 255, .98);
+            border-bottom: 1px solid rgba(116, 70, 34, .10);
+            box-shadow: 0 10px 24px rgba(116, 70, 34, .10);
+        }
+
+        .mobile-nav-panel.is-open {
+            display: block;
+        }
+
+        .mobile-nav-inner {
+            padding: 10px 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-nav-link {
+            min-height: 38px;
+            border-radius: 12px;
+            background: var(--cream-mid);
+            color: var(--brown);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: -.3px;
+            line-height: 38px;
+            padding: 0 12px;
+        }
+
         .notif-wrapper {
             position: relative;
         }
@@ -1239,48 +1303,19 @@
                 height: auto;
                 min-height: 72px;
                 padding: 10px 0;
-                flex-wrap: wrap;
-                row-gap: 10px;
+                gap: 10px;
             }
 
             .nav-links {
-                display: flex;
-                order: 3;
-                width: 100%;
-                gap: 8px;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 4px;
-            }
-
-            .nav-links::-webkit-scrollbar {
                 display: none;
-            }
-
-            .nav-link {
-                flex: 0 0 auto;
-                min-height: 34px;
-                padding: 0 12px;
-                border-radius: 999px;
-                background: rgba(66, 118, 106, .12);
-                color: var(--brown);
-                font-size: 13px;
-                font-weight: 600;
-                line-height: 34px;
-            }
-
-            .nav-link::after {
-                display: none;
-            }
-
-            .nav-link.active {
-                background: var(--green);
-                color: #fff;
             }
 
             .nav-actions {
-                gap: 10px;
+                display: none;
+            }
+
+            .hamburger-btn {
+                display: inline-flex;
                 margin-left: auto;
             }
 
@@ -1359,39 +1394,39 @@
 
             .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 18px;
-                padding-bottom: 24px;
+                gap: 14px;
+                padding-bottom: 20px;
             }
 
             .footer {
                 margin-top: 40px;
-                padding: 28px 0 0;
+                padding: 24px 0 0;
             }
 
             .footer-col-title {
-                margin-bottom: 10px;
-                font-size: 15px;
+                margin-bottom: 8px;
+                font-size: 14px;
             }
 
             .footer-brand-text,
             .footer-link {
-                font-size: 13px;
-                line-height: 1.45;
+                font-size: 12px;
+                line-height: 1.4;
             }
 
             .social-icons {
                 gap: 8px;
-                margin-top: 12px;
+                margin-top: 10px;
             }
 
             .social-btn {
-                width: 34px;
-                height: 34px;
+                width: 32px;
+                height: 32px;
             }
 
             .footer-bottom {
-                padding: 14px 0;
-                font-size: 12px;
+                padding: 12px 0;
+                font-size: 11px;
             }
 
             .cart-item-body {
@@ -1467,6 +1502,12 @@
                         <a href="{{ route('login') }}" class="nav-link">Orders</a>
                     </div>
 
+                    <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
                     <div class="nav-actions">
                         <div class="notif-wrapper">
                             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1481,6 +1522,15 @@
                 </nav>
             </div>
         </header>
+
+        <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
+            <div class="container-wide mobile-nav-inner">
+                <a href="/" class="mobile-nav-link">Home</a>
+                <a href="{{ route('vendor') }}" class="mobile-nav-link">Menu</a>
+                <a href="{{ route('checkout', ['vendor_id' => $vendor?->id]) }}" class="mobile-nav-link">Cart</a>
+                <a href="{{ route('login') }}" class="mobile-nav-link">Orders</a>
+            </div>
+        </div>
 
         <!-- ══════════════════ MAIN ══════════════════ -->
         <main class="main-content">
@@ -2302,6 +2352,44 @@
             }
         }
 
+        function initMobileNavbar() {
+            const toggle = document.getElementById('mobileNavToggle');
+            const panel = document.getElementById('mobileNavPanel');
+            if (!toggle || !panel) {
+                return;
+            }
+
+            const closeMenu = () => {
+                toggle.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+                panel.classList.remove('is-open');
+                panel.setAttribute('aria-hidden', 'true');
+            };
+
+            toggle.addEventListener('click', () => {
+                const isOpen = panel.classList.contains('is-open');
+                if (isOpen) {
+                    closeMenu();
+                    return;
+                }
+
+                toggle.classList.add('is-open');
+                toggle.setAttribute('aria-expanded', 'true');
+                panel.classList.add('is-open');
+                panel.setAttribute('aria-hidden', 'false');
+            });
+
+            panel.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 640) {
+                    closeMenu();
+                }
+            });
+        }
+
         function init() {
             state.cart = parseCart() || getDefaultCart();
             renderCartItems();
@@ -2311,6 +2399,7 @@
             initSuggestionButtons();
             initCustomerName();
             initPickupTime();
+            initMobileNavbar();
 
             document.getElementById('placeOrderBtn').addEventListener('click', handleCheckout);
         }

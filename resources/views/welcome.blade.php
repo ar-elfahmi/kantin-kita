@@ -150,6 +150,67 @@
             gap: 16px;
         }
 
+        .hamburger-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid var(--brown-10);
+            background: var(--white);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .hamburger-btn span {
+            width: 18px;
+            height: 2px;
+            background: var(--brown);
+            border-radius: 999px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .hamburger-btn:hover {
+            box-shadow: 0 6px 16px rgba(116, 70, 34, 0.12);
+        }
+
+        .hamburger-btn.is-open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger-btn.is-open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.is-open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        .mobile-nav-panel {
+            display: none;
+        }
+
+        .mobile-nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brown);
+            letter-spacing: -0.3px;
+            min-height: 40px;
+            border-radius: 12px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            background: var(--cream-dark);
+        }
+
+        .mobile-nav-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
         .btn-login {
             display: flex;
             align-items: center;
@@ -1294,13 +1355,43 @@
             }
 
             .nav-actions {
+                display: none;
+            }
+
+            .hamburger-btn {
+                display: inline-flex;
+            }
+
+            .mobile-nav-panel {
+                position: fixed;
+                top: 82px;
+                left: 16px;
+                right: 16px;
+                z-index: 999;
+                background: rgba(255, 255, 255, 0.98);
+                border: 1px solid var(--brown-10);
+                border-radius: 16px;
+                box-shadow: 0 10px 24px rgba(116, 70, 34, 0.14);
+                padding: 12px;
+                flex-direction: column;
                 gap: 8px;
             }
 
-            .btn-login,
-            .btn-register {
-                padding: 10px 14px;
-                border-radius: 14px;
+            .mobile-nav-panel.is-open {
+                display: flex;
+            }
+
+            .mobile-nav-actions {
+                flex-direction: column;
+            }
+
+            .mobile-nav-actions .btn-login,
+            .mobile-nav-actions .btn-register {
+                justify-content: center;
+                width: 100%;
+                border-radius: 12px;
+                min-height: 40px;
+                padding: 10px 12px;
                 font-size: 13px;
                 white-space: nowrap;
             }
@@ -1340,27 +1431,42 @@
             }
 
             .menu-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
             }
 
             .menu-card-body {
-                padding: 16px;
-                gap: 10px;
+                padding: 12px;
+                gap: 8px;
             }
 
             .menu-card-name {
-                font-size: 18px;
+                font-size: 15px;
             }
 
             .menu-card-desc {
-                font-size: 13px;
-                line-height: 1.45;
+                font-size: 12px;
+                line-height: 1.35;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                line-clamp: 2;
+                overflow: hidden;
             }
 
             .btn-order {
-                min-height: 40px;
-                padding: 10px 14px;
+                min-height: 36px;
+                padding: 8px 10px;
                 border-radius: 12px;
+                font-size: 13px;
+            }
+
+            .menu-card-img {
+                height: 150px;
+            }
+
+            .price-current {
+                font-size: 18px;
             }
 
             .menu-header {
@@ -1447,6 +1553,39 @@
                 font-size: 12px;
             }
 
+            .menu-card-img {
+                height: 136px;
+            }
+
+            .footer {
+                padding: 26px 16px;
+            }
+
+            .footer-inner {
+                gap: 20px;
+            }
+
+            .footer-grid {
+                gap: 16px;
+            }
+
+            .footer-col-title {
+                font-size: 16px;
+            }
+
+            .footer-socials {
+                gap: 8px;
+            }
+
+            .social-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .footer-bottom {
+                gap: 8px;
+            }
+
             .hero-cta-group {
                 width: 100%;
             }
@@ -1465,17 +1604,12 @@
         }
 
         @media (max-width: 420px) {
-            .brand-text {
-                display: none;
+            .brand-name {
+                font-size: 16px;
             }
 
-            .nav-actions {
-                gap: 6px;
-            }
-
-            .btn-login,
-            .btn-register {
-                padding: 8px 10px;
+            .menu-card-img {
+                height: 128px;
             }
         }
     </style>
@@ -1503,6 +1637,12 @@
                 <li><a href="#contact">Kontak</a></li>
             </ul>
 
+            <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <div class="nav-actions">
                 <a href="{{ route('login') }}" class="btn-login">
                     <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
@@ -1514,6 +1654,17 @@
             </div>
         </div>
     </nav>
+
+    <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
+        <a href="{{ route('home') }}" class="mobile-nav-link">Beranda</a>
+        <a href="#menu" class="mobile-nav-link">Menu</a>
+        <a href="#about" class="mobile-nav-link">Tentang</a>
+        <a href="#contact" class="mobile-nav-link">Kontak</a>
+        <div class="mobile-nav-actions">
+            <a href="{{ route('login') }}" class="btn-login">Masuk</a>
+            <a href="{{ route('login') }}" class="btn-register">Daftar</a>
+        </div>
+    </div>
 
     <!-- ================ HERO ================ -->
     <section class="hero-section">
@@ -1980,6 +2131,42 @@
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 20);
         });
+
+        // Mobile hamburger nav
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+
+        if (mobileNavToggle && mobileNavPanel) {
+            const closeMobileNav = () => {
+                mobileNavToggle.classList.remove('is-open');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                mobileNavPanel.classList.remove('is-open');
+                mobileNavPanel.setAttribute('aria-hidden', 'true');
+            };
+
+            mobileNavToggle.addEventListener('click', () => {
+                const isOpen = mobileNavPanel.classList.contains('is-open');
+                if (isOpen) {
+                    closeMobileNav();
+                    return;
+                }
+
+                mobileNavToggle.classList.add('is-open');
+                mobileNavToggle.setAttribute('aria-expanded', 'true');
+                mobileNavPanel.classList.add('is-open');
+                mobileNavPanel.setAttribute('aria-hidden', 'false');
+            });
+
+            mobileNavPanel.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', closeMobileNav);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    closeMobileNav();
+                }
+            });
+        }
 
         // Scroll reveal animation
         const revealEls = document.querySelectorAll('.reveal');

@@ -154,8 +154,67 @@
             gap: 32px;
         }
 
-        .mobile-quick-links {
+        .hamburger-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid rgba(116, 70, 34, 0.14);
+            background: var(--white);
             display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .hamburger-btn span {
+            width: 18px;
+            height: 2px;
+            background: var(--brown);
+            border-radius: 999px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .hamburger-btn.is-open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger-btn.is-open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.is-open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        .mobile-nav-panel {
+            display: none;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(116, 70, 34, 0.10);
+            padding: 8px 16px 12px;
+        }
+
+        .mobile-nav-panel.is-open {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-nav-link {
+            min-height: 38px;
+            border-radius: 12px;
+            background: var(--cream);
+            color: var(--brown);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            line-height: 38px;
+            padding: 0 12px;
         }
 
         .nav-link {
@@ -814,48 +873,36 @@
         }
 
         @media (max-width: 640px) {
+            .site-header {
+                height: auto;
+            }
+
             .header-inner {
                 padding: 0 16px;
+                min-height: 72px;
+                height: auto;
             }
 
             .main-nav {
                 display: none;
             }
 
-            .mobile-quick-links {
-                display: flex;
-                gap: 8px;
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-                padding: 8px 16px 10px;
-                background: rgba(255, 255, 255, 0.9);
-                border-bottom: 1px solid rgba(116, 70, 34, 0.10);
+            .hamburger-btn {
+                display: inline-flex;
             }
 
-            .mobile-quick-links::-webkit-scrollbar {
-                display: none;
+            .logo-name {
+                font-size: 20px;
+                line-height: 1.2;
             }
 
-            .mobile-quick-link {
-                flex: 0 0 auto;
-                min-height: 34px;
-                padding: 0 14px;
-                border-radius: var(--radius-pill);
-                background: rgba(66, 118, 106, 0.12);
-                color: var(--brown);
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: -0.3px;
-                line-height: 34px;
-            }
-
-            .logo-text-group {
-                display: none;
+            .logo-tagline {
+                font-size: 10px;
+                line-height: 1.2;
             }
 
             .header-actions {
-                gap: 10px;
+                display: none;
             }
 
             .page-body {
@@ -1046,6 +1093,12 @@
                 <a href="{{ route('login') }}" class="nav-link">Profile</a>
             </nav>
 
+            <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <!-- Actions -->
             <div class="header-actions">
                 <button class="notif-btn" aria-label="Notifications">
@@ -1062,12 +1115,14 @@
         </div>
     </header>
 
-    <nav class="mobile-quick-links" aria-label="Quick links">
-        <a href="{{ route('home') }}" class="mobile-quick-link">Home</a>
-        <a href="{{ route('vendor') }}" class="mobile-quick-link">Vendors</a>
-        <a href="{{ route('login') }}" class="mobile-quick-link">My Orders</a>
-        <a href="{{ route('login') }}" class="mobile-quick-link">Profile</a>
-    </nav>
+    <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
+        <nav class="mobile-nav-links" aria-label="Quick links">
+            <a href="{{ route('home') }}" class="mobile-nav-link">Home</a>
+            <a href="{{ route('vendor') }}" class="mobile-nav-link">Vendors</a>
+            <a href="{{ route('login') }}" class="mobile-nav-link">My Orders</a>
+            <a href="{{ route('login') }}" class="mobile-nav-link">Profile</a>
+        </nav>
+    </div>
 
     <!-- ═══════════════════════════════════════════ MAIN -->
     <main>
@@ -1413,6 +1468,42 @@
                 }
             });
         });
+
+        /* ── Mobile hamburger nav ───────────────────────── */
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mobileNavPanel = document.getElementById('mobileNavPanel');
+
+        if (mobileNavToggle && mobileNavPanel) {
+            const closeMobileNav = () => {
+                mobileNavToggle.classList.remove('is-open');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                mobileNavPanel.classList.remove('is-open');
+                mobileNavPanel.setAttribute('aria-hidden', 'true');
+            };
+
+            mobileNavToggle.addEventListener('click', () => {
+                const isOpen = mobileNavPanel.classList.contains('is-open');
+                if (isOpen) {
+                    closeMobileNav();
+                    return;
+                }
+
+                mobileNavToggle.classList.add('is-open');
+                mobileNavToggle.setAttribute('aria-expanded', 'true');
+                mobileNavPanel.classList.add('is-open');
+                mobileNavPanel.setAttribute('aria-hidden', 'false');
+            });
+
+            mobileNavPanel.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', closeMobileNav);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 640) {
+                    closeMobileNav();
+                }
+            });
+        }
     </script>
 
 </body>
