@@ -372,6 +372,15 @@
             gap: 16px;
         }
 
+        .cart-items-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
         /* Vendor info */
         .vendor-card {
             padding: 24px;
@@ -1010,10 +1019,22 @@
             gap: 24px;
         }
 
+        .suggestions-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
         .suggestion-card {
             border-radius: var(--radius-card);
             overflow: hidden;
             cursor: pointer;
+            position: relative;
+        }
+
+        .cart-item-index,
+        .suggestion-index {
+            display: none;
         }
 
         .suggestion-img-wrap {
@@ -1218,14 +1239,57 @@
                 height: auto;
                 min-height: 72px;
                 padding: 10px 0;
+                flex-wrap: wrap;
+                row-gap: 10px;
             }
 
             .nav-links {
+                display: flex;
+                order: 3;
+                width: 100%;
+                gap: 8px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+            }
+
+            .nav-links::-webkit-scrollbar {
                 display: none;
+            }
+
+            .nav-link {
+                flex: 0 0 auto;
+                min-height: 34px;
+                padding: 0 12px;
+                border-radius: 999px;
+                background: rgba(66, 118, 106, .12);
+                color: var(--brown);
+                font-size: 13px;
+                font-weight: 600;
+                line-height: 34px;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+
+            .nav-link.active {
+                background: var(--green);
+                color: #fff;
             }
 
             .nav-actions {
                 gap: 10px;
+                margin-left: auto;
+            }
+
+            .brand-name {
+                font-size: 20px;
+            }
+
+            .brand-sub {
+                font-size: 10px;
             }
 
             .page-title {
@@ -1252,14 +1316,82 @@
 
             .cart-item-card {
                 padding: 16px;
+                position: relative;
+            }
+
+            .cart-item-index {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 24px;
+                height: 24px;
+                border-radius: 999px;
+                background: rgba(66, 118, 106, .14);
+                color: var(--green);
+                font-size: 12px;
+                font-weight: 700;
+                z-index: 2;
             }
 
             .suggestions-grid {
                 grid-template-columns: 1fr;
             }
 
+            .suggestion-index {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 24px;
+                height: 24px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, .94);
+                color: var(--brown);
+                font-size: 12px;
+                font-weight: 700;
+                z-index: 2;
+            }
+
             .footer-grid {
                 grid-template-columns: 1fr;
+                gap: 18px;
+                padding-bottom: 24px;
+            }
+
+            .footer {
+                margin-top: 40px;
+                padding: 28px 0 0;
+            }
+
+            .footer-col-title {
+                margin-bottom: 10px;
+                font-size: 15px;
+            }
+
+            .footer-brand-text,
+            .footer-link {
+                font-size: 13px;
+                line-height: 1.45;
+            }
+
+            .social-icons {
+                gap: 8px;
+                margin-top: 12px;
+            }
+
+            .social-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+            .footer-bottom {
+                padding: 14px 0;
+                font-size: 12px;
             }
 
             .cart-item-body {
@@ -1394,7 +1526,7 @@
                             </div>
                         </div>
 
-                        <div id="cartItemsContainer"></div>
+                        <ol id="cartItemsContainer" class="cart-items-list"></ol>
 
                         <div class="card cart-item-card reveal" id="emptyCartCard" style="display:none;">
                             <div class="cart-item-body">
@@ -1514,9 +1646,10 @@
                         </a>
                     </div>
 
-                    <div class="suggestions-grid">
+                    <ol class="suggestions-grid suggestions-list">
                         <!-- Bakso Komplit -->
-                        <div class="card suggestion-card reveal">
+                        <li class="card suggestion-card reveal">
+                            <span class="suggestion-index">1</span>
                             <div class="suggestion-img-wrap">
                                 <img class="suggestion-img"
                                     src="https://api.builder.io/api/v1/image/assets/TEMP/495775340130bd90fafed33c09c9a6c05e6c41e5?width=572"
@@ -1534,10 +1667,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </li>
 
                         <!-- Gado-Gado -->
-                        <div class="card suggestion-card reveal">
+                        <li class="card suggestion-card reveal">
+                            <span class="suggestion-index">2</span>
                             <div class="suggestion-img-wrap">
                                 <img class="suggestion-img"
                                     src="https://api.builder.io/api/v1/image/assets/TEMP/ae58ea381450ff2555d5325e463f7d95a41ae88a?width=572"
@@ -1555,10 +1689,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </li>
 
                         <!-- Pisang Goreng -->
-                        <div class="card suggestion-card reveal">
+                        <li class="card suggestion-card reveal">
+                            <span class="suggestion-index">3</span>
                             <div class="suggestion-img-wrap">
                                 <img class="suggestion-img"
                                     src="https://api.builder.io/api/v1/image/assets/TEMP/663335b04797e845e7a9041874c258b14fd8e919?width=572"
@@ -1576,10 +1711,11 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </li>
 
                         <!-- Es Jeruk Segar -->
-                        <div class="card suggestion-card reveal">
+                        <li class="card suggestion-card reveal">
+                            <span class="suggestion-index">4</span>
                             <div class="suggestion-img-wrap">
                                 <img class="suggestion-img"
                                     src="https://api.builder.io/api/v1/image/assets/TEMP/4adc7c1a7549ef3d9fb199db079b10f322afee23?width=572"
@@ -1597,8 +1733,8 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ol>
                 </div>
 
             </div><!-- /container-wide -->
@@ -1679,7 +1815,7 @@
     </div><!-- /page-wrapper -->
 
     @if (config('midtrans.client_key'))
-        <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
     @endif
     <script>
         const CART_KEY = 'kantin_cart';
@@ -1849,11 +1985,12 @@
                 placeOrderBtn.disabled = false;
                 placeOrderBtn.style.opacity = '1';
 
-                container.innerHTML = state.cart.items.map((item) => {
+                container.innerHTML = state.cart.items.map((item, index) => {
                     const subtotal = Number(item.harga) * Number(item.jumlah);
 
                     return `
-                        <div class="card cart-item-card reveal visible" data-menu-id="${item.menu_id}">
+                        <li class="card cart-item-card reveal visible" data-menu-id="${item.menu_id}">
+                            <span class="cart-item-index">${index + 1}</span>
                             <div class="cart-item-body">
                                 <div class="cart-item-img-wrap">
                                     <img class="cart-item-photo" src="${escapeHtml(item.path_gambar || DEFAULT_MENU_IMAGE)}" alt="${escapeHtml(item.nama_menu)}" />
@@ -1895,7 +2032,7 @@
                                 <div class="instructions-label">Special Instructions:</div>
                                 <input class="instructions-input" type="text" data-action="note" value="${escapeHtml(item.catatan || '')}" placeholder="Add notes (e.g., less spicy, no onions)" />
                             </div>
-                        </div>
+                        </li>
                     `;
                 }).join('');
             }
@@ -1914,6 +2051,16 @@
             state.cart.items = state.cart.items.filter((item) => Number(item.jumlah) > 0);
             persistCart();
             renderCartItems();
+        }
+
+        function updateItemNote(menuId, noteValue) {
+            const item = state.cart.items.find((entry) => Number(entry.menu_id) === Number(menuId));
+            if (!item) {
+                return;
+            }
+
+            item.catatan = noteValue;
+            persistCart();
         }
 
         async function updatePaymentStatus(pesananId, status, result) {
@@ -2121,9 +2268,7 @@
                 }
 
                 const menuId = Number(card.dataset.menuId);
-                updateItem(menuId, (item) => {
-                    item.catatan = noteInput.value;
-                });
+                updateItemNote(menuId, noteInput.value);
             });
         }
 

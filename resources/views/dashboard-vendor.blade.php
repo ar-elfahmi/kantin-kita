@@ -817,6 +817,9 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .order-row {
@@ -1070,41 +1073,65 @@
         }
 
         @media (max-width: 900px) {
-            .sidebar {
-                width: 72px;
-                padding: 20px 12px;
-                gap: 32px;
+            .dashboard-shell {
+                flex-direction: column;
             }
 
-            .logo-text-primary,
-            .logo-text-secondary,
-            .nav-item>span:not(.nav-icon),
-            .sidebar-logout,
-            .user-name,
-            .user-email {
-                display: none;
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 14px 16px 12px;
+                gap: 14px;
+                border-right: none;
+                border-bottom: 1px solid var(--brown-10);
+                box-shadow: 0 2px 10px rgba(116, 70, 34, .08);
             }
 
             .sidebar-logo {
-                justify-content: center;
+                justify-content: flex-start;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                gap: 8px;
+                padding-bottom: 4px;
+            }
+
+            .sidebar-nav::-webkit-scrollbar {
+                display: none;
             }
 
             .nav-item {
-                justify-content: center;
-                padding: 12px;
+                justify-content: flex-start;
+                padding: 8px 12px;
+                min-height: 36px;
+                min-width: max-content;
+                transform: none;
+            }
+
+            .nav-item::before,
+            .nav-item.active::after {
+                display: none;
+            }
+
+            .nav-item:hover {
+                transform: none;
             }
 
             .nav-icon {
-                width: 36px;
-                height: 36px;
-                border-radius: 12px;
-                background: #f7efe0;
-                border: 1px solid var(--brown-10);
+                width: 20px;
+                height: 20px;
+                border-radius: 0;
+                background: transparent;
+                border: none;
             }
 
             .nav-icon svg {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
             }
 
             .nav-item .nav-icon svg path {
@@ -1112,21 +1139,15 @@
             }
 
             .nav-item.active {
-                background: rgba(66, 118, 106, .16);
-            }
-
-            .nav-item.active .nav-icon {
-                background: var(--green);
-                border-color: transparent;
-                box-shadow: 0 4px 12px rgba(66, 118, 106, .28);
+                background: rgba(66, 118, 106, .14);
             }
 
             .nav-item.active .nav-icon svg path {
-                fill: var(--white) !important;
+                fill: var(--green) !important;
             }
 
             .sidebar-user {
-                justify-content: center;
+                padding: 10px 12px;
             }
 
             .stats-grid,
@@ -1146,8 +1167,20 @@
         @media (max-width: 640px) {
 
             .sidebar {
-                width: 64px;
-                padding: 16px 8px;
+                width: 100%;
+                padding: 12px;
+            }
+
+            .sidebar-logo {
+                gap: 8px;
+            }
+
+            .logo-text-primary {
+                font-size: 18px;
+            }
+
+            .logo-text-secondary {
+                display: none;
             }
 
             .dashboard-body {
@@ -1171,9 +1204,13 @@
                 display: none;
             }
 
-            .stats-grid,
-            .products-grid {
+            .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
             }
 
             .orders-panel,
@@ -1181,9 +1218,38 @@
                 padding: 18px;
             }
 
+            .orders-list {
+                counter-reset: order-item;
+            }
+
             .order-row {
-                padding: 12px;
+                position: relative;
+                padding: 12px 12px 12px 44px;
                 align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .order-row::before {
+                counter-increment: order-item;
+                content: counter(order-item) ".";
+                position: absolute;
+                left: 14px;
+                top: 12px;
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--green);
+            }
+
+            .order-info {
+                width: 100%;
+            }
+
+            .order-name {
+                white-space: normal;
+                overflow: visible;
+                text-overflow: unset;
+                line-height: 1.35;
             }
 
             .order-right {
@@ -1193,14 +1259,21 @@
 
             .order-actions {
                 width: 100%;
-                justify-content: space-between;
+                justify-content: flex-start;
                 flex-wrap: wrap;
+                gap: 8px;
             }
 
             .order-done-form,
             .btn-mark-done {
-                width: 100%;
-                justify-content: center;
+                width: auto;
+                justify-content: flex-start;
+                max-width: 100%;
+            }
+
+            .btn-mark-done {
+                white-space: nowrap;
+                padding: 7px 12px;
             }
 
             .stat-card,
@@ -1463,7 +1536,7 @@
                             </div>
                             <a href="{{ route('dashboard') }}" class="link-see-all">Lihat Semua</a>
                         </div>
-                        <div class="orders-list">
+                        <ol class="orders-list">
                             @forelse ($pesananMasuk as $pesanan)
                             @php
                             $firstDetail = $pesanan->detailPesanans->first();
@@ -1476,7 +1549,7 @@
                             default => 'status-pending',
                             };
                             @endphp
-                            <div class="order-row">
+                            <li class="order-row">
                                 <img class="order-thumb" src="{{ $firstMenu?->path_gambar ?: 'https://api.builder.io/api/v1/image/assets/TEMP/ba6382dc578b32751a4c6e03f2066fc64f93e8ce?width=128' }}" alt="{{ $firstMenu?->nama_menu ?: 'Pesanan' }}">
                                 <div class="order-info">
                                     <div class="order-name">#{{ $pesanan->id }} - {{ $pesanan->nama_customer }}</div>
@@ -1494,17 +1567,17 @@
                                     </div>
                                     <span class="order-time">{{ $pesanan->created_at?->diffForHumans() }}</span>
                                 </div>
-                            </div>
+                            </li>
                             @empty
-                            <div class="order-row">
+                            <li class="order-row">
                                 <div class="order-info">
                                     <div class="order-name">Belum ada pesanan dibayar</div>
                                     <div class="order-qty">Pesanan settlement akan tampil di sini.</div>
                                 </div>
-                            </div>
+                            </li>
                             @endforelse
 
-                        </div>
+                        </ol>
                     </div>
 
                     <!-- Ringkasan Penjualan -->

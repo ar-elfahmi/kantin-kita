@@ -1258,15 +1258,55 @@
 
         @media (max-width: 768px) {
             .navbar {
-                padding: 0 20px;
+                padding: 0 16px;
+                height: auto;
+                min-height: 72px;
+            }
+
+            .navbar-inner {
+                min-height: 72px;
+                padding: 10px 0;
+                gap: 10px;
+            }
+
+            .brand {
+                gap: 8px;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 14px;
+            }
+
+            .brand-name {
+                font-size: 19px;
+                line-height: 1.2;
+            }
+
+            .brand-tagline {
+                font-size: 10px;
+                line-height: 1.2;
             }
 
             .nav-links {
                 display: none;
             }
 
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .btn-login,
+            .btn-register {
+                padding: 10px 14px;
+                border-radius: 14px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
             .hero-section {
-                padding: 80px 20px 0;
+                padding: 72px 16px 0;
             }
 
             .features-section,
@@ -1274,15 +1314,53 @@
             .cta-section,
             .testimonials-section,
             .footer {
-                padding: 48px 20px;
+                padding: 36px 16px;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
             }
 
+            .feature-card {
+                padding: 18px;
+                gap: 12px;
+            }
+
+            .feature-icon {
+                width: 56px;
+                height: 56px;
+            }
+
+            .feature-name {
+                font-size: 19px;
+            }
+
+            .feature-desc {
+                font-size: 14px;
+            }
+
             .menu-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .menu-card-body {
+                padding: 16px;
+                gap: 10px;
+            }
+
+            .menu-card-name {
+                font-size: 18px;
+            }
+
+            .menu-card-desc {
+                font-size: 13px;
+                line-height: 1.45;
+            }
+
+            .btn-order {
+                min-height: 40px;
+                padding: 10px 14px;
+                border-radius: 12px;
             }
 
             .menu-header {
@@ -1299,10 +1377,43 @@
                 grid-template-columns: 1fr;
             }
 
+            .footer-inner {
+                gap: 28px;
+            }
+
+            .footer-brand {
+                gap: 16px;
+            }
+
+            .footer-col {
+                gap: 14px;
+            }
+
+            .footer-col-title {
+                font-size: 18px;
+            }
+
+            .footer-desc,
+            .contact-text,
+            .footer-links a {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .footer-socials {
+                gap: 12px;
+            }
+
             .footer-bottom {
                 flex-direction: column;
-                gap: 16px;
+                gap: 10px;
                 text-align: center;
+            }
+
+            .footer-legal {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .hero-cta-group {
@@ -1314,6 +1425,57 @@
             .menu-title,
             .cta-title {
                 font-size: 32px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .brand-tagline {
+                display: none;
+            }
+
+            .brand-name {
+                font-size: 18px;
+            }
+
+            .btn-login svg {
+                display: none;
+            }
+
+            .btn-login,
+            .btn-register {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+
+            .hero-cta-group {
+                width: 100%;
+            }
+
+            .btn-cta-primary,
+            .btn-cta-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title,
+            .menu-title,
+            .cta-title {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .brand-text {
+                display: none;
+            }
+
+            .nav-actions {
+                gap: 6px;
+            }
+
+            .btn-login,
+            .btn-register {
+                padding: 8px 10px;
             }
         }
     </style>

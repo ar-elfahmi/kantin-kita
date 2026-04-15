@@ -90,8 +90,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--white);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(116, 70, 34, 0.12);
+            box-shadow: 0 8px 20px rgba(116, 70, 34, 0.08);
             height: 80px;
         }
 
@@ -149,6 +152,10 @@
             display: flex;
             align-items: center;
             gap: 32px;
+        }
+
+        .mobile-quick-links {
+            display: none;
         }
 
         .nav-link {
@@ -815,6 +822,34 @@
                 display: none;
             }
 
+            .mobile-quick-links {
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                padding: 8px 16px 10px;
+                background: rgba(255, 255, 255, 0.9);
+                border-bottom: 1px solid rgba(116, 70, 34, 0.10);
+            }
+
+            .mobile-quick-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mobile-quick-link {
+                flex: 0 0 auto;
+                min-height: 34px;
+                padding: 0 14px;
+                border-radius: var(--radius-pill);
+                background: rgba(66, 118, 106, 0.12);
+                color: var(--brown);
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: -0.3px;
+                line-height: 34px;
+            }
+
             .logo-text-group {
                 display: none;
             }
@@ -848,6 +883,27 @@
             .filter-btn {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .category-pills {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                gap: 10px;
+                padding-bottom: 4px;
+            }
+
+            .category-pills::-webkit-scrollbar {
+                display: none;
+            }
+
+            .pill {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                min-height: 38px;
+                padding: 0 16px;
+                font-size: 13px;
+                line-height: 38px;
             }
 
             .card-image-wrap {
@@ -928,8 +984,38 @@
                 padding: 0 10px;
             }
 
-            .pill {
-                min-height: 40px;
+            .site-footer {
+                padding: 32px 0 20px;
+            }
+
+            .footer-inner {
+                padding: 0 16px;
+                gap: 20px;
+            }
+
+            .footer-cols {
+                gap: 20px;
+            }
+
+            .footer-brand-desc,
+            .footer-links a {
+                font-size: 13px;
+                line-height: 1.45;
+            }
+
+            .footer-col-title {
+                margin-bottom: 10px;
+                font-size: 15px;
+            }
+
+            .social-btn {
+                width: 34px;
+                height: 34px;
+            }
+
+            .footer-divider {
+                padding-top: 16px;
+                font-size: 12px;
             }
         }
     </style>
@@ -975,6 +1061,13 @@
 
         </div>
     </header>
+
+    <nav class="mobile-quick-links" aria-label="Quick links">
+        <a href="{{ route('home') }}" class="mobile-quick-link">Home</a>
+        <a href="{{ route('vendor') }}" class="mobile-quick-link">Vendors</a>
+        <a href="{{ route('login') }}" class="mobile-quick-link">My Orders</a>
+        <a href="{{ route('login') }}" class="mobile-quick-link">Profile</a>
+    </nav>
 
     <!-- ═══════════════════════════════════════════ MAIN -->
     <main>
