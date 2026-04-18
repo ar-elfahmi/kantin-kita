@@ -1204,8 +1204,75 @@
                 display: none;
             }
 
+            /* Stats as order-list on mobile */
             .stats-grid {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                background: var(--white);
+                border-radius: var(--radius-md);
+                border: 1px solid var(--brown-10);
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+
+            .stat-card {
+                border-radius: 0;
+                border: none;
+                border-bottom: 1px solid var(--brown-10);
+                box-shadow: none;
+                padding: 14px 16px;
+                gap: 0;
+                flex-direction: row;
+                align-items: center;
+                animation: none;
+            }
+
+            .stat-card:last-child {
+                border-bottom: none;
+            }
+
+            .stat-card::before {
+                display: none;
+            }
+
+            .stat-card:hover {
+                transform: none;
+                box-shadow: none;
+                background: #f5ead6;
+            }
+
+            .stat-card-top {
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+                flex: 1;
+            }
+
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+                border-radius: var(--radius-sm);
+            }
+
+            .stat-value {
+                font-size: 18px;
+                line-height: 1.2;
+                margin-left: auto;
+                order: 3;
+                white-space: nowrap;
+            }
+
+            .stat-label {
+                font-size: 13px;
+                flex: 1;
+                order: 2;
+            }
+
+            .stat-badge {
+                order: 4;
+                margin-left: 8px;
             }
 
             .products-grid {
