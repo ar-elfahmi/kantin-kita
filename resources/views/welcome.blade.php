@@ -2732,7 +2732,7 @@
         // Chatbot interaction
         const chatbotForm = document.getElementById('chatbotForm');
         if (chatbotForm) {
-            const CHATBOT_ENDPOINT = "{{ route('chatbot.respond') }}";
+            const CHATBOT_ENDPOINT = @json(route('chatbot.respond', [], false));
             const CHATBOT_ERROR_MESSAGE = 'Maaf, chatbot sedang tidak tersedia. Coba lagi sebentar ya.';
             const chatbotMessages = document.getElementById('chatbotMessages');
             const chatbotInput = document.getElementById('chatbotInput');
