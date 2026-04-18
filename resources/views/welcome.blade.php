@@ -1934,10 +1934,11 @@
                 flex-wrap: nowrap;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
+                scroll-padding-inline: calc(50vw - 37vw);
                 -webkit-overflow-scrolling: touch;
                 scroll-behavior: smooth;
-                gap: 16px;
-                padding-bottom: 8px;
+                gap: 14px;
+                padding: 4px calc(50vw - 37vw) 12px;
                 /* hide scrollbar */
                 scrollbar-width: none;
                 -ms-overflow-style: none;
@@ -1947,13 +1948,28 @@
                 display: none;
             }
 
-            .testimonial-card {
-                flex: 0 0 82vw;
+            .testimonials-grid .testimonial-card {
+                flex: 0 0 74vw;
                 max-width: 340px;
-                scroll-snap-align: start;
-                padding: 24px;
+                scroll-snap-align: center;
+                padding: 22px;
                 border-radius: 20px;
                 gap: 16px;
+                transform: scale(0.9);
+                opacity: 0.68;
+                transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .testimonials-grid .testimonial-card:hover {
+                transform: scale(0.9);
+                box-shadow: none;
+            }
+
+            .testimonials-grid .testimonial-card.is-active,
+            .testimonials-grid .testimonial-card.is-active:hover {
+                transform: scale(1);
+                opacity: 1;
+                box-shadow: 0 16px 34px rgba(116, 70, 34, 0.16);
             }
 
             .testimonial-text {
@@ -2968,9 +2984,12 @@
             const dotsContainer = document.getElementById('testimonialDots');
             if (!grid || !dotsContainer) return;
 
-            const dots = dotsContainer.querySelectorAll('.testimonial-dot');
-            const cards = grid.querySelectorAll('.testimonial-card');
+            const dots = Array.from(dotsContainer.querySelectorAll('.testimonial-dot'));
+            const cards = Array.from(grid.querySelectorAll('.testimonial-card'));
+            if (!cards.length) return;
+
             let currentIndex = 0;
+            let frameId = null;
 
             function isMobile() {
                 return window.innerWidth <= 768;
@@ -2981,13 +3000,63 @@
                 currentIndex = index;
             }
 
+            function setActiveCard(index) {
+                cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
+                updateDots(index);
+            }
+
+            function getCenteredIndex() {
+                const gridRect = grid.getBoundingClientRect();
+                const gridCenter = gridRect.left + gridRect.width / 2;
+
+                let nearestIndex = 0;
+                let nearestDistance = Number.POSITIVE_INFINITY;
+
+                cards.forEach((card, index) => {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+                    const distance = Math.abs(gridCenter - cardCenter);
+
+                    if (distance < nearestDistance) {
+                        nearestDistance = distance;
+                        nearestIndex = index;
+                    }
+                });
+
+                return nearestIndex;
+            }
+
+            function syncActiveState() {
+                if (!isMobile()) {
+                    cards.forEach((card) => card.classList.remove('is-active'));
+                    dots.forEach((dot, index) => dot.classList.toggle('active', index === 0));
+                    currentIndex = 0;
+                    return;
+                }
+
+                setActiveCard(getCenteredIndex());
+            }
+
+            function scrollToCard(index) {
+                const targetCard = cards[index];
+                if (!targetCard) return;
+
+                const targetLeft = targetCard.offsetLeft + (targetCard.offsetWidth / 2) - (grid.clientWidth / 2);
+                grid.scrollTo({
+                    left: Math.max(0, targetLeft),
+                    behavior: 'smooth'
+                });
+            }
+
             // Sync dots on scroll
             grid.addEventListener('scroll', () => {
                 if (!isMobile()) return;
-                const scrollLeft = grid.scrollLeft;
-                const cardWidth = cards[0] ? cards[0].getBoundingClientRect().width + 16 : grid.scrollWidth / cards.length;
-                const idx = Math.round(scrollLeft / cardWidth);
-                updateDots(Math.max(0, Math.min(idx, cards.length - 1)));
+
+                if (frameId) {
+                    cancelAnimationFrame(frameId);
+                }
+
+                frameId = requestAnimationFrame(syncActiveState);
             }, {
                 passive: true
             });
@@ -2996,14 +3065,16 @@
             dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
                     if (!isMobile()) return;
-                    const cardWidth = cards[0] ? cards[0].getBoundingClientRect().width + 16 : grid.scrollWidth / cards.length;
-                    grid.scrollTo({
-                        left: i * cardWidth,
-                        behavior: 'smooth'
-                    });
-                    updateDots(i);
+
+                    scrollToCard(i);
+                    setActiveCard(i);
                 });
             });
+
+            window.addEventListener('resize', syncActiveState);
+            window.addEventListener('orientationchange', syncActiveState);
+
+            requestAnimationFrame(syncActiveState);
         })();
     </script>
 </body>

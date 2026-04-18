@@ -1297,6 +1297,99 @@
             display: none;
         }
 
+        @media (max-width: 768px) {
+            .container-wide {
+                padding: 0 16px;
+            }
+
+            .navbar {
+                height: auto;
+                width: 100%;
+                left: 0;
+                right: 0;
+                padding: 0;
+            }
+
+            .navbar .container-wide {
+                padding: 0 16px;
+            }
+
+            .navbar-inner {
+                height: auto;
+                min-height: 68px;
+                padding: 10px 0;
+                gap: 10px;
+                flex-wrap: nowrap;
+                width: 100%;
+            }
+
+            .nav-links,
+            .nav-actions {
+                display: none;
+            }
+
+            .hamburger-btn {
+                display: inline-flex;
+                margin-left: auto;
+                flex-shrink: 0;
+            }
+
+            .brand {
+                min-width: 0;
+                gap: 10px;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                flex-shrink: 0;
+            }
+
+            .brand-name {
+                font-size: 18px;
+                line-height: 1.2;
+                white-space: nowrap;
+            }
+
+            .brand-sub {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+
+            .mobile-nav-panel {
+                position: fixed;
+                top: 78px;
+                left: 12px;
+                right: 12px;
+                width: auto;
+                z-index: 130;
+                border: 1px solid rgba(116, 70, 34, .12);
+                border-radius: 16px;
+                box-shadow: 0 10px 24px rgba(116, 70, 34, .14);
+            }
+
+            .mobile-nav-inner {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .mobile-nav-link {
+                min-height: 42px;
+                line-height: 42px;
+                font-size: 14px;
+            }
+
+            .suggestions-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .suggestion-card {
+                min-width: 0;
+            }
+        }
+
         @media (max-width: 640px) {
             .container-wide {
                 padding: 0 16px;
@@ -1360,9 +1453,13 @@
 
             /* ── Mobile nav panel full-width ── */
             .mobile-nav-panel {
+                top: 64px;
                 width: 100%;
                 left: 0;
                 right: 0;
+                border-left: none;
+                border-right: none;
+                border-radius: 0;
             }
 
             .page-title {
@@ -1596,7 +1693,7 @@
 
         <!-- ══════════════════ NAVBAR ══════════════════ -->
         <header class="navbar">
-            <div class="container-wide">
+            <div class="container-wide navbar-container">
                 <nav class="navbar-inner">
                     <a href="/" class="brand">
                         <div class="brand-icon">
@@ -2497,7 +2594,7 @@
             });
 
             window.addEventListener('resize', () => {
-                if (window.innerWidth > 640) {
+                if (window.innerWidth > 768) {
                     closeMenu();
                 }
             });
