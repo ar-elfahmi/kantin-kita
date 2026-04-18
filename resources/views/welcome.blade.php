@@ -2138,7 +2138,7 @@
                     </svg>
                     Masuk
                 </a>
-                <a href="{{ route('login') }}" class="btn-register">Daftar</a>
+                <a href="{{ route('vendor') }}" class="btn-register">Daftar</a>
             </div>
         </div>
     </nav>
@@ -2151,7 +2151,7 @@
         <a href="#contact" class="mobile-nav-link">Kontak</a>
         <div class="mobile-nav-actions">
             <a href="{{ route('login') }}" class="btn-login">Masuk</a>
-            <a href="{{ route('login') }}" class="btn-register">Daftar</a>
+            <a href="{{ route('vendor') }}" class="btn-register">Daftar</a>
         </div>
     </div>
 
@@ -2417,7 +2417,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('login') }}" class="btn-cta-white">Daftar Sekarang - Gratis!</a>
+                <a href="{{ route('vendor') }}" class="btn-cta-white">Daftar Sekarang - Gratis!</a>
             </div>
 
             <div class="cta-image-card reveal reveal-delay-2">
@@ -2795,7 +2795,9 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ prompt: cleanedPrompt }),
+                        body: JSON.stringify({
+                            prompt: cleanedPrompt
+                        }),
                         signal: controller.signal
                     });
 
@@ -2804,9 +2806,9 @@
                         throw new Error(payload.message || 'Permintaan gagal diproses.');
                     }
 
-                    const botReply = typeof payload.result === 'string' && payload.result.trim()
-                        ? payload.result.trim()
-                        : CHATBOT_ERROR_MESSAGE;
+                    const botReply = typeof payload.result === 'string' && payload.result.trim() ?
+                        payload.result.trim() :
+                        CHATBOT_ERROR_MESSAGE;
 
                     hideTyping();
                     appendMessage('bot', botReply);
@@ -2837,10 +2839,15 @@
 
             if (chatbotCtaButton) {
                 chatbotCtaButton.addEventListener('click', () => {
-                    chatbotForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    chatbotForm.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest'
+                    });
 
                     try {
-                        chatbotInput.focus({ preventScroll: true });
+                        chatbotInput.focus({
+                            preventScroll: true
+                        });
                     } catch (error) {
                         chatbotInput.focus();
                     }

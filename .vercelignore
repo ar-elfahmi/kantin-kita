@@ -11,3 +11,4 @@ storage/framework/views
 .env
 .env.*
 .phpunit.result.cache
+/Chatbot
