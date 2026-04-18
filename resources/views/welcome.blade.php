@@ -1054,6 +1054,420 @@
             letter-spacing: -0.3px;
         }
 
+        /* ===================== CHATBOT ===================== */
+        .chatbot-section {
+            padding: 0 64px 56px;
+            background: var(--white);
+        }
+
+        .chatbot-inner {
+            max-width: 1312px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .chatbot-shell {
+            display: grid;
+            grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.35fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .chatbot-cta-card {
+            border-radius: 25px;
+            padding: 24px;
+            background: linear-gradient(165deg, var(--cream) 0%, var(--cream-dark) 100%);
+            border: 1px solid var(--brown-10);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-cta-card::before {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -72px;
+            top: -72px;
+            border-radius: 50%;
+            background: var(--green-20);
+            filter: blur(20px);
+            pointer-events: none;
+        }
+
+        .chatbot-cta-eyebrow {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--green);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-cta-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--brown);
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-cta-copy {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--brown-70);
+            letter-spacing: -0.2px;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-focus-frame {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            min-height: 170px;
+            box-shadow: var(--shadow-md);
+            isolation: isolate;
+            z-index: 1;
+        }
+
+        .chatbot-focus-image {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.03);
+            transition: transform 0.35s ease;
+            filter: saturate(1.05);
+        }
+
+        .chatbot-focus-frame:hover .chatbot-focus-image {
+            transform: scale(1.08);
+        }
+
+        .chatbot-focus-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 25%, rgba(0, 0, 0, 0.52) 100%);
+            pointer-events: none;
+        }
+
+        .chatbot-focus-overlay {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: rgba(251, 245, 232, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1;
+        }
+
+        .chatbot-focus-tag {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: -0.2px;
+        }
+
+        .chatbot-focus-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brown);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .chatbot-focus-meta {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--brown-70);
+            letter-spacing: -0.2px;
+        }
+
+        .chatbot-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            z-index: 1;
+        }
+
+        .chatbot-chip {
+            border: none;
+            border-radius: 9999px;
+            background: var(--white);
+            color: var(--brown);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            padding: 8px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--brown-10);
+        }
+
+        .chatbot-chip:hover {
+            transform: translateY(-1px);
+            background: var(--green-10);
+        }
+
+        .chatbot-chip:focus-visible,
+        .chatbot-cta-button:focus-visible,
+        .chatbot-send:focus-visible {
+            outline: 3px solid var(--green-20);
+            outline-offset: 2px;
+        }
+
+        .chatbot-cta-button {
+            margin-top: auto;
+            width: fit-content;
+            z-index: 1;
+            padding: 14px 26px;
+            border-radius: 16px;
+            font-size: 16px;
+        }
+
+        .chatbot-panel {
+            border-radius: 25px;
+            background: linear-gradient(180deg, rgba(251, 245, 232, 0.92) 0%, rgba(245, 237, 217, 0.84) 100%);
+            border: 1px solid var(--brown-10);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chatbot-panel::before {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: var(--green-10);
+            filter: blur(36px);
+            right: -95px;
+            bottom: -120px;
+            pointer-events: none;
+        }
+
+        .chatbot-panel-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid var(--brown-10);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brown);
+            letter-spacing: -0.4px;
+        }
+
+        .chatbot-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green-dark);
+        }
+
+        .chatbot-status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 0 6px var(--green-10);
+        }
+
+        .chatbot-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            flex: 1 1 auto;
+            min-height: 250px;
+            overflow-y: auto;
+            background:
+                radial-gradient(circle at top right, rgba(66, 118, 106, 0.15), transparent 45%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(245, 237, 217, 0.55) 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-bubble {
+            max-width: min(80%, 560px);
+            border-radius: 18px;
+            padding: 11px 14px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: -0.2px;
+            line-height: 1.5;
+            word-break: break-word;
+            white-space: pre-line;
+        }
+
+        .chatbot-bubble-user {
+            align-self: flex-end;
+            background: var(--green);
+            color: var(--white);
+            border-bottom-right-radius: 8px;
+            box-shadow: 0 10px 24px rgba(47, 90, 79, 0.2);
+        }
+
+        .chatbot-bubble-bot {
+            align-self: flex-start;
+            background: var(--white);
+            color: var(--brown-80);
+            border: 1px solid var(--brown-10);
+            border-bottom-left-radius: 8px;
+            box-shadow: 0 8px 20px rgba(116, 70, 34, 0.08);
+        }
+
+        .chatbot-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            padding: 12px 16px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid var(--brown-10);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-input {
+            border-radius: 16px;
+            border: 1px solid var(--brown-10);
+            background: var(--white);
+            padding: 11px 14px;
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--brown);
+            letter-spacing: -0.2px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chatbot-input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px var(--green-10);
+        }
+
+        .chatbot-send {
+            border: none;
+            border-radius: 16px;
+            background: var(--green);
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            padding: 0 20px;
+            min-height: 44px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .chatbot-send:hover {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(42, 118, 106, 0.25);
+        }
+
+        .chatbot-send:disabled,
+        .chatbot-input:disabled,
+        .chatbot-chip:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .chatbot-hint {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--brown-60);
+            letter-spacing: -0.2px;
+            padding: 8px 16px 14px;
+            background: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatbot-typing {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chatbot-typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            opacity: 0.25;
+            animation: chatbot-typing 1.2s ease-in-out infinite;
+        }
+
+        .chatbot-typing-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .chatbot-typing-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes chatbot-typing {
+
+            0%,
+            80%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.25;
+            }
+
+            40% {
+                transform: translateY(-3px);
+                opacity: 1;
+            }
+        }
+
+        .chatbot-sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+            white-space: nowrap;
+        }
+
         /* ===================== FOOTER ===================== */
         .footer {
             background: var(--brown);
@@ -1283,8 +1697,13 @@
             .menu-section,
             .cta-section,
             .testimonials-section,
+            .chatbot-section,
             .footer {
                 padding: 60px 32px;
+            }
+
+            .chatbot-section {
+                padding: 44px 32px;
             }
 
             .features-grid {
@@ -1301,6 +1720,14 @@
 
             .cta-inner {
                 grid-template-columns: 1fr;
+            }
+
+            .chatbot-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .chatbot-messages {
+                min-height: 280px;
             }
 
             .footer-grid {
@@ -1404,8 +1831,13 @@
             .menu-section,
             .cta-section,
             .testimonials-section,
+            .chatbot-section,
             .footer {
                 padding: 36px 16px;
+            }
+
+            .chatbot-section {
+                padding: 28px 16px;
             }
 
             .features-grid {
@@ -1477,6 +1909,49 @@
 
             .testimonials-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .chatbot-shell {
+                gap: 16px;
+            }
+
+            .chatbot-cta-card,
+            .chatbot-panel {
+                border-radius: 20px;
+            }
+
+            .chatbot-cta-card {
+                padding: 18px;
+            }
+
+            .chatbot-cta-title {
+                font-size: 22px;
+            }
+
+            .chatbot-focus-frame {
+                min-height: 150px;
+            }
+
+            .chatbot-focus-image {
+                height: 160px;
+            }
+
+            .chatbot-messages {
+                min-height: 220px;
+                padding: 16px;
+            }
+
+            .chatbot-form {
+                grid-template-columns: 1fr;
+                padding: 12px 14px 0;
+            }
+
+            .chatbot-send {
+                min-height: 40px;
+            }
+
+            .chatbot-hint {
+                padding: 8px 14px 14px;
             }
 
             .footer-grid {
@@ -1557,6 +2032,18 @@
                 height: 136px;
             }
 
+            .chatbot-panel-head {
+                padding: 16px;
+            }
+
+            .chatbot-panel-title {
+                font-size: 18px;
+            }
+
+            .chatbot-status {
+                font-size: 12px;
+            }
+
             .footer {
                 padding: 26px 16px;
             }
@@ -1634,6 +2121,7 @@
                 <li><a href="{{ route('home') }}" class="nav-active">Beranda</a></li>
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#about">Tentang</a></li>
+                <li><a href="#chatbot">Chatbot</a></li>
                 <li><a href="#contact">Kontak</a></li>
             </ul>
 
@@ -1659,6 +2147,7 @@
         <a href="{{ route('home') }}" class="mobile-nav-link">Beranda</a>
         <a href="#menu" class="mobile-nav-link">Menu</a>
         <a href="#about" class="mobile-nav-link">Tentang</a>
+        <a href="#chatbot" class="mobile-nav-link">Chatbot</a>
         <a href="#contact" class="mobile-nav-link">Kontak</a>
         <div class="mobile-nav-actions">
             <a href="{{ route('login') }}" class="btn-login">Masuk</a>
@@ -2033,6 +2522,62 @@
         </div>
     </section>
 
+    <!-- ================ CHATBOT ===================== -->
+    <section class="chatbot-section" id="chatbot">
+        <div class="chatbot-inner">
+            <div class="section-header reveal">
+                <h2 class="section-title">Asisten Kantin Siap Bantu</h2>
+                <p class="section-subtitle">Butuh rekomendasi menu atau bantuan pemesanan? Chat langsung dengan asisten Kantin Kita di sini.</p>
+            </div>
+
+            <div class="chatbot-shell">
+                <aside class="chatbot-cta-card reveal reveal-delay-1">
+                    <p class="chatbot-cta-eyebrow">Asisten Virtual Kantin Kita</p>
+                    <h3 class="chatbot-cta-title">Tanya cepat, dapat jawaban yang relevan buat jam sibuk kampus.</h3>
+                    <p class="chatbot-cta-copy">Mulai dari saran menu terlaris, jam operasional, hingga cara checkout. Pilih pertanyaan cepat di bawah atau ketik pertanyaanmu sendiri.</p>
+
+                    <div class="chatbot-focus-frame" aria-hidden="true">
+                        <img class="chatbot-focus-image" src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop" alt="Menu nasi goreng premium dengan latar blur" />
+                        <div class="chatbot-focus-overlay">
+                            <span class="chatbot-focus-tag">Featured Hari Ini</span>
+                            <p class="chatbot-focus-name">Nasi Goreng Special</p>
+                            <span class="chatbot-focus-meta">Bestseller kampus - Rp 18.000</span>
+                        </div>
+                    </div>
+
+                    <div class="chatbot-chip-list">
+                        <button type="button" class="chatbot-chip" data-prompt="Menu terlaris hari ini apa saja?">Menu terlaris hari ini</button>
+                        <button type="button" class="chatbot-chip" data-prompt="Jam operasional kantin dimulai dari jam berapa?">Jam operasional kantin</button>
+                        <button type="button" class="chatbot-chip" data-prompt="Bagaimana cara pesan makanan tanpa antre?">Cara pesan tanpa antre</button>
+                        <button type="button" class="chatbot-chip" data-prompt="Ada rekomendasi menu di bawah 20 ribu?">Rekomendasi menu hemat</button>
+                    </div>
+
+                    <button type="button" class="btn-cta-primary chatbot-cta-button" id="chatbotCtaButton">Mulai Chat Sekarang</button>
+                </aside>
+
+                <article class="chatbot-panel reveal reveal-delay-2" aria-labelledby="chatbotPanelTitle">
+                    <div class="chatbot-panel-head">
+                        <h3 class="chatbot-panel-title" id="chatbotPanelTitle">Chatbot Kantin Kita</h3>
+                        <span class="chatbot-status">
+                            <span class="chatbot-status-dot"></span>
+                            Online
+                        </span>
+                    </div>
+
+                    <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite" aria-label="Percakapan chatbot"></div>
+
+                    <form class="chatbot-form" id="chatbotForm">
+                        <label for="chatbotInput" class="chatbot-sr-only">Tulis pertanyaan untuk chatbot</label>
+                        <input id="chatbotInput" class="chatbot-input" type="text" maxlength="400" autocomplete="off" placeholder="Contoh: Menu pedas yang paling favorit apa?" aria-describedby="chatbotHint" required>
+                        <button type="submit" class="chatbot-send" id="chatbotSendButton">Kirim</button>
+                    </form>
+
+                    <p class="chatbot-hint" id="chatbotHint">Tekan Enter untuk mengirim pesan.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- ================ FOOTER ================ -->
     <footer class="footer" id="contact">
         <div class="footer-inner">
@@ -2183,6 +2728,127 @@
         });
 
         revealEls.forEach(el => observer.observe(el));
+
+        // Chatbot interaction
+        const chatbotForm = document.getElementById('chatbotForm');
+        if (chatbotForm) {
+            const CHATBOT_ENDPOINT = "{{ route('chatbot.respond') }}";
+            const CHATBOT_ERROR_MESSAGE = 'Maaf, chatbot sedang tidak tersedia. Coba lagi sebentar ya.';
+            const chatbotMessages = document.getElementById('chatbotMessages');
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotSendButton = document.getElementById('chatbotSendButton');
+            const chatbotCtaButton = document.getElementById('chatbotCtaButton');
+            const chatbotChips = document.querySelectorAll('.chatbot-chip');
+            let isChatbotSending = false;
+
+            const appendMessage = (role, text) => {
+                const bubble = document.createElement('div');
+                bubble.className = `chatbot-bubble ${role === 'user' ? 'chatbot-bubble-user' : 'chatbot-bubble-bot'}`;
+                bubble.textContent = text;
+                chatbotMessages.appendChild(bubble);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            };
+
+            const showTyping = () => {
+                const typingBubble = document.createElement('div');
+                typingBubble.id = 'chatbotTyping';
+                typingBubble.className = 'chatbot-bubble chatbot-bubble-bot';
+                typingBubble.innerHTML = '<span class="chatbot-typing"><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span></span>';
+                chatbotMessages.appendChild(typingBubble);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            };
+
+            const hideTyping = () => {
+                const typingBubble = document.getElementById('chatbotTyping');
+                if (typingBubble) {
+                    typingBubble.remove();
+                }
+            };
+
+            const setSendingState = (sending) => {
+                isChatbotSending = sending;
+                chatbotMessages.setAttribute('aria-busy', sending ? 'true' : 'false');
+                chatbotInput.disabled = sending;
+                chatbotSendButton.disabled = sending;
+                chatbotChips.forEach((chip) => {
+                    chip.disabled = sending;
+                });
+            };
+
+            const requestChatbotReply = async (prompt) => {
+                const cleanedPrompt = prompt.trim();
+                if (!cleanedPrompt || isChatbotSending) {
+                    return;
+                }
+
+                appendMessage('user', cleanedPrompt);
+                chatbotInput.value = '';
+                setSendingState(true);
+                showTyping();
+
+                const controller = new AbortController();
+                const timeoutId = window.setTimeout(() => controller.abort(), 30000);
+
+                try {
+                    const response = await fetch(CHATBOT_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ prompt: cleanedPrompt }),
+                        signal: controller.signal
+                    });
+
+                    const payload = await response.json().catch(() => ({}));
+                    if (!response.ok) {
+                        throw new Error(payload.message || 'Permintaan gagal diproses.');
+                    }
+
+                    const botReply = typeof payload.result === 'string' && payload.result.trim()
+                        ? payload.result.trim()
+                        : CHATBOT_ERROR_MESSAGE;
+
+                    hideTyping();
+                    appendMessage('bot', botReply);
+                } catch (error) {
+                    hideTyping();
+                    if (error.name === 'AbortError') {
+                        appendMessage('bot', 'Respon chatbot terlalu lama. Coba kirim ulang pertanyaanmu.');
+                    } else {
+                        appendMessage('bot', CHATBOT_ERROR_MESSAGE);
+                    }
+                } finally {
+                    window.clearTimeout(timeoutId);
+                    setSendingState(false);
+                    chatbotInput.focus();
+                }
+            };
+
+            chatbotForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                requestChatbotReply(chatbotInput.value);
+            });
+
+            chatbotChips.forEach((chip) => {
+                chip.addEventListener('click', () => {
+                    requestChatbotReply(chip.dataset.prompt || chip.textContent || '');
+                });
+            });
+
+            if (chatbotCtaButton) {
+                chatbotCtaButton.addEventListener('click', () => {
+                    chatbotForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    try {
+                        chatbotInput.focus({ preventScroll: true });
+                    } catch (error) {
+                        chatbotInput.focus();
+                    }
+                });
+            }
+
+            appendMessage('bot', 'Halo, aku asisten Kantin Kita. Kamu bisa tanya menu terlaris, jam operasional, atau cara pesan tanpa antre.');
+        }
 
         // Parallax on hero glow
         window.addEventListener('scroll', () => {
