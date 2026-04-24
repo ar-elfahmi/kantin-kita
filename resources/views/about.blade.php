@@ -1050,7 +1050,7 @@
               </li>
             </ul>
             <div class="map-placeholder">
-              <img src="{{ asset('images/map-placeholder.png') }}" alt="Peta lokasi Kantin Kita" class="map-placeholder-img" />
+              <img src="https://i.postimg.cc/g00kB6wH/map-placeholder.png" alt="Peta lokasi Kantin Kita" class="map-placeholder-img" />
             </div>
           </aside>
         </div>

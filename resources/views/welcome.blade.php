@@ -1729,8 +1729,8 @@
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-bg-shapes" aria-hidden="true">
-        <img src="{{ asset('images/maskot.png') }}" class="hero-circle-right" alt="" />
-        <img src="{{ asset('images/image-background.png') }}" class="hero-circle-left" alt="" />
+        <img src="https://i.postimg.cc/3J316KB9/maskot.png" class="hero-circle-right" alt="" />
+        <img src="https://i.postimg.cc/SR9KfFXb/image-background.png" class="hero-circle-left" alt="" />
       </div>
       <h1 class="hero-headline" id="hero-title"><span class="headline-brown">Pesan Makanan</span> <span
           class="headline-green">Tanpa Antri</span></h1>
