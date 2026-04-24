@@ -1,3082 +1,2411 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kantin Kita — Pesan Makanan Tanpa Antri</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kantin Kita â€” Pesan Makanan Tanpa Antri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
         *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --cream: #FBF5E8;
-            --cream-dark: #F5EDD9;
-            --brown: #744622;
-            --brown-60: rgba(116, 70, 34, 0.60);
-            --brown-70: rgba(116, 70, 34, 0.70);
-            --brown-80: rgba(116, 70, 34, 0.80);
-            --brown-10: rgba(116, 70, 34, 0.10);
-            --green: #42766A;
-            --green-dark: #2F5A4F;
-            --green-10: rgba(66, 118, 106, 0.10);
-            --green-20: rgba(66, 118, 106, 0.20);
-            --white: #FFFFFF;
-            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07), 0 10px 15px rgba(0, 0, 0, 0.07);
-            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.18);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', -apple-system, sans-serif;
-            background: var(--cream);
-            color: var(--brown);
-            overflow-x: hidden;
-        }
-
-        /* ===================== NAVBAR ===================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 0 64px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            background: rgba(251, 245, 232, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--brown-10);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            box-shadow: 0 4px 24px rgba(116, 70, 34, 0.08);
-        }
-
-        .navbar-inner {
-            max-width: 1312px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .brand-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--brown);
-            line-height: 1.33;
-            letter-spacing: -0.5px;
-        }
-
-        .brand-tagline {
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--brown-60);
-            letter-spacing: -0.3px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--brown-70);
-            letter-spacing: -0.5px;
-            transition: color 0.2s ease;
-            position: relative;
-            padding-bottom: 4px;
-        }
-
-        .nav-links a:hover {
-            color: var(--brown);
-        }
-
-        .nav-links .nav-active {
-            font-weight: 600;
-            color: var(--brown);
-            border-bottom: 2px solid var(--green);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .hamburger-btn {
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            border: 1px solid var(--brown-10);
-            background: var(--white);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 4px;
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
-        }
-
-        .hamburger-btn span {
-            width: 18px;
-            height: 2px;
-            background: var(--brown);
-            border-radius: 999px;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .hamburger-btn:hover {
-            box-shadow: 0 6px 16px rgba(116, 70, 34, 0.12);
-        }
-
-        .hamburger-btn.is-open span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-        }
-
-        .hamburger-btn.is-open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.is-open span:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-        }
-
-        .mobile-nav-panel {
-            display: none;
-        }
-
-        .mobile-nav-link {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--brown);
-            letter-spacing: -0.3px;
-            min-height: 40px;
-            border-radius: 12px;
-            padding: 0 12px;
-            display: flex;
-            align-items: center;
-            background: var(--cream-dark);
-        }
-
-        .mobile-nav-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 4px;
-        }
-
-        .btn-login {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 20px;
-            background: var(--white);
-            color: var(--brown);
-            font-size: 16px;
-            font-weight: 500;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-login:hover {
-            box-shadow: 0 4px 12px var(--brown-10);
-            transform: translateY(-1px);
-        }
-
-        .btn-register {
-            padding: 12px 24px;
-            border-radius: 20px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-register:hover {
-            background: var(--green-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(42, 118, 106, 0.35);
-        }
-
-        /* ===================== HERO ===================== */
-        .hero-section {
-            min-height: 100vh;
-            padding: 80px 64px 0;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 50%, rgba(116, 70, 34, 0.04) 100%);
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg-glow {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: var(--green-20);
-            filter: blur(80px);
-            right: -100px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            animation: pulse-glow 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-
-            0%,
-            100% {
-                transform: translateY(-50%) scale(1);
-                opacity: 0.6;
-            }
-
-            50% {
-                transform: translateY(-50%) scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        .hero-inner {
-            max-width: 1312px;
-            width: 100%;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
-            padding: 80px 0;
-        }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 24px;
-            border-radius: 9999px;
-            background: var(--green-10);
-            color: var(--green);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            width: fit-content;
-            animation: fade-in-up 0.6s ease both;
-        }
-
-        .hero-headline {
-            display: flex;
-            flex-direction: column;
-            animation: fade-in-up 0.6s 0.1s ease both;
-        }
-
-        .hero-headline h1 {
-            font-size: clamp(52px, 5vw, 72px);
-            font-weight: 700;
-            line-height: 1;
-            letter-spacing: -1px;
-        }
-
-        .hero-headline .headline-white {
-            color: var(--brown);
-        }
-
-        .hero-headline .headline-green {
-            color: var(--green);
-        }
-
-        .hero-description {
-            font-size: 20px;
-            font-weight: 400;
-            color: var(--brown-70);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-            max-width: 560px;
-            animation: fade-in-up 0.6s 0.2s ease both;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            animation: fade-in-up 0.6s 0.3s ease both;
-        }
-
-        .btn-cta-primary {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 18px 32px;
-            border-radius: 20px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-cta-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-
-        .btn-cta-primary:hover {
-            background: var(--green-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(42, 118, 106, 0.40);
-        }
-
-        .btn-cta-primary:hover::before {
-            opacity: 1;
-        }
-
-        .btn-cta-secondary {
-            padding: 18px 32px;
-            border-radius: 20px;
-            background: var(--white);
-            color: var(--brown);
-            font-size: 18px;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            border: 2px solid var(--brown-10);
-            transition: all 0.25s ease;
-        }
-
-        .btn-cta-secondary:hover {
-            border-color: var(--brown-10);
-            box-shadow: var(--shadow-sm);
-            transform: translateY(-2px);
-        }
-
-        .hero-stats {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            animation: fade-in-up 0.6s 0.4s ease both;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .stat-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 20px;
-            background: var(--green-10);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--brown-60);
-            letter-spacing: -0.3px;
-        }
-
-        /* Hero Image Column */
-        .hero-visual {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fade-in-up 0.6s 0.2s ease both;
-        }
-
-        .hero-blur-glow {
-            position: absolute;
-            width: 384px;
-            height: 384px;
-            border-radius: 50%;
-            background: var(--green-20);
-            filter: blur(48px);
-            right: -40px;
-            bottom: -40px;
-            pointer-events: none;
-        }
-
-        .hero-card {
-            width: 100%;
-            max-width: 560px;
-            background: var(--white);
-            border-radius: 25px;
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-
-        .hero-card:hover {
-            transform: translateY(-6px);
-        }
-
-        .hero-card img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 20px;
-            display: block;
-        }
-
-        .floating-badge {
-            position: absolute;
-            bottom: -24px;
-            left: -32px;
-            background: var(--white);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.08), 0 20px 25px rgba(0, 0, 0, 0.10);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 2;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-
-        .badge-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            background: var(--green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .badge-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.3px;
-        }
-
-        .badge-sub {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--brown-60);
-        }
-
-        /* ===================== FEATURES ===================== */
-        .features-section {
-            padding: 80px 64px;
-            background: var(--white);
-        }
-
-        .features-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 64px;
-        }
-
-        .section-header {
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -1px;
-            line-height: 1;
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--brown-70);
-            margin-top: 16px;
-            letter-spacing: -0.3px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-        }
-
-        .feature-card {
-            background: var(--cream);
-            border-radius: 25px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: var(--green-10);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            background: var(--green);
-        }
-
-        .feature-card:hover .feature-icon svg path {
-            fill: white;
-        }
-
-        .feature-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.5px;
-        }
-
-        .feature-desc {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--brown-70);
-            line-height: 1.5;
-            letter-spacing: -0.3px;
-        }
-
-        /* ===================== MENU ===================== */
-        .menu-section {
-            padding: 80px 64px;
-            background: var(--cream);
-        }
-
-        .menu-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 48px;
-        }
-
-        .menu-header {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-
-        .menu-title {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -1px;
-            line-height: 1;
-        }
-
-        .menu-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--brown-70);
-            margin-top: 16px;
-            letter-spacing: -0.3px;
-        }
-
-        .btn-view-all {
-            padding: 16px 32px;
-            border-radius: 20px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            white-space: nowrap;
-            transition: all 0.25s ease;
-        }
-
-        .btn-view-all:hover {
-            background: var(--green-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(42, 118, 106, 0.35);
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-
-        .menu-card {
-            background: var(--white);
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .menu-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .menu-card-img {
-            position: relative;
-            height: 256px;
-            overflow: hidden;
-            background: var(--cream-dark);
-        }
-
-        .menu-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .menu-card:hover .menu-card-img img {
-            transform: scale(1.08);
-        }
-
-        .menu-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            padding: 8px 16px;
-            border-radius: 15px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--white);
-            letter-spacing: -0.3px;
-        }
-
-        .badge-bestseller {
-            background: var(--green);
-        }
-
-        .badge-promo {
-            background: var(--brown);
-        }
-
-        .menu-card-body {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .menu-card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .menu-card-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.5px;
-        }
-
-        .menu-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .rating-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--green);
-            letter-spacing: -0.3px;
-        }
-
-        .menu-card-desc {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--brown-70);
-            line-height: 1.5;
-            letter-spacing: -0.3px;
-        }
-
-        .menu-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .menu-price-block {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .price-original {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(116, 70, 34, 0.50);
-            text-decoration: line-through;
-            letter-spacing: -0.3px;
-        }
-
-        .price-current {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.5px;
-        }
-
-        .btn-order {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 15px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: -0.3px;
-            transition: all 0.25s ease;
-        }
-
-        .btn-order:hover {
-            background: var(--green-dark);
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(42, 118, 106, 0.35);
-        }
-
-        /* ===================== CTA SECTION ===================== */
-        .cta-section {
-            padding: 96px 64px;
-            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-bg-orb-1 {
-            position: absolute;
-            width: 256px;
-            height: 256px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            filter: blur(40px);
-            left: 40px;
-            top: 40px;
-            pointer-events: none;
-        }
-
-        .cta-bg-orb-2 {
-            position: absolute;
-            width: 384px;
-            height: 384px;
-            border-radius: 50%;
-            background: rgba(251, 245, 232, 0.08);
-            filter: blur(40px);
-            right: -40px;
-            bottom: -40px;
-            pointer-events: none;
-        }
-
-        .cta-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-content {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .cta-title {
-            font-size: clamp(36px, 4vw, 48px);
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: -1px;
-            line-height: 1;
-        }
-
-        .cta-subtitle {
-            font-size: 20px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.90);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
-
-        .cta-benefits {
-            background: rgba(255, 255, 255, 0.10);
-            border-radius: 25px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            backdrop-filter: blur(10px);
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .benefit-check {
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.20);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .benefit-text {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--white);
-            letter-spacing: -0.3px;
-        }
-
-        .btn-cta-white {
-            padding: 21px 40px;
-            border-radius: 20px;
-            background: var(--white);
-            color: var(--green);
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-            display: inline-block;
-            transition: all 0.25s ease;
-        }
-
-        .btn-cta-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.20);
-        }
-
-        .cta-image-card {
-            background: rgba(255, 255, 255, 0.10);
-            border-radius: 25px;
-            padding: 32px;
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-        }
-
-        .cta-image-card img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            border-radius: 20px;
-            display: block;
-        }
-
-        /* ===================== TESTIMONIALS ===================== */
-        .testimonials-section {
-            padding: 80px 64px;
-            background: var(--white);
-        }
-
-        .testimonials-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 64px;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-
-        /* Swipeable carousel wrapper — active only on mobile */
-        .testimonials-carousel {
-            position: relative;
-        }
-
-        .testimonials-track {
-            display: contents;
-            /* transparent on desktop — grid takes over */
-        }
-
-        .testimonial-card {
-            background: var(--cream);
-            border-radius: 25px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .stars {
-            display: flex;
-            gap: 4px;
-        }
-
-        .testimonial-text {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--brown-80);
-            line-height: 1.7;
-            letter-spacing: -0.3px;
-            flex: 1;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .author-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 20px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .author-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.3px;
-        }
-
-        .author-role {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--brown-60);
-            letter-spacing: -0.3px;
-        }
-
-        /* Carousel dots */
-        .testimonial-dots {
-            display: none;
-            /* hidden on desktop */
-        }
-
-        /* ===================== CHATBOT ===================== */
-        .chatbot-section {
-            padding: 0 64px 56px;
-            background: var(--white);
-        }
-
-        .chatbot-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .chatbot-shell {
-            display: grid;
-            grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.35fr);
-            gap: 24px;
-            align-items: stretch;
-        }
-
-        .chatbot-cta-card {
-            border-radius: 25px;
-            padding: 24px;
-            background: linear-gradient(165deg, var(--cream) 0%, var(--cream-dark) 100%);
-            border: 1px solid var(--brown-10);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chatbot-cta-card::before {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 220px;
-            right: -72px;
-            top: -72px;
-            border-radius: 50%;
-            background: var(--green-20);
-            filter: blur(20px);
-            pointer-events: none;
-        }
-
-        .chatbot-cta-eyebrow {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: var(--green);
-            text-transform: uppercase;
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-cta-title {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.6px;
-            line-height: 1.15;
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-cta-copy {
-            font-size: 15px;
-            font-weight: 400;
-            color: var(--brown-70);
-            letter-spacing: -0.2px;
-            line-height: 1.5;
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-focus-frame {
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            min-height: 170px;
-            box-shadow: var(--shadow-md);
-            isolation: isolate;
-            z-index: 1;
-        }
-
-        .chatbot-focus-image {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-            display: block;
-            transform: scale(1.03);
-            transition: transform 0.35s ease;
-            filter: saturate(1.05);
-        }
-
-        .chatbot-focus-frame:hover .chatbot-focus-image {
-            transform: scale(1.08);
-        }
-
-        .chatbot-focus-frame::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 25%, rgba(0, 0, 0, 0.52) 100%);
-            pointer-events: none;
-        }
-
-        .chatbot-focus-overlay {
-            position: absolute;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border-radius: 16px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            background: rgba(251, 245, 232, 0.72);
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 1;
-        }
-
-        .chatbot-focus-tag {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--green-dark);
-            letter-spacing: -0.2px;
-        }
-
-        .chatbot-focus-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.3px;
-            line-height: 1.2;
-        }
-
-        .chatbot-focus-meta {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--brown-70);
-            letter-spacing: -0.2px;
-        }
-
-        .chatbot-chip-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            z-index: 1;
-        }
-
-        .chatbot-chip {
-            border: none;
-            border-radius: 9999px;
-            background: var(--white);
-            color: var(--brown);
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-            padding: 8px 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px var(--brown-10);
-        }
-
-        .chatbot-chip:hover {
-            transform: translateY(-1px);
-            background: var(--green-10);
-        }
-
-        .chatbot-chip:focus-visible,
-        .chatbot-cta-button:focus-visible,
-        .chatbot-send:focus-visible {
-            outline: 3px solid var(--green-20);
-            outline-offset: 2px;
-        }
-
-        .chatbot-cta-button {
-            margin-top: auto;
-            width: fit-content;
-            z-index: 1;
-            padding: 14px 26px;
-            border-radius: 16px;
-            font-size: 16px;
-        }
-
-        .chatbot-panel {
-            border-radius: 25px;
-            background: linear-gradient(180deg, rgba(251, 245, 232, 0.92) 0%, rgba(245, 237, 217, 0.84) 100%);
-            border: 1px solid var(--brown-10);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .chatbot-panel::before {
-            content: '';
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: var(--green-10);
-            filter: blur(36px);
-            right: -95px;
-            bottom: -120px;
-            pointer-events: none;
-        }
-
-        .chatbot-panel-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.88);
-            border-bottom: 1px solid var(--brown-10);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-panel-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -0.4px;
-        }
-
-        .chatbot-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--green-dark);
-        }
-
-        .chatbot-status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 0 6px var(--green-10);
-        }
-
-        .chatbot-messages {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 16px;
-            flex: 1 1 auto;
-            min-height: 250px;
-            overflow-y: auto;
-            background:
-                radial-gradient(circle at top right, rgba(66, 118, 106, 0.15), transparent 45%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(245, 237, 217, 0.55) 100%);
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-bubble {
-            max-width: min(80%, 560px);
-            border-radius: 18px;
-            padding: 11px 14px;
-            font-size: 14px;
-            font-weight: 400;
-            letter-spacing: -0.2px;
-            line-height: 1.5;
-            word-break: break-word;
-            white-space: pre-line;
-        }
-
-        .chatbot-bubble-user {
-            align-self: flex-end;
-            background: var(--green);
-            color: var(--white);
-            border-bottom-right-radius: 8px;
-            box-shadow: 0 10px 24px rgba(47, 90, 79, 0.2);
-        }
-
-        .chatbot-bubble-bot {
-            align-self: flex-start;
-            background: var(--white);
-            color: var(--brown-80);
-            border: 1px solid var(--brown-10);
-            border-bottom-left-radius: 8px;
-            box-shadow: 0 8px 20px rgba(116, 70, 34, 0.08);
-        }
-
-        .chatbot-form {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            padding: 12px 16px 0;
-            background: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid var(--brown-10);
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-input {
-            border-radius: 16px;
-            border: 1px solid var(--brown-10);
-            background: var(--white);
-            padding: 11px 14px;
-            font-size: 15px;
-            font-weight: 400;
-            color: var(--brown);
-            letter-spacing: -0.2px;
-            outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .chatbot-input:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 4px var(--green-10);
-        }
-
-        .chatbot-send {
-            border: none;
-            border-radius: 16px;
-            background: var(--green);
-            color: var(--white);
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            padding: 0 20px;
-            min-height: 44px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .chatbot-send:hover {
-            background: var(--green-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(42, 118, 106, 0.25);
-        }
-
-        .chatbot-send:disabled,
-        .chatbot-input:disabled,
-        .chatbot-chip:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .chatbot-hint {
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--brown-60);
-            letter-spacing: -0.2px;
-            padding: 8px 16px 14px;
-            background: rgba(255, 255, 255, 0.9);
-            position: relative;
-            z-index: 1;
-        }
-
-        .chatbot-typing {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .chatbot-typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--green);
-            opacity: 0.25;
-            animation: chatbot-typing 1.2s ease-in-out infinite;
-        }
-
-        .chatbot-typing-dot:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .chatbot-typing-dot:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        @keyframes chatbot-typing {
-
-            0%,
-            80%,
-            100% {
-                transform: translateY(0);
-                opacity: 0.25;
-            }
-
-            40% {
-                transform: translateY(-3px);
-                opacity: 1;
-            }
-        }
-
-        .chatbot-sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-            white-space: nowrap;
-        }
-
-        /* ===================== FOOTER ===================== */
-        .footer {
-            background: var(--brown);
-            padding: 64px;
-        }
-
-        .footer-inner {
-            max-width: 1312px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 48px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 48px;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .footer-brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-brand-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: -0.5px;
-        }
-
-        .footer-brand-tagline {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.60);
-            letter-spacing: -0.3px;
-        }
-
-        .footer-desc {
-            font-size: 16px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.70);
-            line-height: 1.6;
-            letter-spacing: -0.3px;
-        }
-
-        .footer-socials {
-            display: flex;
-            gap: 16px;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.10);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .social-btn:hover {
-            background: rgba(255, 255, 255, 0.20);
-            transform: translateY(-2px);
-        }
-
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .footer-col-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: -0.5px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            list-style: none;
-        }
-
-        .footer-links a {
-            font-size: 16px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.70);
-            text-decoration: none;
-            letter-spacing: -0.3px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-        }
-
-        .footer-contact {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .contact-icon {
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .contact-text {
-            font-size: 16px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.70);
-            line-height: 1.5;
-            letter-spacing: -0.3px;
-        }
-
-        .footer-divider {
-            border: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.10);
-        }
-
-        .footer-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .footer-copyright {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.60);
-            letter-spacing: -0.3px;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.60);
-            text-decoration: none;
-            letter-spacing: -0.3px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-legal a:hover {
-            color: var(--white);
-        }
-
-        /* ===================== SCROLL ANIMATIONS ===================== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 {
-            transition-delay: 0.1s;
-        }
-
-        .reveal-delay-2 {
-            transition-delay: 0.2s;
-        }
-
-        .reveal-delay-3 {
-            transition-delay: 0.3s;
-        }
-
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===================== RESPONSIVE ===================== */
-        @media (max-width: 1024px) {
-            .navbar {
-                padding: 0 32px;
-            }
-
-            .hero-section {
-                padding: 80px 32px 0;
-            }
-
-            .hero-inner {
-                grid-template-columns: 1fr;
-                padding: 80px 0 60px;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .features-section,
-            .menu-section,
-            .cta-section,
-            .testimonials-section,
-            .chatbot-section,
-            .footer {
-                padding: 60px 32px;
-            }
-
-            .chatbot-section {
-                padding: 44px 32px;
-            }
-
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .testimonials-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .cta-inner {
-                grid-template-columns: 1fr;
-            }
-
-            .chatbot-shell {
-                grid-template-columns: 1fr;
-            }
-
-            .chatbot-messages {
-                min-height: 280px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 32px;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
-            .menu-title {
-                font-size: 36px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0 16px;
-                height: auto;
-                min-height: 72px;
-            }
-
-            .navbar-inner {
-                min-height: 72px;
-                padding: 10px 0;
-                gap: 10px;
-            }
-
-            .brand {
-                gap: 8px;
-            }
-
-            .brand-icon {
-                width: 40px;
-                height: 40px;
-                border-radius: 14px;
-            }
-
-            .brand-name {
-                font-size: 19px;
-                line-height: 1.2;
-            }
-
-            .brand-tagline {
-                font-size: 10px;
-                line-height: 1.2;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .nav-actions {
-                display: none;
-            }
-
-            .hamburger-btn {
-                display: inline-flex;
-            }
-
-            .mobile-nav-panel {
-                position: fixed;
-                top: 82px;
-                left: 16px;
-                right: 16px;
-                z-index: 999;
-                background: rgba(255, 255, 255, 0.98);
-                border: 1px solid var(--brown-10);
-                border-radius: 16px;
-                box-shadow: 0 10px 24px rgba(116, 70, 34, 0.14);
-                padding: 12px;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .mobile-nav-panel.is-open {
-                display: flex;
-            }
-
-            .mobile-nav-actions {
-                flex-direction: column;
-            }
-
-            .mobile-nav-actions .btn-login,
-            .mobile-nav-actions .btn-register {
-                justify-content: center;
-                width: 100%;
-                border-radius: 12px;
-                min-height: 40px;
-                padding: 10px 12px;
-                font-size: 13px;
-                white-space: nowrap;
-            }
-
-            .hero-section {
-                padding: 72px 16px 0;
-            }
-
-            .features-section,
-            .menu-section,
-            .cta-section,
-            .testimonials-section,
-            .chatbot-section,
-            .footer {
-                padding: 36px 16px;
-            }
-
-            .chatbot-section {
-                padding: 28px 16px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-card {
-                padding: 18px;
-                gap: 12px;
-            }
-
-            .feature-icon {
-                width: 56px;
-                height: 56px;
-            }
-
-            .feature-name {
-                font-size: 19px;
-            }
-
-            .feature-desc {
-                font-size: 14px;
-            }
-
-            .menu-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 12px;
-            }
-
-            .menu-card-body {
-                padding: 12px;
-                gap: 8px;
-            }
-
-            .menu-card-name {
-                font-size: 15px;
-            }
-
-            .menu-card-desc {
-                font-size: 12px;
-                line-height: 1.35;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                line-clamp: 2;
-                overflow: hidden;
-            }
-
-            .btn-order {
-                min-height: 36px;
-                padding: 8px 10px;
-                border-radius: 12px;
-                font-size: 13px;
-            }
-
-            .menu-card-img {
-                height: 150px;
-            }
-
-            .price-current {
-                font-size: 18px;
-            }
-
-            .menu-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 20px;
-            }
-
-            /* Testimonials swipeable carousel on mobile */
-            .testimonials-carousel {
-                overflow: hidden;
-            }
-
-            .testimonials-grid {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                scroll-padding-inline: calc(50vw - 37vw);
-                -webkit-overflow-scrolling: touch;
-                scroll-behavior: smooth;
-                gap: 14px;
-                padding: 4px calc(50vw - 37vw) 12px;
-                /* hide scrollbar */
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-
-            .testimonials-grid::-webkit-scrollbar {
-                display: none;
-            }
-
-            .testimonials-grid .testimonial-card {
-                flex: 0 0 74vw;
-                max-width: 340px;
-                scroll-snap-align: center;
-                padding: 22px;
-                border-radius: 20px;
-                gap: 16px;
-                transform: scale(0.9);
-                opacity: 0.68;
-                transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .testimonials-grid .testimonial-card:hover {
-                transform: scale(0.9);
-                box-shadow: none;
-            }
-
-            .testimonials-grid .testimonial-card.is-active,
-            .testimonials-grid .testimonial-card.is-active:hover {
-                transform: scale(1);
-                opacity: 1;
-                box-shadow: 0 16px 34px rgba(116, 70, 34, 0.16);
-            }
-
-            .testimonial-text {
-                font-size: 14px;
-                line-height: 1.6;
-            }
-
-            .author-avatar {
-                width: 44px;
-                height: 44px;
-                border-radius: 14px;
-            }
-
-            .author-name {
-                font-size: 14px;
-            }
-
-            .author-role {
-                font-size: 12px;
-            }
-
-            /* Pagination dots */
-            .testimonial-dots {
-                display: flex;
-                justify-content: center;
-                gap: 8px;
-                margin-top: 20px;
-            }
-
-            .testimonial-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: var(--brown-10);
-                border: none;
-                padding: 0;
-                cursor: pointer;
-                transition: background 0.25s ease, transform 0.25s ease;
-                flex-shrink: 0;
-            }
-
-            .testimonial-dot.active {
-                background: var(--green);
-                transform: scale(1.35);
-            }
-
-            .chatbot-shell {
-                gap: 16px;
-            }
-
-            .chatbot-cta-card,
-            .chatbot-panel {
-                border-radius: 20px;
-            }
-
-            .chatbot-cta-card {
-                padding: 18px;
-            }
-
-            .chatbot-cta-title {
-                font-size: 22px;
-            }
-
-            .chatbot-focus-frame {
-                min-height: 150px;
-            }
-
-            .chatbot-focus-image {
-                height: 160px;
-            }
-
-            .chatbot-messages {
-                min-height: 220px;
-                padding: 16px;
-            }
-
-            .chatbot-form {
-                grid-template-columns: 1fr;
-                padding: 12px 14px 0;
-            }
-
-            .chatbot-send {
-                min-height: 40px;
-            }
-
-            .chatbot-hint {
-                padding: 8px 14px 14px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-inner {
-                gap: 28px;
-            }
-
-            .footer-brand {
-                gap: 16px;
-            }
-
-            .footer-col {
-                gap: 14px;
-            }
-
-            .footer-col-title {
-                font-size: 18px;
-            }
-
-            .footer-desc,
-            .contact-text,
-            .footer-links a {
-                font-size: 14px;
-                line-height: 1.5;
-            }
-
-            .footer-socials {
-                gap: 12px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-
-            .footer-legal {
-                gap: 14px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero-cta-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .section-title,
-            .menu-title,
-            .cta-title {
-                font-size: 32px;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .brand-tagline {
-                display: none;
-            }
-
-            .brand-name {
-                font-size: 18px;
-            }
-
-            .btn-login svg {
-                display: none;
-            }
-
-            .btn-login,
-            .btn-register {
-                padding: 9px 12px;
-                font-size: 12px;
-            }
-
-            .menu-card-img {
-                height: 136px;
-            }
-
-            .chatbot-panel-head {
-                padding: 16px;
-            }
-
-            .chatbot-panel-title {
-                font-size: 18px;
-            }
-
-            .chatbot-status {
-                font-size: 12px;
-            }
-
-            .footer {
-                padding: 26px 16px;
-            }
-
-            .footer-inner {
-                gap: 20px;
-            }
-
-            .footer-grid {
-                gap: 16px;
-            }
-
-            .footer-col-title {
-                font-size: 16px;
-            }
-
-            .footer-socials {
-                gap: 8px;
-            }
-
-            .social-btn {
-                width: 36px;
-                height: 36px;
-            }
-
-            .footer-bottom {
-                gap: 8px;
-            }
-
-            .hero-cta-group {
-                width: 100%;
-            }
-
-            .btn-cta-primary,
-            .btn-cta-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .section-title,
-            .menu-title,
-            .cta-title {
-                font-size: 28px;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .brand-name {
-                font-size: 16px;
-            }
-
-            .menu-card-img {
-                height: 128px;
-            }
-        }
-    </style>
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-light: #FBF5E8;
+      --bg-white: #FFFFFF;
+      --bg-dark: #42766A;
+      --text-main: #744622;
+      --text-muted: rgba(116, 70, 34, 0.72);
+      --focus-ring: rgba(66, 118, 106, 0.28);
+      --surface-soft: #F5EDD9;
+      --accent: #42766A;
+      --accent-dark: #2F5A4F;
+      --accent-10: rgba(66, 118, 106, 0.12);
+      --brown-10: rgba(116, 70, 34, 0.10);
+      --brown-16: rgba(116, 70, 34, 0.16);
+
+      --font-body: "Manrope", -apple-system, "Segoe UI", sans-serif;
+      --font-display: "Space Grotesk", "Manrope", sans-serif;
+
+      --fw-regular: 400;
+      --fw-medium: 500;
+      --fw-semibold: 600;
+      --fw-bold: 700;
+
+      --fs-display: clamp(2.35rem, 3.4vw, 3.5rem);
+      --fs-heading-lg: clamp(2rem, 2.6vw, 2.45rem);
+      --fs-heading-md: clamp(1.65rem, 2.1vw, 2rem);
+      --fs-body-lg: 1.125rem;
+      --fs-body: 1rem;
+      --fs-caption: 0.875rem;
+
+      --lh-tight: 1.15;
+      --lh-normal: 1.55;
+      --lh-relaxed: 1.72;
+
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-7: 32px;
+      --space-8: 40px;
+      --space-9: 48px;
+      --space-10: 64px;
+      --space-11: 80px;
+
+      --radius-soft: 16px;
+      --radius-md: 18px;
+      --radius-lg: 20px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-main);
+      background: var(--bg-light);
+      line-height: var(--lh-normal);
+      overflow-x: hidden;
+      padding-top: 72px;
+    }
+
+    a,
+    button,
+    input {
+      font: inherit;
+    }
+
+    a,
+    button {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* â”€â”€â”€ NAV â”€â”€â”€ */
+    .nav {
+      width: 100%;
+      min-height: 72px;
+      background: rgba(251, 245, 232, 0.95);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-9);
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--brown-10);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(251, 245, 232, 0.82);
+      border-bottom-color: var(--brown-16);
+      box-shadow: 0 6px 24px rgba(116, 70, 34, 0.12);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: var(--fw-bold);
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--text-main);
+      text-decoration: none;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(66, 118, 106, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      margin-right: 40px;
+    }
+
+    .nav-links a {
+      font-size: var(--fs-body);
+      font-weight: var(--fw-semibold);
+      color: var(--text-muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--text-main);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text-main);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    .nav-links a:active {
+      transform: translateY(1px);
+    }
+
+    .btn-signup {
+      font-size: var(--fs-body);
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      border: 1px solid var(--text-main);
+      border-radius: var(--radius-soft);
+      padding: 10px 24px;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-signup:hover {
+      background: var(--text-main);
+      color: var(--bg-white);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(116, 70, 34, 0.2);
+    }
+
+    .btn-signup:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* â”€â”€â”€ HERO â”€â”€â”€ */
+    .hero {
+      background: var(--bg-light);
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 40px 24px;
+      position: relative;
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+
+    .hero-bg-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .hero-circle-right {
+      position: absolute;
+      width: clamp(450px, 30vw, 450px);
+      height: auto;
+      top: -20px;
+      right: -30px;
+      object-fit: contain;
+      z-index: 1;
+    }
+
+    .hero-circle-left {
+      position: absolute;
+      width: 774px;
+      height: 774px;
+      top: auto;
+      left: -387px;
+      bottom: -387px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: var(--fs-display);
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      text-align: center;
+      line-height: var(--lh-tight);
+      letter-spacing: -0.02em;
+      max-width: 820px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .headline-brown {
+      color: var(--text-main);
+    }
+
+    .headline-green {
+      color: var(--accent);
+    }
+
+    .hero-subheadline {
+      font-size: var(--fs-body-lg);
+      font-weight: var(--fw-medium);
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: var(--space-6);
+      max-width: 560px;
+      line-height: var(--lh-relaxed);
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: var(--bg-white);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.01em;
+      font-family: var(--font-body);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0 42px;
+      height: 58px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: var(--space-7);
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 10px 22px rgba(66, 118, 106, 0.28);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(47, 90, 79, 0.34);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(47, 90, 79, 0.26);
+    }
+
+    .hero-mockup {
+      margin-top: var(--space-9);
+      width: 800px;
+      max-width: 100%;
+      background: var(--bg-white);
+      border: 1px solid rgba(116, 70, 34, 0.35);
+      border-radius: var(--radius-lg);
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 18px 42px rgba(116, 70, 34, 0.14);
+    }
+
+    .mockup-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(116, 70, 34, 0.35);
+    }
+
+    .mockup-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(116, 70, 34, 0.45);
+      background: transparent;
+    }
+
+    .mockup-body {
+      height: 300px;
+      overflow: hidden;
+      border-radius: 0 0 calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px);
+    }
+
+    .mockup-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: inherit;
+    }
+
+    /* â”€â”€â”€ TESTIMONIAL â”€â”€â”€ */
+    .testimonial {
+      background: var(--bg-light);
+      padding: 92px 40px 84px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .testimonial figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 981px;
+    }
+
+    .testimonial-quote {
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-weight: var(--fw-medium);
+      color: var(--text-main);
+      text-align: center;
+      line-height: 1.5;
+      font-style: normal;
+      letter-spacing: -0.01em;
+    }
+
+    .testimonial figcaption {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: var(--space-7);
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 0;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(66, 118, 106, 0.28);
+    }
+
+    .testimonial-role {
+      font-size: 0.82rem;
+      font-weight: var(--fw-medium);
+      color: var(--accent);
+    }
+
+    .testimonial-author {
+      font-size: 0.95rem;
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      text-align: left;
+      margin-top: 0;
+      line-height: 1.45;
+    }
+
+    /* â”€â”€â”€ DARK FEATURE â”€â”€â”€ */
+    .dark-feature {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      padding: 80px 100px;
+      display: flex;
+      align-items: center;
+      gap: 72px;
+      min-height: 580px;
+      overflow: hidden;
+    }
+
+    .dark-feature-content {
+      flex: 0 0 420px;
+      max-width: 420px;
+    }
+
+    .dark-feature-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3vw, 2.8rem);
+      color: #fff;
+      font-weight: var(--fw-bold);
+      line-height: var(--lh-tight);
+      letter-spacing: -0.02em;
+    }
+
+    .dark-feature-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: var(--space-7);
+      line-height: var(--lh-relaxed);
+    }
+
+    .dark-feature-testimonial {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.88);
+      margin-top: var(--space-7);
+      line-height: var(--lh-relaxed);
+      font-style: italic;
+      min-height: 80px;
+      transition: opacity 0.4s ease;
+    }
+
+    .dark-feature-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      transition: opacity 0.4s ease;
+    }
+
+    .dark-feature-author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark-feature-author-name {
+      font-size: 0.95rem;
+      font-weight: var(--fw-semibold);
+      color: #fff;
+    }
+
+    .dark-feature-author-role {
+      font-size: 0.82rem;
+      font-weight: var(--fw-medium);
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    /* â”€â”€ Carousel Media â”€â”€ */
+    .dark-feature-media {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 420px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .dark-feature-media:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 420px;
+    }
+
+    .carousel-card {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+    }
+
+    .carousel-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-card.active {
+      width: 280px;
+      height: 380px;
+      z-index: 3;
+      transform: translateX(0) scale(1);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .carousel-card.prev {
+      width: 220px;
+      height: 300px;
+      z-index: 2;
+      transform: translateX(-180px) scale(0.88);
+      opacity: 0.7;
+      filter: brightness(0.75);
+    }
+
+    .carousel-card.next {
+      width: 220px;
+      height: 300px;
+      z-index: 2;
+      transform: translateX(180px) scale(0.88);
+      opacity: 0.7;
+      filter: brightness(0.75);
+    }
+
+    .carousel-card.far-prev {
+      width: 180px;
+      height: 240px;
+      z-index: 1;
+      transform: translateX(-300px) scale(0.75);
+      opacity: 0.35;
+      filter: brightness(0.6);
+    }
+
+    .carousel-card.far-next {
+      width: 180px;
+      height: 240px;
+      z-index: 1;
+      transform: translateX(300px) scale(0.75);
+      opacity: 0.35;
+      filter: brightness(0.6);
+    }
+
+    .carousel-card.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(0) scale(0.6);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: #fff;
+      border-color: #fff;
+      transform: scale(1.2);
+    }
+
+    .carousel-dot:hover {
+      border-color: #fff;
+    }
+
+    /* â”€â”€â”€ FEATURE CARDS â”€â”€â”€ */
+    .feature-cards {
+      background: var(--bg-white);
+      padding: 80px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-heading-lg);
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      line-height: var(--lh-tight);
+      letter-spacing: -0.01em;
+    }
+
+    .section-tagline {
+      font-size: var(--fs-body-lg);
+      font-weight: var(--fw-medium);
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-style: italic;
+      line-height: var(--lh-normal);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 14px 32px rgba(116, 70, 34, 0.11);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 36px rgba(116, 70, 34, 0.18);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: var(--accent-10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .feature-icon {
+      background: var(--accent);
+    }
+
+    .card:hover .feature-icon svg path {
+      fill: white;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: var(--fw-bold);
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 1rem;
+      font-weight: var(--fw-medium);
+      color: var(--text-muted);
+      line-height: var(--lh-normal);
+    }
+
+    /* â”€â”€â”€ POPULAR MENU â”€â”€â”€ */
+    .menu-section {
+      padding: 48px 48px;
+      background: var(--bg-light);
+    }
+
+    .menu-section .section-header {
+      padding: 0 40px;
+      margin-bottom: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      text-align: left;
+    }
+
+    .menu-header-text {
+      text-align: left;
+    }
+
+    .btn-detail {
+      font-size: 0.9rem;
+      font-weight: var(--fw-bold);
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .btn-detail:hover {
+      color: var(--accent-dark);
+      text-decoration: underline;
+    }
+
+    .menu-card {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(116, 70, 34, 0.08);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 32px rgba(116, 70, 34, 0.12);
+    }
+
+    .menu-card-img {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+      background: var(--bg-light);
+    }
+
+    .menu-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .menu-card:hover .menu-card-img img {
+      transform: scale(1.08);
+    }
+
+    .menu-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: var(--fw-bold);
+      color: var(--bg-white);
+    }
+
+    .badge-bestseller {
+      background: var(--accent);
+    }
+
+    .badge-promo {
+      background: var(--text-main);
+    }
+
+    .menu-card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .menu-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .menu-card-name {
+      font-size: 1.1rem;
+      font-weight: var(--fw-bold);
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .menu-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .menu-rating svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--accent);
+    }
+
+    .rating-value {
+      font-weight: var(--fw-bold);
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .menu-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .menu-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+
+
+    /* â”€â”€â”€ CHATBOT SECTION â”€â”€â”€ */
+    .chatbot-section {
+      padding: 96px 5%;
+      background: var(--bg-white);
+    }
+
+    .chatbot-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .chatbot-shell {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .chatbot-cta-card {
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      background-image: linear-gradient(145deg, rgba(47, 90, 79, 0.85), rgba(66, 118, 106, 0.95)), url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=800&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(116, 70, 34, 0.1);
+      box-shadow: 0 14px 32px rgba(116, 70, 34, 0.11);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      color: var(--bg-white);
+    }
+
+    .chatbot-cta-eyebrow {
+      font-size: 0.95rem;
+      font-weight: var(--fw-semibold);
+      letter-spacing: -0.01em;
+      color: var(--surface-soft);
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .chatbot-cta-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-heading-sm);
+      font-weight: var(--fw-bold);
+      color: var(--bg-white);
+      letter-spacing: -0.02em;
+      line-height: var(--lh-tight);
+      margin: 0;
+    }
+
+    .chatbot-cta-copy {
+      font-size: 1rem;
+      font-weight: var(--fw-medium);
+      color: rgba(255, 255, 255, 0.85);
+      line-height: var(--lh-relaxed);
+      margin: 0;
+    }
+
+    .chatbot-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .chatbot-chip {
+      border: none;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--bg-white);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      font-weight: var(--fw-semibold);
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .chatbot-chip:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* â”€â”€â”€ CHATBOT UI â”€â”€â”€ */
+    .chatbot-panel {
+      border-radius: var(--radius-lg);
+      background: var(--surface-soft);
+      border: 1px solid rgba(116, 70, 34, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbot-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: var(--bg-white);
+      border-bottom: 1px solid rgba(116, 70, 34, 0.15);
+    }
+
+    .chatbot-panel-title {
+      font-size: 1.15rem;
+      font-weight: var(--fw-bold);
+      color: var(--text-main);
+    }
+
+    .chatbot-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: var(--fw-semibold);
+      color: var(--accent-dark);
+    }
+
+    .chatbot-status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-10);
+    }
+
+    .chatbot-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 24px;
+      height: 320px;
+      overflow-y: auto;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(245, 237, 217, 0.4) 100%);
+    }
+
+    .chatbot-bubble {
+      max-width: 85%;
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .chatbot-bubble-user {
+      align-self: flex-end;
+      background: var(--accent);
+      color: var(--bg-white);
+      border-bottom-right-radius: 4px;
+    }
+
+    .chatbot-bubble-bot {
+      align-self: flex-start;
+      background: var(--bg-white);
+      color: var(--text-main);
+      border: 1px solid rgba(116, 70, 34, 0.15);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chatbot-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px 20px 0;
+      background: var(--bg-white);
+    }
+
+    .chatbot-input {
+      border-radius: var(--radius-soft);
+      border: 1px solid rgba(116, 70, 34, 0.2);
+      background: var(--bg-white);
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: var(--font-body);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .chatbot-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-10);
+    }
+
+    .chatbot-send {
+      border: none;
+      border-radius: var(--radius-soft);
+      background: var(--accent);
+      color: var(--bg-white);
+      font-size: 1rem;
+      font-weight: var(--fw-bold);
+      padding: 0 24px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chatbot-send:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .chatbot-send:disabled,
+    .chatbot-input:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .chatbot-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 10px 20px 16px;
+      background: var(--bg-white);
+      margin: 0;
+    }
+
+    .chatbot-typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chatbot-typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.25;
+      animation: chatbot-typing 1.2s ease-in-out infinite;
+    }
+
+    .chatbot-typing-dot:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .chatbot-typing-dot:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes chatbot-typing {
+
+      0%,
+      80%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.25;
+      }
+
+      40% {
+        transform: translateY(-3px);
+        opacity: 1;
+      }
+    }
+
+    .chatbot-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+      white-space: nowrap;
+    }
+
+    /* â”€â”€â”€ CTA FORM â”€â”€â”€ */
+    .cta-form {
+      background: var(--bg-light);
+      padding: 80px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 568px;
+      justify-content: center;
+    }
+
+    .cta-form-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-heading-md);
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      line-height: var(--lh-tight);
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cta-form form {
+      width: min(100%, 380px);
+    }
+
+    .form-input {
+      width: 100%;
+      height: 64px;
+      border: 1px solid rgba(116, 70, 34, 0.42);
+      border-radius: var(--radius-soft);
+      background: var(--bg-white);
+      padding: 0 24px;
+      font-size: var(--fs-body-lg);
+      font-weight: var(--fw-medium);
+      font-family: var(--font-body);
+      color: var(--text-main);
+      margin-bottom: 16px;
+      outline: none;
+      display: block;
+    }
+
+    .form-input::placeholder {
+      color: rgba(116, 70, 34, 0.56);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-10);
+    }
+
+    .btn-cta {
+      width: 100%;
+      height: 64px;
+      background: var(--accent);
+      color: var(--bg-white);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.01em;
+      font-family: var(--font-body);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 10px 22px rgba(66, 118, 106, 0.3);
+    }
+
+    .btn-cta:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(47, 90, 79, 0.36);
+    }
+
+    .btn-cta:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* â”€â”€â”€ FOOTER â”€â”€â”€ */
+    .footer {
+      background: var(--text-main);
+      color: var(--bg-white);
+      position: relative;
+      overflow: hidden;
+      padding: 52px 0 36px;
+    }
+
+    .footer-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 80px;
+      padding: 0 40px 40px;
+    }
+
+    .footer-nav-group {
+      display: flex;
+      gap: 48px;
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: var(--fw-bold);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .footer-nav-link {
+      font-size: 0.95rem;
+      font-weight: var(--fw-semibold);
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      text-underline-offset: 4px;
+    }
+
+    .footer-nav-link:hover,
+    .footer-nav-link:focus-visible {
+      text-decoration: underline;
+      opacity: 1;
+    }
+
+    .footer-nav-link:active {
+      transform: translateY(1px);
+    }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.24);
+      margin: 0 80px;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 40px 0;
+    }
+
+    .social-icon-placeholder {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .footer-legal {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      padding-bottom: 32px;
+    }
+
+    .footer-legal-text {
+      font-size: var(--fs-caption);
+      font-weight: var(--fw-medium);
+      color: #fff;
+    }
+
+    /* â”€â”€â”€ UTILITY COLORS â”€â”€â”€ */
+    .text-green {
+      color: var(--accent);
+    }
+
+    /* â”€â”€â”€ SOCIAL LINKS â”€â”€â”€ */
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    /* footer decorative shapes */
+    .footer-shapes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .footer-shape {
+      position: absolute;
+    }
+
+    /* â”€â”€â”€ HAMBURGER â”€â”€â”€ */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: 16px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+    }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: rgba(251, 245, 232, 0.97);
+      border-top: 1px solid var(--brown-10);
+      padding: 16px 24px 24px;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 28px rgba(116, 70, 34, 0.12);
+    }
+
+    .nav-mobile.open {
+      display: flex;
+    }
+
+    .nav-mobile a {
+      font-size: var(--fs-body);
+      font-weight: var(--fw-semibold);
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--brown-10);
+    }
+
+    .nav-mobile a:hover,
+    .nav-mobile a:focus-visible {
+      color: var(--text-main);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .nav-mobile a:active {
+      transform: translateY(1px);
+    }
+
+    .nav-mobile a:last-child {
+      border-bottom: none;
+    }
+
+    .nav-mobile-cta {
+      margin-top: 16px;
+      border: 1px solid var(--text-main) !important;
+      border-radius: var(--radius-soft);
+      text-align: center;
+      padding: 12px 0 !important;
+    }
+
+    /* â”€â”€â”€ RESPONSIVE â”€â”€â”€ */
+    @media (max-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        min-height: 730px;
+      }
+
+      .hero-circle-left {
+        width: 680px;
+        height: 680px;
+        left: -340px;
+        bottom: -340px;
+      }
+
+      .dark-feature {
+        flex-direction: column;
+        padding: 60px;
+        gap: 48px;
+      }
+
+      .dark-feature-content {
+        max-width: 100%;
+        flex: unset;
+      }
+
+      .carousel-card.active {
+        width: 240px;
+        height: 320px;
+      }
+
+      .carousel-card.prev,
+      .carousel-card.next {
+        width: 180px;
+        height: 250px;
+        transform: translateX(-140px) scale(0.85);
+      }
+
+      .carousel-card.next {
+        transform: translateX(140px) scale(0.85);
+      }
+
+      .carousel-card.far-prev,
+      .carousel-card.far-next {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .chatbot-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .chatbot-cta-card {
+        padding: 40px 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .btn-signup {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .hero {
+        padding: 56px 24px 0;
+        min-height: 0;
+      }
+
+      .hero-headline {
+        font-size: 2.1rem;
+      }
+
+      .hero-subheadline {
+        font-size: 1rem;
+        margin-top: 16px;
+      }
+
+      .btn-primary {
+        height: 52px;
+        font-size: 0.95rem;
+        margin-top: 20px;
+        border-radius: var(--radius-soft);
+      }
+
+      .hero-mockup {
+        margin-top: 32px;
+      }
+
+      .mockup-body {
+        height: 180px;
+      }
+
+      .hero-bg-shapes {
+        display: none;
+      }
+
+      .testimonial {
+        padding: 48px 24px;
+        min-height: 0;
+      }
+
+      .testimonial-quote {
+        font-size: 1.1rem;
+      }
+
+      .dark-feature {
+        flex-direction: column;
+        padding: 48px 24px;
+        gap: 40px;
+      }
+
+      .dark-feature-content {
+        max-width: 100%;
+        flex: unset;
+      }
+
+      .dark-feature-title {
+        font-size: 1.8rem;
+      }
+
+      .dark-feature-description {
+        font-size: 1rem;
+      }
+
+      .dark-feature-media {
+        min-height: 320px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .carousel-track {
+        height: 320px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .carousel-card.active {
+        width: 200px;
+        height: 280px;
+      }
+
+      .carousel-card.prev,
+      .carousel-card.next {
+        width: 140px;
+        height: 200px;
+        transform: translateX(-110px) scale(0.82);
+      }
+
+      .carousel-card.next {
+        transform: translateX(110px) scale(0.82);
+      }
+
+      .carousel-card.far-prev,
+      .carousel-card.far-next {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .feature-cards {
+        padding: 48px 0;
+      }
+
+      .feature-cards .section-header,
+      .menu-section .section-header {
+        padding: 0 24px;
+        margin-bottom: 24px;
+      }
+
+      .section-title {
+        font-size: 1.9rem;
+      }
+
+      .section-tagline {
+        font-size: 0.95rem;
+      }
+
+      .cards-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 12px 24px 32px;
+        /* Bottom padding for scroll and shadow */
+        gap: 16px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .cards-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .card,
+      .menu-card {
+        flex: 0 0 82%;
+        scroll-snap-align: center;
+      }
+
+      .chatbot-section {
+        padding: 64px 5%;
+      }
+
+      .chatbot-cta-card {
+        padding: 32px 24px;
+      }
+
+      .chatbot-cta-title {
+        font-size: 1.5rem;
+      }
+
+      .cta-form {
+        padding: 48px 24px;
+        min-height: 0;
+      }
+
+      .cta-form-title {
+        font-size: 1.65rem;
+        margin-bottom: 28px;
+      }
+
+      .form-input {
+        width: 100%;
+        max-width: 360px;
+        font-size: 16px;
+      }
+
+      .btn-cta {
+        width: 100%;
+        max-width: 360px;
+        font-size: 0.95rem;
+        border-radius: var(--radius-soft);
+      }
+
+      .footer {
+        padding: 48px 0 32px;
+      }
+
+      .footer-nav {
+        flex-direction: column;
+        gap: 24px;
+        padding: 0 24px 32px;
+      }
+
+      .footer-nav-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .footer-divider {
+        margin: 0 24px;
+      }
+
+      .footer-social {
+        gap: 20px;
+        padding: 28px 0;
+      }
+
+      .social-link {
+        width: 36px;
+        height: 36px;
+      }
+
+      .footer-legal {
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0 24px 32px;
+      }
+
+      .footer-shapes {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- ================ NAVBAR ================ -->
-    <nav class="navbar" id="navbar">
-        <div class="navbar-inner">
-            <a href="{{ route('home') }}" class="brand">
-                <div class="brand-icon">
-                    <img src="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" alt="Kantin Kita Logo" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
-                </div>
-                <div class="brand-text">
-                    <span class="brand-name">Kantin Kita</span>
-                    <span class="brand-tagline">Campus Canteen</span>
-                </div>
-            </a>
-
-            <ul class="nav-links">
-                <li><a href="{{ route('home') }}" class="nav-active">Beranda</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#about">Tentang</a></li>
-                <li><a href="#chatbot">Chatbot</a></li>
-                <li><a href="#contact">Kontak</a></li>
-            </ul>
-
-            <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <div class="nav-actions">
-                <a href="{{ route('login') }}" class="btn-login">
-                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
-                        <path d="M7 8C8.06087 8 9.07828 7.57857 9.82843 6.82843C10.5786 6.07828 11 5.06087 11 4C11 2.93913 10.5786 1.92172 9.82843 1.17157C9.07828 0.421427 8.06087 0 7 0C5.93913 0 4.92172 0.421427 4.17157 1.17157C3.42143 1.92172 3 2.93913 3 4C3 5.06087 3.42143 6.07828 4.17157 6.82843C4.92172 7.57857 5.93913 8 7 8ZM5.57188 9.5C2.49375 9.5 0 11.9937 0 15.0719C0 15.5844 0.415625 16 0.928125 16H13.0719C13.5844 16 14 15.5844 14 15.0719C14 11.9937 11.5063 9.5 8.42813 9.5H5.57188Z" fill="#744622" />
-                    </svg>
-                    Masuk
-                </a>
-                <a href="{{ route('vendor') }}" class="btn-register">Daftar</a>
-            </div>
-        </div>
+  <!-- NAV -->
+  <header>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="{{ route('home') }}" class="nav-logo"><img
+          src="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114"
+          alt="Logo" class="nav-logo-img" />Kantin Kita</a>
+      <ul class="nav-links" role="list">
+        <li><a href="{{ route('home') }}">Beranda</a></li>
+        <li><a href="{{ route('home') }}#menu-title">Menu</a></li>
+        <li><a href="{{ route('about') }}">Tentang</a></li>
+        <li><a href="{{ route('about') }}#kontak">Kontak</a></li>
+      </ul>
+      <a href="{{ route('login') }}" class="btn-signup">Daftar</a>
+      <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-mobile"
+        id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
-
-    <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
-        <a href="{{ route('home') }}" class="mobile-nav-link">Beranda</a>
-        <a href="#menu" class="mobile-nav-link">Menu</a>
-        <a href="#about" class="mobile-nav-link">Tentang</a>
-        <a href="#chatbot" class="mobile-nav-link">Chatbot</a>
-        <a href="#contact" class="mobile-nav-link">Kontak</a>
-        <div class="mobile-nav-actions">
-            <a href="{{ route('login') }}" class="btn-login">Masuk</a>
-            <a href="{{ route('vendor') }}" class="btn-register">Daftar</a>
-        </div>
+    <div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Navigasi seluler">
+      <a href="{{ route('home') }}">Beranda</a>
+      <a href="{{ route('home') }}#menu-title">Menu</a>
+      <a href="{{ route('about') }}">Tentang</a>
+      <a href="{{ route('about') }}#kontak">Kontak</a>
+      <a href="{{ route('login') }}" class="nav-mobile-cta">Daftar</a>
     </div>
+  </header>
 
-    <!-- ================ HERO ================ -->
-    <section class="hero-section">
-        <div class="hero-bg-glow"></div>
-        <div class="hero-inner">
-            <div class="hero-content">
-                <span class="hero-badge">🎓 Khusus Mahasiswa & Staff</span>
-                <div class="hero-headline">
-                    <h1>
-                        <span class="headline-white">Pesan Makanan</span><br>
-                        <span class="headline-green">Tanpa Antri</span>
-                    </h1>
-                </div>
-                <p class="hero-description">Nikmati hidangan lezat dari kantin kampus favorit kamu. Pesan sekarang, ambil nanti. Hemat waktu, lebih praktis!</p>
-                <div class="hero-cta-group">
-                    <a href="{{ route('vendor') }}" class="btn-cta-primary">
-                        Mulai Pesan
-                        <svg width="16" height="16" viewBox="0 0 16 18" fill="none">
-                            <path d="M15.4195 9.79473C15.859 9.35527 15.859 8.6416 15.4195 8.20215L9.79453 2.57715C9.35508 2.1377 8.64141 2.1377 8.20195 2.57715C7.7625 3.0166 7.7625 3.73027 8.20195 4.16973L11.9109 7.8752H1.125C0.502734 7.8752 0 8.37793 0 9.0002C0 9.62246 0.502734 10.1252 1.125 10.1252H11.9074L8.20547 13.8307C7.76602 14.2701 7.76602 14.9838 8.20547 15.4232C8.64492 15.8627 9.35859 15.8627 9.79805 15.4232L15.423 9.79824L15.4195 9.79473Z" fill="white" />
-                        </svg>
-                    </a>
-                    <a href="#menu" class="btn-cta-secondary">Lihat Menu</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 0C15.1826 0 18.2348 1.26428 20.4853 3.51472C22.7357 5.76516 24 8.8174 24 12C24 15.1826 22.7357 18.2348 20.4853 20.4853C18.2348 22.7357 15.1826 24 12 24C8.8174 24 5.76516 22.7357 3.51472 20.4853C1.26428 18.2348 0 15.1826 0 12C0 8.8174 1.26428 5.76516 3.51472 3.51472C5.76516 1.26428 8.8174 0 12 0ZM10.875 5.625V12C10.875 12.375 11.0625 12.7266 11.3766 12.9375L15.8766 15.9375C16.3922 16.2844 17.0906 16.1437 17.4375 15.6234C17.7844 15.1031 17.6437 14.4094 17.1234 14.0625L13.125 11.4V5.625C13.125 5.00156 12.6234 4.5 12 4.5C11.3766 4.5 10.875 5.00156 10.875 5.625Z" fill="#42766A" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="stat-value">10 Min</div>
-                            <div class="stat-label">Waktu Tunggu</div>
-                        </div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <svg width="27" height="24" viewBox="0 0 27 24" fill="none">
-                                <path d="M14.8547 0.84375C14.6062 0.328125 14.0813 0 13.5047 0C12.9281 0 12.4078 0.328125 12.1547 0.84375L9.14062 7.04531L2.40938 8.03906C1.84688 8.12344 1.37813 8.51719 1.20469 9.05625C1.03125 9.59531 1.17187 10.1906 1.575 10.5891L6.45938 15.4219L5.30625 22.2516C5.2125 22.8141 5.44688 23.3859 5.91094 23.7188C6.375 24.0516 6.98906 24.0938 7.49531 23.8266L13.5094 20.6156L19.5234 23.8266C20.0297 24.0938 20.6437 24.0562 21.1078 23.7188C21.5719 23.3813 21.8063 22.8141 21.7125 22.2516L20.5547 15.4219L25.4391 10.5891C25.8422 10.1906 25.9875 9.59531 25.8094 9.05625C25.6312 8.51719 25.1672 8.12344 24.6047 8.03906L17.8688 7.04531L14.8547 0.84375Z" fill="#42766A" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="stat-value">4.8</div>
-                            <div class="stat-label">Rating</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <main>
 
-            <div class="hero-visual">
-                <div class="hero-blur-glow"></div>
-                <div class="hero-card">
-                    <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80&auto=format&fit=crop" alt="Makanan Lezat Kantin Kita">
-                    <div class="floating-badge">
-                        <div class="badge-icon">
-                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-                                <path d="M8.81641 16.25C9.80469 16.25 10.6797 15.9766 11.5039 15.4297C13.1484 14.2813 13.5898 11.9844 12.6016 10.1797C12.4258 9.82814 11.9766 9.8047 11.7227 10.1016L10.7383 11.2461C10.4805 11.543 10.0156 11.5352 9.77344 11.2266C9.12891 10.4063 7.97656 8.94142 7.32031 8.10939C7.07422 7.79689 6.60547 7.79298 6.35547 8.10548C5.03516 9.76563 4.37109 10.8125 4.37109 11.9883C4.375 14.6641 6.35156 16.25 8.81641 16.25Z" fill="white" />
-                                <path d="M6.22266 0.210948C6.52734 -0.0742087 7 -0.0703025 7.30469 0.214854C8.38281 1.22657 9.39453 2.31642 10.3398 3.4961C10.7695 2.9336 11.2578 2.32032 11.7852 1.82032C12.0938 1.53126 12.5703 1.53126 12.8789 1.82423C14.2305 3.11329 15.375 4.81642 16.1797 6.4336C16.9727 8.02735 17.5 9.65626 17.5 10.8047C17.5 15.7891 13.6016 20 8.75 20C3.84375 20 0 15.7852 0 10.8008C0 9.30079 0.695313 7.46876 1.77344 5.65626C2.86328 3.81642 4.40234 1.89845 6.22266 0.210948Z" fill="white" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="badge-title">Menu Terpopuler</div>
-                            <div class="badge-sub">500+ Pesanan Hari Ini</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg-shapes" aria-hidden="true">
+        <img src="{{ asset('images/maskot.png') }}" class="hero-circle-right" alt="" />
+        <img src="{{ asset('images/image-background.png') }}" class="hero-circle-left" alt="" />
+      </div>
+      <h1 class="hero-headline" id="hero-title"><span class="headline-brown">Pesan Makanan</span> <span
+          class="headline-green">Tanpa Antri</span></h1>
+      <p class="hero-subheadline">Nikmati hidangan lezat dari kantin kampus favorit kamu. Pesan sekarang, ambil nanti.
+        Hemat waktu, lebih praktis!</p>
+      <a href="{{ route('vendor') }}" class="btn-primary">Mulai Pesan</a>
+      <div class="hero-mockup" role="img" aria-label="Pratinjau aplikasi Kantin Kita">
+        <div class="mockup-bar" aria-hidden="true">
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
         </div>
+        <div class="mockup-body"><img
+            src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80&auto=format&fit=crop"
+            alt="Makanan lezat kantin kampus" class="mockup-img" /></div>
+      </div>
     </section>
 
-    <!-- ================ FEATURES ================ -->
-    <section class="features-section" id="about">
-        <div class="features-inner">
-            <div class="section-header reveal">
-                <h2 class="section-title">Kenapa Kantin Kita?</h2>
-                <p class="section-subtitle">Solusi praktis untuk makan siang yang sibuk di kampus</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card reveal reveal-delay-1">
-                    <div class="feature-icon">
-                        <svg width="30" height="30" viewBox="0 0 23 30" fill="none">
-                            <path d="M0.9375 3.75C0.9375 1.68164 2.61914 0 4.6875 0H17.8125C19.8809 0 21.5625 1.68164 21.5625 3.75V26.25C21.5625 28.3184 19.8809 30 17.8125 30H4.6875C2.61914 30 0.9375 28.3184 0.9375 26.25V3.75ZM13.125 26.25C13.125 25.7527 12.9275 25.2758 12.5758 24.9242C12.2242 24.5725 11.7473 24.375 11.25 24.375C10.7527 24.375 10.2758 24.5725 9.92418 24.9242C9.57254 25.2758 9.375 25.7527 9.375 26.25C9.375 26.7473 9.57254 27.2242 9.92418 27.5758C10.2758 27.9275 10.7527 28.125 11.25 28.125C11.7473 28.125 12.2242 27.9275 12.5758 27.5758C12.9275 27.2242 13.125 26.7473 13.125 26.25ZM17.8125 3.75H4.6875V22.5H17.8125V3.75Z" fill="#42766A" />
-                        </svg>
-                    </div>
-                    <div class="feature-name">Pesan Online</div>
-                    <p class="feature-desc">Pesan dari mana saja, kapan saja melalui aplikasi</p>
-                </div>
-
-                <div class="feature-card reveal reveal-delay-2">
-                    <div class="feature-icon">
-                        <svg width="26" height="30" viewBox="0 0 27 30" fill="none">
-                            <path d="M20.4726 2.61332C20.8183 1.81059 20.5605 0.873089 19.8515 0.357464C19.1426-0.158161 18.1758-0.111286 17.5137 0.462932L2.51366 13.5879C1.92772 14.1036 1.71678 14.9297 1.99217 15.6563C2.26757 16.3829 2.97069 16.875 3.74999 16.875H10.2832L5.77733 27.3868C5.43163 28.1895 5.68944 29.127 6.39842 29.6426C7.10741 30.1582 8.07421 30.1114 8.73632 29.5372L23.7363 16.4122C24.3223 15.8965 24.5332 15.0704 24.2578 14.3438C23.9824 13.6172 23.2851 13.1309 22.5 13.1309H15.9668L20.4726 2.61332Z" fill="#42766A" />
-                        </svg>
-                    </div>
-                    <div class="feature-name">Cepat & Mudah</div>
-                    <p class="feature-desc">Proses pemesanan hanya dalam hitungan detik</p>
-                </div>
-
-                <div class="feature-card reveal reveal-delay-3">
-                    <div class="feature-icon">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                            <path d="M3.75 1.875C1.68164 1.875 0 3.55664 0 5.625V24.375C0 26.4434 1.68164 28.125 3.75 28.125H26.25C28.3184 28.125 30 26.4434 30 24.375V11.25C30 9.18164 28.3184 7.5 26.25 7.5H4.6875C4.17188 7.5 3.75 7.07812 3.75 6.5625C3.75 6.04688 4.17188 5.625 4.6875 5.625H26.25C27.2871 5.625 28.125 4.78711 28.125 3.75C28.125 2.71289 27.2871 1.875 26.25 1.875H3.75ZM24.375 15.9375C24.8723 15.9375 25.3492 16.135 25.7008 16.4867C26.0525 16.8383 26.25 17.3152 26.25 17.8125C26.25 18.3098 26.0525 18.7867 25.7008 19.1383C25.3492 19.49 24.8723 19.6875 24.375 19.6875C23.8777 19.6875 23.4008 19.49 23.0492 19.1383C22.6975 18.7867 22.5 18.3098 22.5 17.8125C22.5 17.3152 22.6975 16.8383 23.0492 16.4867C23.4008 16.135 23.8777 15.9375 24.375 15.9375Z" fill="#42766A" />
-                        </svg>
-                    </div>
-                    <div class="feature-name">Cashless</div>
-                    <p class="feature-desc">Pembayaran digital yang aman dan praktis</p>
-                </div>
-
-                <div class="feature-card reveal reveal-delay-3">
-                    <div class="feature-icon">
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                            <path d="M11.1621 4.03125L13.2012 7.5H8.90625C7.61133 7.5 6.5625 6.45117 6.5625 5.15625C6.5625 3.86133 7.61133 2.8125 8.90625 2.8125H9.03516C9.9082 2.8125 10.7227 3.27539 11.1621 4.03125ZM3.75 5.15625C3.75 6 3.95508 6.79688 4.3125 7.5H1.875C0.837891 7.5 0 8.33789 0 9.375V13.125C0 14.1621 0.837891 15 1.875 15H28.125C29.1621 15 30 14.1621 30 13.125V9.375C30 8.33789 29.1621 7.5 28.125 7.5H25.6875C26.0449 6.79688 26.25 6 26.25 5.15625C26.25 2.30859 23.9414 0 21.0938 0H20.9648C19.0957 0 17.3613 0.990234 16.4121 2.60156L15 5.00977L13.5879 2.60742C12.6387 0.990234 10.9043 0 9.03516 0H8.90625C6.05859 0 3.75 2.30859 3.75 5.15625ZM1.875 16.875V27.1875C1.875 28.7402 3.13477 30 4.6875 30H13.125V16.875H1.875ZM16.875 30H25.3125C26.8652 30 28.125 28.7402 28.125 27.1875V16.875H16.875V30Z" fill="#42766A" />
-                        </svg>
-                    </div>
-                    <div class="feature-name">Promo Menarik</div>
-                    <p class="feature-desc">Dapatkan diskon dan reward setiap hari</p>
-                </div>
-            </div>
-        </div>
+    <!-- TESTIMONIAL -->
+    <section class="testimonial" aria-label="Testimoni pengguna">
+      <figure>
+        <blockquote class="testimonial-quote">
+          "Aplikasi yang sangat membantu! Tidak perlu lagi antri panjang saat jam makan siang. Pesanan selalu siap tepat
+          waktu."
+        </blockquote>
+        <figcaption>
+          <img src="https://i.pravatar.cc/100?img=59" alt="Alfian Rasyid" class="testimonial-avatar" />
+          <p class="testimonial-author">Alfian Rasyid<br><span class="testimonial-role">Mahasiswa Teknik
+              Informatika</span></p>
+        </figcaption>
+      </figure>
     </section>
 
-    <!-- ================ MENU ================ -->
-    <section class="menu-section" id="menu">
-        <div class="menu-inner">
-            <div class="menu-header reveal">
-                <div class="menu-header-text">
-                    <h2 class="menu-title">Menu Populer</h2>
-                    <p class="menu-subtitle">Pilihan favorit mahasiswa setiap hari</p>
-                </div>
-                <a href="{{ route('vendor') }}" class="btn-view-all">Lihat Semua Menu</a>
-            </div>
-
-            <div class="menu-grid">
-                <div class="menu-card reveal reveal-delay-1">
-                    <div class="menu-card-img">
-                        <img src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop" alt="Nasi Goreng Special">
-                        <span class="menu-badge badge-bestseller">Terlaris</span>
-                    </div>
-                    <div class="menu-card-body">
-                        <div class="menu-card-header">
-                            <span class="menu-card-name">Nasi Goreng Special</span>
-                            <div class="menu-rating">
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
-                                    <path d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" fill="#42766A" />
-                                </svg>
-                                <span class="rating-value">4.9</span>
-                            </div>
-                        </div>
-                        <p class="menu-card-desc">Nasi goreng dengan ayam, telur mata sapi, dan sayuran segar</p>
-                        <div class="menu-card-footer">
-                            <div class="menu-price-block">
-                                <span class="price-current">Rp 18.000</span>
-                            </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
-                                </svg>
-                                Pesan
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-card reveal reveal-delay-2">
-                    <div class="menu-card-img">
-                        <img src="https://images.unsplash.com/photo-1680675494363-75bbf9838a09?q=80&w=2070&auto=format&fit=crop" alt="Mie Goreng Jawa">
-                    </div>
-                    <div class="menu-card-body">
-                        <div class="menu-card-header">
-                            <span class="menu-card-name">Mie Goreng Jawa</span>
-                            <div class="menu-rating">
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
-                                    <path d="M8.66522 0.492188C8.52029 0.191406 8.21404 0 7.87772 0C7.54139 0 7.23787 0.191406 7.09021 0.492188L5.33201 4.10977L1.40545 4.68945C1.07732 4.73867 0.803887 4.96836 0.702715 5.28281C0.601543 5.59727 0.683575 5.94453 0.918731 6.17695L3.76795 8.99609L3.09529 12.9801C3.04061 13.3082 3.17732 13.6418 3.44803 13.8359C3.71873 14.0301 4.07693 14.0547 4.37225 13.8988L7.88045 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8394 6.17695C15.0746 5.94453 15.1594 5.59727 15.0554 5.28281C14.9515 4.96836 14.6808 4.73867 14.3527 4.68945L10.4234 4.10977L8.66522 0.492188Z" fill="#42766A" />
-                                </svg>
-                                <span class="rating-value">4.8</span>
-                            </div>
-                        </div>
-                        <p class="menu-card-desc">Mie goreng dengan bumbu khas Jawa yang gurih dan pedas</p>
-                        <div class="menu-card-footer">
-                            <div class="menu-price-block">
-                                <span class="price-current">Rp 15.000</span>
-                            </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
-                                </svg>
-                                Pesan
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-card reveal reveal-delay-3">
-                    <div class="menu-card-img">
-                        <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80&auto=format&fit=crop" alt="Ayam Geprek">
-                        <span class="menu-badge badge-promo">Promo</span>
-                    </div>
-                    <div class="menu-card-body">
-                        <div class="menu-card-header">
-                            <span class="menu-card-name">Ayam Geprek</span>
-                            <div class="menu-rating">
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
-                                    <path d="M8.66522 0.492188C8.52029 0.191406 8.21404 0 7.87772 0C7.54139 0 7.23787 0.191406 7.09021 0.492188L5.33201 4.10977L1.40545 4.68945C1.07732 4.73867 0.803887 4.96836 0.702715 5.28281C0.601543 5.59727 0.683575 5.94453 0.918731 6.17695L3.76795 8.99609L3.09529 12.9801C3.04061 13.3082 3.17732 13.6418 3.44803 13.8359C3.71873 14.0301 4.07693 14.0547 4.37225 13.8988L7.88045 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8394 6.17695C15.0746 5.94453 15.1594 5.59727 15.0554 5.28281C14.9515 4.96836 14.6808 4.73867 14.3527 4.68945L10.4234 4.10977L8.66522 0.492188Z" fill="#42766A" />
-                                </svg>
-                                <span class="rating-value">4.7</span>
-                            </div>
-                        </div>
-                        <p class="menu-card-desc">Ayam crispy dengan sambal level pilihan dan nasi hangat</p>
-                        <div class="menu-card-footer">
-                            <div class="menu-price-block">
-                                <span class="price-original">Rp 20.000</span>
-                                <span class="price-current">Rp 17.000</span>
-                            </div>
-                            <a href="{{ route('vendor') }}" class="btn-order">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                    <path d="M8 2.5C8 1.94687 7.55312 1.5 7 1.5C6.44688 1.5 6 1.94687 6 2.5V7H1.5C0.946875 7 0.5 7.44688 0.5 8C0.5 8.55312 0.946875 9 1.5 9H6V13.5C6 14.0531 6.44688 14.5 7 14.5C7.55312 14.5 8 14.0531 8 13.5V9H12.5C13.0531 9 13.5 8.55312 13.5 8C13.5 7.44688 13.0531 7 12.5 7H8V2.5Z" fill="white" />
-                                </svg>
-                                Pesan
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- DARK FEATURE / SOCIAL PROOF -->
+    <section class="dark-feature" aria-labelledby="dark-feature-title">
+      <div class="dark-feature-content">
+        <h2 class="dark-feature-title" id="dark-feature-title">Kenapa Kantin Kita?</h2>
+        <p class="dark-feature-description">Solusi praktis untuk makan siang yang sibuk di kampus.</p>
+        <p class="dark-feature-testimonial" id="darkFeatureTestimonial">"Menu-nya lengkap dan harganya ramah kantong
+          mahasiswa. Sistem pembayaran digital juga sangat praktis!"</p>
+        <div class="dark-feature-author" id="darkFeatureAuthor">
+          <img src="https://i.pravatar.cc/100?img=12" alt="" class="dark-feature-author-avatar"
+            id="darkFeatureAvatar" />
+          <div>
+            <div class="dark-feature-author-name" id="darkFeatureName">Budi Santoso</div>
+            <div class="dark-feature-author-role" id="darkFeatureRole">Mahasiswa Ekonomi</div>
+          </div>
         </div>
+      </div>
+      <div class="dark-feature-media" id="darkFeatureCarousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-card" data-index="0">
+            <img src="https://i.pravatar.cc/600?img=12" alt="Budi Santoso" />
+          </div>
+          <div class="carousel-card" data-index="1">
+            <img src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?w=500&q=80&auto=format&fit=crop"
+              alt="Nasi Goreng Spesial" />
+          </div>
+          <div class="carousel-card" data-index="2">
+            <img src="https://i.pravatar.cc/600?img=32" alt="Siti Nurhaliza" />
+          </div>
+          <div class="carousel-card" data-index="3">
+            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=500&q=80&auto=format&fit=crop"
+              alt="Ayam Geprek" />
+          </div>
+          <div class="carousel-card" data-index="4">
+            <img src="https://i.pravatar.cc/600?img=59" alt="Alfian Rasyid" />
+          </div>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
     </section>
 
-    <!-- ================ CTA ================ -->
-    <section class="cta-section">
-        <div class="cta-bg-orb-1"></div>
-        <div class="cta-bg-orb-2"></div>
-        <div class="cta-inner">
-            <div class="cta-content reveal">
-                <h2 class="cta-title">Siap Mulai Pesan?</h2>
-                <p class="cta-subtitle">Daftar sekarang dan dapatkan voucher diskon 20% untuk pesanan pertama kamu!</p>
-
-                <div class="cta-benefits">
-                    <div class="benefit-item">
-                        <div class="benefit-check">
-                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-                                <path d="M17.1328 4.11719C17.6211 4.60547 17.6211 5.39844 17.1328 5.88672L7.13281 15.8867C6.64453 16.375 5.85156 16.375 5.36328 15.8867L0.363281 10.8867C-0.125 10.3984 -0.125 9.60547 0.363281 9.11719C0.851562 8.62891 1.64453 8.62891 2.13281 9.11719L6.25 13.2305L15.3672 4.11719C15.8555 3.62891 16.6484 3.62891 17.1367 4.11719H17.1328Z" fill="white" />
-                            </svg>
-                        </div>
-                        <span class="benefit-text">Gratis biaya layanan untuk mahasiswa</span>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-check">
-                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-                                <path d="M17.1328 4.11719C17.6211 4.60547 17.6211 5.39844 17.1328 5.88672L7.13281 15.8867C6.64453 16.375 5.85156 16.375 5.36328 15.8867L0.363281 10.8867C-0.125 10.3984 -0.125 9.60547 0.363281 9.11719C0.851562 8.62891 1.64453 8.62891 2.13281 9.11719L6.25 13.2305L15.3672 4.11719C15.8555 3.62891 16.6484 3.62891 17.1367 4.11719H17.1328Z" fill="white" />
-                            </svg>
-                        </div>
-                        <span class="benefit-text">Poin reward setiap transaksi</span>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-check">
-                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-                                <path d="M17.1328 4.11719C17.6211 4.60547 17.6211 5.39844 17.1328 5.88672L7.13281 15.8867C6.64453 16.375 5.85156 16.375 5.36328 15.8867L0.363281 10.8867C-0.125 10.3984 -0.125 9.60547 0.363281 9.11719C0.851562 8.62891 1.64453 8.62891 2.13281 9.11719L6.25 13.2305L15.3672 4.11719C15.8555 3.62891 16.6484 3.62891 17.1367 4.11719H17.1328Z" fill="white" />
-                            </svg>
-                        </div>
-                        <span class="benefit-text">Promo eksklusif setiap minggu</span>
-                    </div>
-                </div>
-
-                <a href="{{ route('vendor') }}" class="btn-cta-white">Daftar Sekarang - Gratis!</a>
-            </div>
-
-            <div class="cta-image-card reveal reveal-delay-2">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80&auto=format&fit=crop" alt="Mahasiswa Kantin Kita">
-            </div>
-        </div>
+    <!-- FEATURE CARDS -->
+    <section class="feature-cards" aria-labelledby="cards-title">
+      <header class="section-header">
+        <h2 class="section-title" id="cards-title">Fitur Unggulan <span class="text-green">Kantin Kita</span></h2>
+        <p class="section-tagline">Solusi praktis untuk makan siang yang sibuk di kampus</p>
+      </header>
+      <ul class="cards-grid" role="list">
+        <li class="card">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 23 30" fill="none">
+              <path
+                d="M0.9375 3.75C0.9375 1.68164 2.61914 0 4.6875 0H17.8125C19.8809 0 21.5625 1.68164 21.5625 3.75V26.25C21.5625 28.3184 19.8809 30 17.8125 30H4.6875C2.61914 30 0.9375 28.3184 0.9375 26.25V3.75ZM13.125 26.25C13.125 25.7527 12.9275 25.2758 12.5758 24.9242C12.2242 24.5725 11.7473 24.375 11.25 24.375C10.7527 24.375 10.2758 24.5725 9.92418 24.9242C9.57254 25.2758 9.375 25.7527 9.375 26.25C9.375 26.7473 9.57254 27.2242 9.92418 27.5758C10.2758 27.9275 10.7527 28.125 11.25 28.125C11.7473 28.125 12.2242 27.9275 12.5758 27.5758C12.9275 27.2242 13.125 26.7473 13.125 26.25ZM17.8125 3.75H4.6875V22.5H17.8125V3.75Z"
+                fill="#42766A" />
+            </svg>
+          </div>
+          <h3 class="card-title">Pesan Online</h3>
+          <p class="card-desc">Pesan dari mana saja, kapan saja melalui aplikasi</p>
+        </li>
+        <li class="card">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="26" height="30" viewBox="0 0 27 30" fill="none">
+              <path
+                d="M20.4726 2.61332C20.8183 1.81059 20.5605 0.873089 19.8515 0.357464C19.1426-0.158161 18.1758-0.111286 17.5137 0.462932L2.51366 13.5879C1.92772 14.1036 1.71678 14.9297 1.99217 15.6563C2.26757 16.3829 2.97069 16.875 3.74999 16.875H10.2832L5.77733 27.3868C5.43163 28.1895 5.68944 29.127 6.39842 29.6426C7.10741 30.1582 8.07421 30.1114 8.73632 29.5372L23.7363 16.4122C24.3223 15.8965 24.5332 15.0704 24.2578 14.3438C23.9824 13.6172 23.2851 13.1309 22.5 13.1309H15.9668L20.4726 2.61332Z"
+                fill="#42766A" />
+            </svg>
+          </div>
+          <h3 class="card-title">Cepat &amp; Mudah</h3>
+          <p class="card-desc">Proses pemesanan hanya dalam hitungan detik</p>
+        </li>
+        <li class="card">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <path
+                d="M3.75 1.875C1.68164 1.875 0 3.55664 0 5.625V24.375C0 26.4434 1.68164 28.125 3.75 28.125H26.25C28.3184 28.125 30 26.4434 30 24.375V11.25C30 9.18164 28.3184 7.5 26.25 7.5H4.6875C4.17188 7.5 3.75 7.07812 3.75 6.5625C3.75 6.04688 4.17188 5.625 4.6875 5.625H26.25C27.2871 5.625 28.125 4.78711 28.125 3.75C28.125 2.71289 27.2871 1.875 26.25 1.875H3.75ZM24.375 15.9375C24.8723 15.9375 25.3492 16.135 25.7008 16.4867C26.0525 16.8383 26.25 17.3152 26.25 17.8125C26.25 18.3098 26.0525 18.7867 25.7008 19.1383C25.3492 19.49 24.8723 19.6875 24.375 19.6875C23.8777 19.6875 23.4008 19.49 23.0492 19.1383C22.6975 18.7867 22.5 18.3098 22.5 17.8125C22.5 17.3152 22.6975 16.8383 23.0492 16.4867C23.4008 16.135 23.8777 15.9375 24.375 15.9375Z"
+                fill="#42766A" />
+            </svg>
+          </div>
+          <h3 class="card-title">Cashless</h3>
+          <p class="card-desc">Pembayaran digital yang aman dan praktis</p>
+        </li>
+        <li class="card">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <path
+                d="M11.1621 4.03125L13.2012 7.5H8.90625C7.61133 7.5 6.5625 6.45117 6.5625 5.15625C6.5625 3.86133 7.61133 2.8125 8.90625 2.8125H9.03516C9.9082 2.8125 10.7227 3.27539 11.1621 4.03125ZM3.75 5.15625C3.75 6 3.95508 6.79688 4.3125 7.5H1.875C0.837891 7.5 0 8.33789 0 9.375V13.125C0 14.1621 0.837891 15 1.875 15H28.125C29.1621 15 30 14.1621 30 13.125V9.375C30 8.33789 29.1621 7.5 28.125 7.5H25.6875C26.0449 6.79688 26.25 6 26.25 5.15625C26.25 2.30859 23.9414 0 21.0938 0H20.9648C19.0957 0 17.3613 0.990234 16.4121 2.60156L15 5.00977L13.5879 2.60742C12.6387 0.990234 10.9043 0 9.03516 0H8.90625C6.05859 0 3.75 2.30859 3.75 5.15625ZM1.875 16.875V27.1875C1.875 28.7402 3.13477 30 4.6875 30H13.125V16.875H1.875ZM16.875 30H25.3125C26.8652 30 28.125 28.7402 28.125 27.1875V16.875H16.875V30Z"
+                fill="#42766A" />
+            </svg>
+          </div>
+          <h3 class="card-title">Promo Menarik</h3>
+          <p class="card-desc">Dapatkan diskon dan reward setiap hari</p>
+        </li>
+      </ul>
     </section>
 
-    <!-- ================ TESTIMONIALS ================ -->
-    <section class="testimonials-section">
-        <div class="testimonials-inner">
-            <div class="section-header reveal">
-                <h2 class="section-title">Kata Mereka</h2>
-                <p class="section-subtitle">Pengalaman pengguna Kantin Kita</p>
-            </div>
-
-            <div class="testimonials-carousel" id="testimonialsCarousel">
-                <div class="testimonials-grid" id="testimonialsGrid">
-                    <div class="testimonial-card reveal reveal-delay-1">
-                        <div class="stars">
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">"Aplikasi yang sangat membantu! Tidak perlu lagi antri panjang saat jam makan siang. Pesanan selalu siap tepat waktu."</p>
-                        <div class="testimonial-author">
-                            <img class="author-avatar" src="https://i.pravatar.cc/100?img=47" alt="Sarah Putri">
-                            <div>
-                                <div class="author-name">Sarah Putri</div>
-                                <div class="author-role">Mahasiswa Teknik Informatika</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card reveal reveal-delay-2">
-                        <div class="stars">
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">"Menu-nya lengkap dan harganya ramah kantong mahasiswa. Sistem pembayaran digital juga sangat praktis!"</p>
-                        <div class="testimonial-author">
-                            <img class="author-avatar" src="https://i.pravatar.cc/100?img=12" alt="Budi Santoso">
-                            <div>
-                                <div class="author-name">Budi Santoso</div>
-                                <div class="author-role">Mahasiswa Ekonomi</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card reveal reveal-delay-3">
-                        <div class="stars">
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                            <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-                                <path d="M9.90312 0.5625C9.7375 0.21875 9.3875 0 9.00313 0C8.61875 0 8.27187 0.21875 8.10312 0.5625L6.09375 4.69688L1.60625 5.35938C1.23125 5.41563 0.91875 5.67812 0.803125 6.0375C0.6875 6.39687 0.78125 6.79375 1.05 7.05937L4.30625 10.2812L3.5375 14.8344C3.475 15.2094 3.63125 15.5906 3.94062 15.8125C4.25 16.0344 4.65937 16.0625 4.99687 15.8844L9.00625 13.7437L13.0156 15.8844C13.3531 16.0625 13.7625 16.0375 14.0719 15.8125C14.3812 15.5875 14.5375 15.2094 14.475 14.8344L13.7031 10.2812L16.9594 7.05937C17.2281 6.79375 17.325 6.39687 17.2062 6.0375C17.0875 5.67812 16.7781 5.41563 16.4031 5.35938L11.9125 4.69688L9.90312 0.5625Z" fill="#42766A" />
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">"Promo dan reward poin-nya bikin makin hemat. Aplikasi favorit untuk makan siang di kampus!"</p>
-                        <div class="testimonial-author">
-                            <img class="author-avatar" src="https://i.pravatar.cc/100?img=23" alt="Rina Wati">
-                            <div>
-                                <div class="author-name">Rina Wati</div>
-                                <div class="author-role">Staff Administrasi</div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- /testimonials-grid -->
-                <!-- Carousel dots (visible only on mobile) -->
-                <div class="testimonial-dots" id="testimonialDots" aria-label="Navigasi testimoni">
-                    <button class="testimonial-dot active" aria-label="Slide 1"></button>
-                    <button class="testimonial-dot" aria-label="Slide 2"></button>
-                    <button class="testimonial-dot" aria-label="Slide 3"></button>
-                </div>
-            </div><!-- /testimonials-carousel -->
+    <!-- POPULAR MENU -->
+    <section class="menu-section" aria-labelledby="menu-title">
+      <header class="section-header">
+        <div class="menu-header-text">
+          <h2 class="section-title" id="menu-title">Menu <span class="text-green">Populer</span></h2>
+          <p class="section-tagline">Pilihan favorit mahasiswa setiap hari</p>
         </div>
+      </header>
+
+      <ul class="cards-grid" role="list">
+        <!-- Nasi Goreng -->
+        <li class="menu-card">
+          <div class="menu-card-img">
+            <img src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop"
+              alt="Nasi Goreng Special">
+            <span class="menu-badge badge-bestseller">Terlaris</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <span class="menu-card-name">Nasi Goreng Special</span>
+              <div class="menu-rating">
+                <svg viewBox="0 0 16 14" fill="none">
+                  <path
+                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
+                </svg>
+                <span class="rating-value">4.9</span>
+              </div>
+            </div>
+            <p class="menu-card-desc">Nasi goreng dengan ayam, telur mata sapi, dan sayuran segar</p>
+            <div class="menu-card-footer">
+              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Mie Goreng -->
+        <li class="menu-card">
+          <div class="menu-card-img">
+            <img src="https://images.unsplash.com/photo-1680675494363-75bbf9838a09?q=80&w=2070&auto=format&fit=crop"
+              alt="Mie Goreng Jawa">
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <span class="menu-card-name">Mie Goreng Jawa</span>
+              <div class="menu-rating">
+                <svg viewBox="0 0 16 14" fill="none">
+                  <path
+                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
+                </svg>
+                <span class="rating-value">4.8</span>
+              </div>
+            </div>
+            <p class="menu-card-desc">Mie goreng dengan bumbu khas Jawa yang gurih dan pedas</p>
+            <div class="menu-card-footer">
+              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Ayam Geprek -->
+        <li class="menu-card">
+          <div class="menu-card-img">
+            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80&auto=format&fit=crop"
+              alt="Ayam Geprek">
+            <span class="menu-badge badge-promo">Promo</span>
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <span class="menu-card-name">Ayam Geprek</span>
+              <div class="menu-rating">
+                <svg viewBox="0 0 16 14" fill="none">
+                  <path
+                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
+                </svg>
+                <span class="rating-value">4.7</span>
+              </div>
+            </div>
+            <p class="menu-card-desc">Ayam crispy dengan sambal level pilihan dan nasi hangat</p>
+            <div class="menu-card-footer">
+              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+            </div>
+          </div>
+        </li>
+
+        <!-- Soto Ayam Lamongan -->
+        <li class="menu-card">
+          <div class="menu-card-img">
+            <img src="https://images.unsplash.com/photo-1652088079703-38f4a8d6b981?q=80&w=995&auto=format&fit=crop"
+              alt="Soto Ayam Lamongan">
+          </div>
+          <div class="menu-card-body">
+            <div class="menu-card-header">
+              <span class="menu-card-name">Soto Ayam</span>
+              <div class="menu-rating">
+                <svg viewBox="0 0 16 14" fill="none">
+                  <path
+                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
+                </svg>
+                <span class="rating-value">4.9</span>
+              </div>
+            </div>
+            <p class="menu-card-desc">Soto ayam khas Jawa Timur dengan kuah kuning yang segar</p>
+            <div class="menu-card-footer">
+              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+            </div>
+          </div>
+        </li>
+      </ul>
     </section>
 
-    <!-- ================ CHATBOT ===================== -->
-    <section class="chatbot-section" id="chatbot">
-        <div class="chatbot-inner">
-            <div class="section-header reveal">
-                <h2 class="section-title">Asisten Kantin Siap Bantu</h2>
-                <p class="section-subtitle">Butuh rekomendasi menu atau bantuan pemesanan? Chat langsung dengan asisten Kantin Kita di sini.</p>
+    <!-- CHATBOT SECTION -->
+    <section class="chatbot-section" id="chatbot" aria-labelledby="chatbot-title">
+      <div class="chatbot-inner">
+        <header class="section-header">
+          <h2 class="section-title" id="chatbot-title">Lanjut Chat Dengan Chatbot Moka</h2>
+          <p class="section-tagline">Butuh rekomendasi menu atau bantuan pemesanan? Chat langsung dengan asisten Kantin
+            Kita di sini.</p>
+        </header>
+
+        <div class="chatbot-shell">
+          <aside class="chatbot-cta-card">
+            <p class="chatbot-cta-eyebrow">Asisten Virtual Kantin Kita</p>
+            <h3 class="chatbot-cta-title">Tanya apa saja, jawabannya datang dalam hitungan detik.</h3>
+            <p class="chatbot-cta-copy">Mulai dari saran menu, jam operasional, hingga cara checkout. Pilih pertanyaan
+              cepat di bawah atau ketik pertanyaanmu sendiri.</p>
+
+            <div class="chatbot-chip-list">
+              <button type="button" class="chatbot-chip" data-prompt="Menu terlaris hari ini apa saja?">Menu terlaris
+                hari ini</button>
+              <button type="button" class="chatbot-chip"
+                data-prompt="Jam operasional kantin dimulai dari jam berapa?">Jam operasional kantin</button>
+              <button type="button" class="chatbot-chip" data-prompt="Bagaimana cara pesan makanan tanpa antre?">Cara
+                pesan tanpa antre</button>
+              <button type="button" class="chatbot-chip"
+                data-prompt="Ada rekomendasi menu di bawah 20 ribu?">Rekomendasi menu hemat</button>
+            </div>
+          </aside>
+
+          <article class="chatbot-panel">
+            <div class="chatbot-panel-head">
+              <h3 class="chatbot-panel-title">Moka Chatbot Kantin Kita</h3>
+              <span class="chatbot-status">
+                <span class="chatbot-status-dot"></span>
+                Online
+              </span>
             </div>
 
-            <div class="chatbot-shell">
-                <aside class="chatbot-cta-card reveal reveal-delay-1">
-                    <p class="chatbot-cta-eyebrow">Asisten Virtual Kantin Kita</p>
-                    <h3 class="chatbot-cta-title">Tanya cepat, dapat jawaban yang relevan buat jam sibuk kampus.</h3>
-                    <p class="chatbot-cta-copy">Mulai dari saran menu terlaris, jam operasional, hingga cara checkout. Pilih pertanyaan cepat di bawah atau ketik pertanyaanmu sendiri.</p>
+            <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite"
+              aria-label="Percakapan chatbot"></div>
 
-                    <div class="chatbot-focus-frame" aria-hidden="true">
-                        <img class="chatbot-focus-image" src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop" alt="Menu nasi goreng premium dengan latar blur" />
-                        <div class="chatbot-focus-overlay">
-                            <span class="chatbot-focus-tag">Featured Hari Ini</span>
-                            <p class="chatbot-focus-name">Nasi Goreng Special</p>
-                            <span class="chatbot-focus-meta">Bestseller kampus - Rp 18.000</span>
-                        </div>
-                    </div>
+            <form class="chatbot-form" id="chatbotForm">
+              <label for="chatbotInput" class="chatbot-sr-only">Tulis pertanyaan untuk chatbot</label>
+              <input id="chatbotInput" class="chatbot-input" type="text" maxlength="400" autocomplete="off"
+                placeholder="Contoh: Menu pedas favorit apa?" required>
+              <button type="submit" class="chatbot-send" id="chatbotSendButton">Kirim</button>
+            </form>
 
-                    <div class="chatbot-chip-list">
-                        <button type="button" class="chatbot-chip" data-prompt="Menu terlaris hari ini apa saja?">Menu terlaris hari ini</button>
-                        <button type="button" class="chatbot-chip" data-prompt="Jam operasional kantin dimulai dari jam berapa?">Jam operasional kantin</button>
-                        <button type="button" class="chatbot-chip" data-prompt="Bagaimana cara pesan makanan tanpa antre?">Cara pesan tanpa antre</button>
-                        <button type="button" class="chatbot-chip" data-prompt="Ada rekomendasi menu di bawah 20 ribu?">Rekomendasi menu hemat</button>
-                    </div>
-
-                    <button type="button" class="btn-cta-primary chatbot-cta-button" id="chatbotCtaButton">Mulai Chat Sekarang</button>
-                </aside>
-
-                <article class="chatbot-panel reveal reveal-delay-2" aria-labelledby="chatbotPanelTitle">
-                    <div class="chatbot-panel-head">
-                        <h3 class="chatbot-panel-title" id="chatbotPanelTitle">Chatbot Kantin Kita</h3>
-                        <span class="chatbot-status">
-                            <span class="chatbot-status-dot"></span>
-                            Online
-                        </span>
-                    </div>
-
-                    <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite" aria-label="Percakapan chatbot"></div>
-
-                    <form class="chatbot-form" id="chatbotForm">
-                        <label for="chatbotInput" class="chatbot-sr-only">Tulis pertanyaan untuk chatbot</label>
-                        <input id="chatbotInput" class="chatbot-input" type="text" maxlength="400" autocomplete="off" placeholder="Contoh: Menu pedas yang paling favorit apa?" aria-describedby="chatbotHint" required>
-                        <button type="submit" class="chatbot-send" id="chatbotSendButton">Kirim</button>
-                    </form>
-
-                    <p class="chatbot-hint" id="chatbotHint">Tekan Enter untuk mengirim pesan.</p>
-                </article>
-            </div>
+            <p class="chatbot-hint">Tekan Enter untuk mengirim pesan.</p>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- ================ FOOTER ================ -->
-    <footer class="footer" id="contact">
-        <div class="footer-inner">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-brand-logo">
-                        <div class="brand-icon">
-                            <img src="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" alt="Kantin Kita Logo" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
-                        </div>
-                        <div>
-                            <div class="footer-brand-name">Kantin Kita</div>
-                            <div class="footer-brand-tagline">Campus Canteen</div>
-                        </div>
-                    </div>
-                    <p class="footer-desc">Solusi praktis untuk makan siang yang sibuk di kampus. Pesan online, ambil langsung.</p>
-                    <div class="footer-socials">
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Instagram">
-                            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
-                                <path d="M7.00312 4.40586C5.01562 4.40586 3.4125 6.00898 3.4125 7.99648C3.4125 9.98398 5.01562 11.5871 7.00312 11.5871C8.99062 11.5871 10.5938 9.98398 10.5938 7.99648C10.5938 6.00898 8.99062 4.40586 7.00312 4.40586ZM7.00312 10.3309C5.71875 10.3309 4.66875 9.28398 4.66875 7.99648C4.66875 6.70898 5.71562 5.66211 7.00312 5.66211C8.29062 5.66211 9.3375 6.70898 9.3375 7.99648C9.3375 9.28398 8.2875 10.3309 7.00312 10.3309ZM11.5781 4.25898C11.5781 4.72461 11.2031 5.09648 10.7406 5.09648C10.275 5.09648 9.90312 4.72148 9.90312 4.25898C9.90312 3.79648 10.2781 3.42148 10.7406 3.42148C11.2031 3.42148 11.5781 3.79648 11.5781 4.25898ZM13.9563 5.10898C13.9031 3.98711 13.6469 2.99336 12.825 2.17461C12.0062 1.35586 11.0125 1.09961 9.89062 1.04336C8.73438 0.977734 5.26875 0.977734 4.1125 1.04336C2.99375 1.09648 2 1.35273 1.17812 2.17148C0.35625 2.99023 0.103125 3.98398 0.0468746 5.10586C-0.0187504 6.26211-0.0187504 9.72773 0.0468746 10.884C0.0999996 12.0059 0.35625 12.9996 1.17812 13.8184C2 14.6371 2.99062 14.8934 4.1125 14.9496C5.26875 15.0152 8.73438 15.0152 9.89062 14.9496C11.0125 14.8965 12.0062 14.6402 12.825 13.8184C13.6438 12.9996 13.9 12.0059 13.9563 10.884C14.0219 9.72773 14.0219 6.26523 13.9563 5.10898ZM12.4625 12.1246C12.2188 12.7371 11.7469 13.209 11.1313 13.4559C10.2094 13.8215 8.02187 13.7371 7.00312 13.7371C5.98438 13.7371 3.79375 13.8184 2.875 13.4559C2.2625 13.2121 1.79062 12.7402 1.54375 12.1246C1.17812 11.2027 1.2625 9.01523 1.2625 7.99648C1.2625 6.97773 1.18125 4.78711 1.54375 3.86836C1.7875 3.25586 2.25937 2.78398 2.875 2.53711C3.79687 2.17148 5.98438 2.25586 7.00312 2.25586C8.02187 2.25586 10.2125 2.17461 11.1313 2.53711C11.7438 2.78086 12.2156 3.25273 12.4625 3.86836C12.8281 4.79023 12.7437 6.97773 12.7437 7.99648C12.7437 9.01523 12.8281 11.2059 12.4625 12.1246Z" fill="white" />
-                            </svg>
-                        </a>
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Facebook">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M15.75 8C15.75 3.71875 12.2812 0.25 8 0.25C3.71875 0.25 0.25 3.71875 0.25 8C0.25 11.8681 3.08406 15.0744 6.78906 15.6562V10.2403H4.82031V8H6.78906V6.2925C6.78906 4.35031 7.94531 3.2775 9.71625 3.2775C10.5644 3.2775 11.4513 3.42875 11.4513 3.42875V5.335H10.4738C9.51125 5.335 9.21094 5.9325 9.21094 6.54531V8H11.3603L11.0166 10.2403H9.21094V15.6562C12.9159 15.0744 15.75 11.8681 15.75 8Z" fill="white" />
-                            </svg>
-                        </a>
-                        <a href="{{ route('home') }}" class="social-btn" aria-label="Twitter">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M14.3553 4.74149C14.3655 4.88362 14.3655 5.02577 14.3655 5.1679C14.3655 9.5029 11.066 14.4978 5.03553 14.4978C3.17766 14.4978 1.45178 13.9597 0 13.0258C0.263969 13.0562 0.51775 13.0664 0.791875 13.0664C2.32484 13.0664 3.73603 12.5486 4.86294 11.6654C3.42131 11.6349 2.21319 10.6907 1.79694 9.39124C2 9.42168 2.20303 9.44199 2.41625 9.44199C2.71066 9.44199 3.00509 9.40137 3.27919 9.33034C1.77666 9.02574 0.649719 7.70596 0.649719 6.11205V6.07146C1.08625 6.31512 1.59391 6.4674 2.13194 6.48768C1.24869 5.89884 0.670031 4.89377 0.670031 3.75671C0.670031 3.14759 0.832438 2.58921 1.11672 2.1019C2.73094 4.09174 5.15734 5.39121 7.87813 5.53337C7.82738 5.28971 7.79691 5.03593 7.79691 4.78212C7.79691 2.97499 9.25884 1.50293 11.0761 1.50293C12.0203 1.50293 12.873 1.89887 13.472 2.53846C14.2131 2.39634 14.9238 2.12221 15.5533 1.74659C15.3096 2.50802 14.7918 3.14762 14.1116 3.55368C14.7715 3.48265 15.4111 3.29987 15.9999 3.04609C15.5533 3.6958 14.9949 4.27446 14.3553 4.74149Z" fill="white" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+    <!-- CTA FORM -->
+    <section class="cta-form" id="signup" aria-labelledby="cta-title">
+      <p class="cta-form-title" id="cta-title">Daftar sekarang dan dapatkan <span class="text-green">voucher diskon
+          20%</span> untuk pesanan pertama kamu!</p>
+      <form action="{{ route('login') }}" method="get" id="ctaForm" novalidate>
+        <label for="cta-email" class="visually-hidden">Alamat email</label>
+        <input class="form-input" id="cta-email" type="email" placeholder="email kampus" autocomplete="email" />
+        <label for="cta-password" class="visually-hidden">Kata sandi</label>
+        <input class="form-input" id="cta-password" type="password" placeholder="kata sandi"
+          autocomplete="new-password" />
+        <button class="btn-cta" type="submit">Daftar Sekarang</button>
+      </form>
+    </section>
 
-                <div class="footer-col">
-                    <h4 class="footer-col-title">Menu Cepat</h4>
-                    <ul class="footer-links">
-                        <li><a href="{{ route('home') }}">Beranda</a></li>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="{{ route('vendor') }}">Promo</a></li>
-                        <li><a href="{{ route('home') }}#about">Tentang Kami</a></li>
-                    </ul>
-                </div>
+  </main>
 
-                <div class="footer-col">
-                    <h4 class="footer-col-title">Bantuan</h4>
-                    <ul class="footer-links">
-                        <li><a href="{{ route('home') }}#contact">FAQ</a></li>
-                        <li><a href="{{ route('home') }}#menu">Cara Pesan</a></li>
-                        <li><a href="{{ route('home') }}#contact">Syarat & Ketentuan</a></li>
-                        <li><a href="{{ route('home') }}#contact">Kebijakan Privasi</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-col-title">Kontak</h4>
-                    <div class="footer-contact">
-                        <div class="contact-item">
-                            <svg class="contact-icon" width="12" height="16" viewBox="0 0 12 16" fill="none">
-                                <path d="M6.74062 15.6C8.34375 13.5938 12 8.73125 12 6C12 2.6875 9.3125 0 6 0C2.6875 0 0 2.6875 0 6C0 8.73125 3.65625 13.5938 5.25938 15.6C5.64375 16.0781 6.35625 16.0781 6.74062 15.6ZM6 4C6.53043 4 7.03914 4.21071 7.41421 4.58579C7.78929 4.96086 8 5.46957 8 6C8 6.53043 7.78929 7.03914 7.41421 7.41421C7.03914 7.78929 6.53043 8 6 8C5.46957 8 4.96086 7.78929 4.58579 7.41421C4.21071 7.03914 4 6.53043 4 6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4Z" fill="#42766A" />
-                            </svg>
-                            <span class="contact-text">Gedung Kantin Lantai 1<br>Universitas Kita</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M5.15312 0.768478C4.9125 0.187228 4.27812-0.122147 3.67188 0.0434781L0.921875 0.793478C0.378125 0.943478 0 1.43723 0 1.99973C0 9.73098 6.26875 15.9997 14 15.9997C14.5625 15.9997 15.0563 15.6216 15.2063 15.0779L15.9563 12.3279C16.1219 11.7216 15.8125 11.0872 15.2312 10.8466L12.2312 9.5966C11.7219 9.3841 11.1313 9.53098 10.7844 9.9591L9.52188 11.4997C7.32188 10.4591 5.54063 8.67785 4.5 6.47785L6.04063 5.21848C6.46875 4.86848 6.61562 4.28098 6.40312 3.7716L5.15312 0.771603V0.768478Z" fill="#42766A" />
-                            </svg>
-                            <span class="contact-text">+62 812-3456-7890</span>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M1.5 2C0.671875 2 0 2.67188 0 3.5C0 3.97187 0.221875 4.41562 0.6 4.7L7.4 9.8C7.75625 10.0656 8.24375 10.0656 8.6 9.8L15.4 4.7C15.7781 4.41562 16 3.97187 16 3.5C16 2.67188 15.3281 2 14.5 2H1.5ZM0 5.5V12C0 13.1031 0.896875 14 2 14H14C15.1031 14 16 13.1031 16 12V5.5L9.2 10.6C8.4875 11.1344 7.5125 11.1344 6.8 10.6L0 5.5Z" fill="#42766A" />
-                            </svg>
-                            <span class="contact-text">info@kantinkita.ac.id</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="footer-divider">
-
-            <div class="footer-bottom">
-                <span class="footer-copyright">© 2024 Kantin Kita. All rights reserved.</span>
-                <div class="footer-legal">
-                    <a href="{{ route('home') }}#contact">Privacy Policy</a>
-                    <a href="{{ route('home') }}#contact">Terms of Service</a>
-                    <a href="{{ route('home') }}#contact">Cookie Policy</a>
-                </div>
-            </div>
+  <!-- FOOTER -->
+  <footer class="footer" aria-label="Footer situs">
+    <div class="footer-shapes" aria-hidden="true">
+      <div class="footer-shape" style="top:60px;right:60px;width:42px;height:42px;border-radius:50%;background:#fff;">
+      </div>
+      <svg class="footer-shape" style="bottom:0;right:160px;" width="180" height="180" viewBox="0 0 180 180" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M180 0L0 180L180 180Z" stroke="white" stroke-width="1.57" fill="none" />
+      </svg>
+      <div class="footer-shape"
+        style="bottom:0;right:0;width:175px;height:175px;background:#fff;transform:translate(30%,30%);"></div>
+      <svg class="footer-shape" style="bottom:0;left:0;" width="170" height="170" viewBox="0 0 170 170" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 170L170 0L170 170Z" fill="white" stroke="#744622" stroke-width="1.57" />
+      </svg>
+      <svg class="footer-shape" style="bottom:0;left:100px;" width="170" height="170" viewBox="0 0 170 170" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M170 170L0 0L0 170Z" stroke="white" stroke-width="1.57" fill="none" />
+      </svg>
+      <div class="footer-shape"
+        style="bottom:0;left:0;width:186px;height:186px;border-radius:50%;border:1.57px solid #fff;transform:translate(-30%,20%);">
+      </div>
+      <svg class="footer-shape" style="bottom:0;right:80px;" width="180" height="180" viewBox="0 0 180 180" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 180L180 0L180 180Z" fill="white" stroke="#744622" stroke-width="1.57" />
+      </svg>
+    </div>
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="Navigasi footer">
+        <div class="footer-nav-group">
+          <a href="{{ route('home') }}" class="footer-nav-link">Beranda</a>
+          <a href="{{ route('home') }}#menu-title" class="footer-nav-link">Menu</a>
+          <a href="home.html#signup" class="footer-nav-link">Promo</a>
         </div>
-    </footer>
+        <a href="{{ route('home') }}" class="footer-wordmark">Kantin Kita</a>
+        <div class="footer-nav-group">
+          <a href="{{ route('about') }}" class="footer-nav-link">Tentang</a>
+          <a href="{{ route('about') }}#faq" class="footer-nav-link">FAQ</a>
+          <a href="{{ route('about') }}#kontak" class="footer-nav-link">Kontak</a>
+        </div>
+      </nav>
+      <hr class="footer-divider" />
+      <div class="footer-social" aria-label="Tautan media sosial">
+        <a href="#" class="social-link" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+              fill="white" />
+          </svg></a>
+        <a href="#" class="social-link" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M24 12c0-6.627-5.373-12-12-12S0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854V15.47H7.078V12h3.047V9.356c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.875V12h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12z"
+              fill="white" />
+          </svg></a>
+        <a href="#" class="social-link" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+              fill="white" />
+          </svg></a>
+      </div>
+      <div class="footer-legal">
+        <span class="footer-legal-text">&copy; 2024 Kantin Kita</span>
+        <span class="footer-legal-text">Privasi &mdash; Syarat</span>
+      </div>
+    </div>
+  </footer>
 
-    <script>
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 20);
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+
+  <script>
+        const nav = document.querySelector('.nav');
+    const updateNavOnScroll = () => {
+      if (!nav) {
+        return;
+      }
+      nav.classList.toggle('scrolled', window.scrollY > 18);
+    };
+
+    updateNavOnScroll();
+    window.addEventListener('scroll', updateNavOnScroll, { passive: true });
+
+    const toggle = document.getElementById('nav-toggle');
+    const mobileNav = document.getElementById('nav-mobile');
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // â”€â”€ Dark Feature Carousel â”€â”€
+    (() => {
+      const testimonials = [
+        {
+          quote: '"Menu-nya lengkap dan harganya ramah kantong mahasiswa. Sistem pembayaran digital juga sangat praktis!"',
+          avatar: 'https://i.pravatar.cc/100?img=12',
+          name: 'Budi Santoso',
+          role: 'Mahasiswa Ekonomi'
+        },
+        {
+          quote: '"Nasi goreng spesial Kantin Kita selalu jadi favorit saya. Porsinya banyak dan rasanya konsisten enak!"',
+          avatar: '',
+          name: 'Menu Favorit',
+          role: 'Nasi Goreng Spesial'
+        },
+        {
+          quote: '"Sangat membantu mahasiswa yang jadwalnya padat. Tinggal pesan lewat HP, makanan sudah siap!"',
+          avatar: 'https://i.pravatar.cc/100?img=32',
+          name: 'Siti Nurhaliza',
+          role: 'Mahasiswa Kedokteran'
+        },
+        {
+          quote: '"Ayam gepreknya level pedasnya pas banget! Harga mahasiswa tapi rasa restoran. Wajib coba!"',
+          avatar: '',
+          name: 'Menu Populer',
+          role: 'Ayam Geprek'
+        },
+        {
+          quote: '"Fitur pre-order sangat berguna, terutama saat jam makan siang yang ramai. Tidak perlu antri lagi!"',
+          avatar: 'https://i.pravatar.cc/100?img=59',
+          name: 'Alfian Rasyid',
+          role: 'Mahasiswa Teknik Informatika'
+        }
+      ];
+
+      const cards = document.querySelectorAll('.carousel-card');
+      const dotsContainer = document.getElementById('carouselDots');
+      const testimonialEl = document.getElementById('darkFeatureTestimonial');
+      const avatarEl = document.getElementById('darkFeatureAvatar');
+      const nameEl = document.getElementById('darkFeatureName');
+      const roleEl = document.getElementById('darkFeatureRole');
+      const authorEl = document.getElementById('darkFeatureAuthor');
+      const carouselEl = document.getElementById('darkFeatureCarousel');
+
+      if (!cards.length || !dotsContainer) return;
+
+      let activeIndex = 0;
+      const totalCards = cards.length;
+
+      // Create dots
+      for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+      function getPosition(index) {
+        const diff = index - activeIndex;
+        // Handle wrapping
+        const wrappedDiff = ((diff + Math.floor(totalCards / 2)) % totalCards + totalCards) % totalCards - Math.floor(totalCards / 2);
+        if (wrappedDiff === 0) return 'active';
+        if (wrappedDiff === -1) return 'prev';
+        if (wrappedDiff === 1) return 'next';
+        if (wrappedDiff === -2) return 'far-prev';
+        if (wrappedDiff === 2) return 'far-next';
+        return 'hidden';
+      }
+
+      function updateCarousel() {
+        cards.forEach((card, i) => {
+          card.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next', 'hidden');
+          card.classList.add(getPosition(i));
         });
 
-        // Mobile hamburger nav
-        const mobileNavToggle = document.getElementById('mobileNavToggle');
-        const mobileNavPanel = document.getElementById('mobileNavPanel');
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === activeIndex);
+        });
 
-        if (mobileNavToggle && mobileNavPanel) {
-            const closeMobileNav = () => {
-                mobileNavToggle.classList.remove('is-open');
-                mobileNavToggle.setAttribute('aria-expanded', 'false');
-                mobileNavPanel.classList.remove('is-open');
-                mobileNavPanel.setAttribute('aria-hidden', 'true');
-            };
+        // Fade out, update text, fade in
+        testimonialEl.style.opacity = '0';
+        authorEl.style.opacity = '0';
+        setTimeout(() => {
+          const t = testimonials[activeIndex];
+          testimonialEl.textContent = t.quote;
+          nameEl.textContent = t.name;
+          roleEl.textContent = t.role;
+          if (t.avatar) {
+            avatarEl.src = t.avatar;
+            avatarEl.style.display = '';
+          } else {
+            avatarEl.style.display = 'none';
+          }
+          testimonialEl.style.opacity = '1';
+          authorEl.style.opacity = '1';
+        }, 250);
+      }
 
-            mobileNavToggle.addEventListener('click', () => {
-                const isOpen = mobileNavPanel.classList.contains('is-open');
-                if (isOpen) {
-                    closeMobileNav();
-                    return;
-                }
+      function goToSlide(index) {
+        activeIndex = ((index % totalCards) + totalCards) % totalCards;
+        updateCarousel();
+      }
 
-                mobileNavToggle.classList.add('is-open');
-                mobileNavToggle.setAttribute('aria-expanded', 'true');
-                mobileNavPanel.classList.add('is-open');
-                mobileNavPanel.setAttribute('aria-hidden', 'false');
-            });
+      // Click on card to activate it
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.dataset.index, 10);
+          if (idx !== activeIndex) goToSlide(idx);
+        });
+      });
 
-            mobileNavPanel.querySelectorAll('a').forEach((link) => {
-                link.addEventListener('click', closeMobileNav);
-            });
+      // Swipe / drag support
+      let startX = 0;
+      let isDragging = false;
 
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) {
-                    closeMobileNav();
-                }
-            });
+      carouselEl.addEventListener('pointerdown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+        carouselEl.setPointerCapture(e.pointerId);
+      });
+
+      carouselEl.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        // Prevent scroll while swiping
+        e.preventDefault();
+      });
+
+      carouselEl.addEventListener('pointerup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        const delta = e.clientX - startX;
+        if (Math.abs(delta) > 50) {
+          if (delta < 0) {
+            goToSlide(activeIndex + 1);
+          } else {
+            goToSlide(activeIndex - 1);
+          }
+        }
+      });
+
+      carouselEl.addEventListener('pointercancel', () => {
+        isDragging = false;
+      });
+
+      // Auto-play every 5s
+      let autoplayInterval = setInterval(() => goToSlide(activeIndex + 1), 5000);
+
+      carouselEl.addEventListener('pointerenter', () => clearInterval(autoplayInterval));
+      carouselEl.addEventListener('pointerleave', () => {
+        autoplayInterval = setInterval(() => goToSlide(activeIndex + 1), 5000);
+      });
+
+      // Initial layout
+      updateCarousel();
+    })();
+
+    // Chatbot interaction
+    const chatbotForm = document.getElementById('chatbotForm');
+    if (chatbotForm) {
+      const CHATBOT_ENDPOINT = @json(route('chatbot.respond', [], false));
+      const CHATBOT_ERROR_MESSAGE = 'Maaf, chatbot sedang tidak tersedia. Coba lagi sebentar ya.';
+      const chatbotMessages = document.getElementById('chatbotMessages');
+      const chatbotInput = document.getElementById('chatbotInput');
+      const chatbotSendButton = document.getElementById('chatbotSendButton');
+      let isChatbotSending = false;
+
+      const appendMessage = (role, text) => {
+        const bubble = document.createElement('div');
+        bubble.className = `chatbot-bubble ${role === 'user' ? 'chatbot-bubble-user' : 'chatbot-bubble-bot'}`;
+        bubble.textContent = text;
+        chatbotMessages.appendChild(bubble);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      };
+
+      const showTyping = () => {
+        const typingBubble = document.createElement('div');
+        typingBubble.id = 'chatbotTyping';
+        typingBubble.className = 'chatbot-bubble chatbot-bubble-bot';
+        typingBubble.innerHTML = '<span class="chatbot-typing"><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span></span>';
+        chatbotMessages.appendChild(typingBubble);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      };
+
+      const hideTyping = () => {
+        const typingBubble = document.getElementById('chatbotTyping');
+        if (typingBubble) {
+          typingBubble.remove();
+        }
+      };
+
+      const setSendingState = (sending) => {
+        isChatbotSending = sending;
+        chatbotInput.disabled = sending;
+        chatbotSendButton.disabled = sending;
+      };
+
+      const requestChatbotReply = async (prompt) => {
+        const cleanedPrompt = prompt.trim();
+        if (!cleanedPrompt || isChatbotSending) {
+          return;
         }
 
-        // Scroll reveal animation
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -40px 0px'
-        });
+        appendMessage('user', cleanedPrompt);
+        chatbotInput.value = '';
+        setSendingState(true);
+        showTyping();
 
-        revealEls.forEach(el => observer.observe(el));
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 30000);
 
-        // Chatbot interaction
-        const chatbotForm = document.getElementById('chatbotForm');
-        if (chatbotForm) {
-            const CHATBOT_ENDPOINT = @json(route('chatbot.respond', [], false));
-            const CHATBOT_ERROR_MESSAGE = 'Maaf, chatbot sedang tidak tersedia. Coba lagi sebentar ya.';
-            const chatbotMessages = document.getElementById('chatbotMessages');
-            const chatbotInput = document.getElementById('chatbotInput');
-            const chatbotSendButton = document.getElementById('chatbotSendButton');
-            const chatbotCtaButton = document.getElementById('chatbotCtaButton');
-            const chatbotChips = document.querySelectorAll('.chatbot-chip');
-            let isChatbotSending = false;
+        try {
+          const response = await fetch(CHATBOT_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ prompt: cleanedPrompt }),
+            signal: controller.signal
+          });
 
-            const appendMessage = (role, text) => {
-                const bubble = document.createElement('div');
-                bubble.className = `chatbot-bubble ${role === 'user' ? 'chatbot-bubble-user' : 'chatbot-bubble-bot'}`;
-                bubble.textContent = text;
-                chatbotMessages.appendChild(bubble);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            };
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            throw new Error(payload.message || 'Permintaan gagal diproses.');
+          }
 
-            const showTyping = () => {
-                const typingBubble = document.createElement('div');
-                typingBubble.id = 'chatbotTyping';
-                typingBubble.className = 'chatbot-bubble chatbot-bubble-bot';
-                typingBubble.innerHTML = '<span class="chatbot-typing"><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span><span class="chatbot-typing-dot"></span></span>';
-                chatbotMessages.appendChild(typingBubble);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            };
+          const botReply = typeof payload.result === 'string' && payload.result.trim()
+            ? payload.result.trim()
+            : CHATBOT_ERROR_MESSAGE;
 
-            const hideTyping = () => {
-                const typingBubble = document.getElementById('chatbotTyping');
-                if (typingBubble) {
-                    typingBubble.remove();
-                }
-            };
-
-            const setSendingState = (sending) => {
-                isChatbotSending = sending;
-                chatbotMessages.setAttribute('aria-busy', sending ? 'true' : 'false');
-                chatbotInput.disabled = sending;
-                chatbotSendButton.disabled = sending;
-                chatbotChips.forEach((chip) => {
-                    chip.disabled = sending;
-                });
-            };
-
-            const requestChatbotReply = async (prompt) => {
-                const cleanedPrompt = prompt.trim();
-                if (!cleanedPrompt || isChatbotSending) {
-                    return;
-                }
-
-                appendMessage('user', cleanedPrompt);
-                chatbotInput.value = '';
-                setSendingState(true);
-                showTyping();
-
-                const controller = new AbortController();
-                const timeoutId = window.setTimeout(() => controller.abort(), 30000);
-
-                try {
-                    const response = await fetch(CHATBOT_ENDPOINT, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            prompt: cleanedPrompt
-                        }),
-                        signal: controller.signal
-                    });
-
-                    const payload = await response.json().catch(() => ({}));
-                    if (!response.ok) {
-                        throw new Error(payload.message || 'Permintaan gagal diproses.');
-                    }
-
-                    const botReply = typeof payload.result === 'string' && payload.result.trim() ?
-                        payload.result.trim() :
-                        CHATBOT_ERROR_MESSAGE;
-
-                    hideTyping();
-                    appendMessage('bot', botReply);
-                } catch (error) {
-                    hideTyping();
-                    if (error.name === 'AbortError') {
-                        appendMessage('bot', 'Respon chatbot terlalu lama. Coba kirim ulang pertanyaanmu.');
-                    } else {
-                        appendMessage('bot', CHATBOT_ERROR_MESSAGE);
-                    }
-                } finally {
-                    window.clearTimeout(timeoutId);
-                    setSendingState(false);
-                    chatbotInput.focus();
-                }
-            };
-
-            chatbotForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                requestChatbotReply(chatbotInput.value);
-            });
-
-            chatbotChips.forEach((chip) => {
-                chip.addEventListener('click', () => {
-                    requestChatbotReply(chip.dataset.prompt || chip.textContent || '');
-                });
-            });
-
-            if (chatbotCtaButton) {
-                chatbotCtaButton.addEventListener('click', () => {
-                    chatbotForm.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'nearest'
-                    });
-
-                    try {
-                        chatbotInput.focus({
-                            preventScroll: true
-                        });
-                    } catch (error) {
-                        chatbotInput.focus();
-                    }
-                });
-            }
-
-            appendMessage('bot', 'Halo, aku asisten Kantin Kita. Kamu bisa tanya menu terlaris, jam operasional, atau cara pesan tanpa antre.');
+          hideTyping();
+          appendMessage('bot', botReply);
+        } catch (error) {
+          hideTyping();
+          if (error.name === 'AbortError') {
+            appendMessage('bot', 'Respon chatbot terlalu lama. Coba kirim ulang pertanyaanmu.');
+          } else {
+            appendMessage('bot', CHATBOT_ERROR_MESSAGE);
+          }
+        } finally {
+          window.clearTimeout(timeoutId);
+          setSendingState(false);
+          chatbotInput.focus();
         }
+      };
 
-        // Parallax on hero glow
-        window.addEventListener('scroll', () => {
-            const glow = document.querySelector('.hero-bg-glow');
-            if (glow) {
-                glow.style.transform = `translateY(calc(-50% + ${window.scrollY * 0.15}px))`;
-            }
+      chatbotForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        requestChatbotReply(chatbotInput.value);
+      });
+
+      const chatbotChips = document.querySelectorAll('.chatbot-chip');
+      chatbotChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const prompt = chip.getAttribute('data-prompt');
+          if (prompt && !isChatbotSending) {
+            chatbotInput.value = prompt;
+            requestChatbotReply(prompt);
+          }
         });
+      });
 
-        // ── Testimonials swipeable carousel (mobile) ──────────────────────
-        (function initTestimonialsCarousel() {
-            const grid = document.getElementById('testimonialsGrid');
-            const dotsContainer = document.getElementById('testimonialDots');
-            if (!grid || !dotsContainer) return;
-
-            const dots = Array.from(dotsContainer.querySelectorAll('.testimonial-dot'));
-            const cards = Array.from(grid.querySelectorAll('.testimonial-card'));
-            if (!cards.length) return;
-
-            let currentIndex = 0;
-            let frameId = null;
-
-            function isMobile() {
-                return window.innerWidth <= 768;
-            }
-
-            function updateDots(index) {
-                dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-                currentIndex = index;
-            }
-
-            function setActiveCard(index) {
-                cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
-                updateDots(index);
-            }
-
-            function getCenteredIndex() {
-                const gridRect = grid.getBoundingClientRect();
-                const gridCenter = gridRect.left + gridRect.width / 2;
-
-                let nearestIndex = 0;
-                let nearestDistance = Number.POSITIVE_INFINITY;
-
-                cards.forEach((card, index) => {
-                    const cardRect = card.getBoundingClientRect();
-                    const cardCenter = cardRect.left + cardRect.width / 2;
-                    const distance = Math.abs(gridCenter - cardCenter);
-
-                    if (distance < nearestDistance) {
-                        nearestDistance = distance;
-                        nearestIndex = index;
-                    }
-                });
-
-                return nearestIndex;
-            }
-
-            function syncActiveState() {
-                if (!isMobile()) {
-                    cards.forEach((card) => card.classList.remove('is-active'));
-                    dots.forEach((dot, index) => dot.classList.toggle('active', index === 0));
-                    currentIndex = 0;
-                    return;
-                }
-
-                setActiveCard(getCenteredIndex());
-            }
-
-            function scrollToCard(index) {
-                const targetCard = cards[index];
-                if (!targetCard) return;
-
-                const targetLeft = targetCard.offsetLeft + (targetCard.offsetWidth / 2) - (grid.clientWidth / 2);
-                grid.scrollTo({
-                    left: Math.max(0, targetLeft),
-                    behavior: 'smooth'
-                });
-            }
-
-            // Sync dots on scroll
-            grid.addEventListener('scroll', () => {
-                if (!isMobile()) return;
-
-                if (frameId) {
-                    cancelAnimationFrame(frameId);
-                }
-
-                frameId = requestAnimationFrame(syncActiveState);
-            }, {
-                passive: true
-            });
-
-            // Dot click to scroll to card
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    if (!isMobile()) return;
-
-                    scrollToCard(i);
-                    setActiveCard(i);
-                });
-            });
-
-            window.addEventListener('resize', syncActiveState);
-            window.addEventListener('orientationchange', syncActiveState);
-
-            requestAnimationFrame(syncActiveState);
-        })();
-    </script>
+      appendMessage('bot', 'Halo, aku Moka asisten Kantin Kita. Kamu bisa tanya menu, jam operasional, atau cara pesan tanpa antre.');
+    }
+  </script>
 </body>
 
 </html>

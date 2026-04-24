@@ -8,6 +8,10 @@ use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
 Route::get('/vendor/{id}/menu', [VendorController::class, 'showMenu'])->name('menu');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
