@@ -93,7 +93,6 @@ class DashboardController extends Controller
 
         return back()->with('orderSuccess', 'Status pesanan berhasil diubah menjadi selesai.');
     }
-
     public function menuList()
     {
         $vendor = Auth::user()?->vendor;
