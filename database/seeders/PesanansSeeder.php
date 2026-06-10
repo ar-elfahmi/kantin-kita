@@ -2,153 +2,75 @@
 
 namespace Database\Seeders;
 
-use App\Models\Menu;
-use App\Models\Payment;
-use App\Models\Pesanan;
-use App\Models\User;
-use App\Models\Vendor;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PesanansSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $orderSeeds = [
+        DB::table('pesanans')->insert([
             [
-                'vendor_name' => 'Warung Mbok Sri',
+                'id' => 1,
+                'user_id' => 10,
+                'vendor_id' => 8,
                 'nama_customer' => 'Ahmad',
+                'total' => 36000,
+                'catatan' => null,
+                'waktu_pengambilan' => '15-20 min',
                 'status_pesanan' => 'pending',
-                'payment_status' => 'pending',
-                'items' => [
-                    ['menu' => 'Nasi Goreng Spesial', 'jumlah' => 2],
-                ],
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
             ],
             [
-                'vendor_name' => 'Warung Mbok Sri',
+                'id' => 2,
+                'user_id' => 11,
+                'vendor_id' => 8,
                 'nama_customer' => 'Budi',
+                'total' => 15000,
+                'catatan' => null,
+                'waktu_pengambilan' => '15-20 min',
                 'status_pesanan' => 'diproses',
-                'payment_status' => 'settlement',
-                'items' => [
-                    ['menu' => 'Bakso Kuah Spesial', 'jumlah' => 1],
-                ],
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
             ],
             [
-                'vendor_name' => 'Warung Mbok Sri',
+                'id' => 3,
+                'user_id' => 12,
+                'vendor_id' => 8,
                 'nama_customer' => 'Citra',
+                'total' => 36000,
+                'catatan' => null,
+                'waktu_pengambilan' => '15-20 min',
                 'status_pesanan' => 'selesai',
-                'payment_status' => 'settlement',
-                'items' => [
-                    ['menu' => 'Soto Ayam Lamongan', 'jumlah' => 3],
-                ],
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
             ],
             [
-                'vendor_name' => 'Warung Bu Sari',
+                'id' => 4,
+                'user_id' => 13,
+                'vendor_id' => 7,
                 'nama_customer' => 'Dewi',
+                'total' => 23000,
+                'catatan' => null,
+                'waktu_pengambilan' => '15-20 min',
                 'status_pesanan' => 'diproses',
-                'payment_status' => 'settlement',
-                'items' => [
-                    ['menu' => 'Nasi Gudeg Ayam', 'jumlah' => 1],
-                    ['menu' => 'Es Teh Manis', 'jumlah' => 1],
-                ],
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
             ],
             [
-                'vendor_name' => 'Warung Bu Sari',
+                'id' => 5,
+                'user_id' => 14,
+                'vendor_id' => 7,
                 'nama_customer' => 'Eka',
+                'total' => 31000,
+                'catatan' => null,
+                'waktu_pengambilan' => '15-20 min',
                 'status_pesanan' => 'pending',
-                'payment_status' => 'pending',
-                'items' => [
-                    ['menu' => 'Mie Ayam Special', 'jumlah' => 1],
-                    ['menu' => 'Pisang Goreng', 'jumlah' => 2],
-                ],
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
             ],
-        ];
 
-        foreach ($orderSeeds as $seed) {
-            $vendor = Vendor::where('nama_vendor', $seed['vendor_name'])->first();
-            if (! $vendor) {
-                continue;
-            }
-
-            $guestUser = User::firstOrCreate(
-                [
-                    'name' => $seed['nama_customer'],
-                    'role' => 'guest',
-                ],
-                [
-                    'email' => null,
-                    'password' => null,
-                ]
-            );
-
-            $detailItems = [];
-            $total = 0;
-
-            foreach ($seed['items'] as $item) {
-                $menu = Menu::query()
-                    ->where('vendor_id', $vendor->id)
-                    ->where('nama_menu', $item['menu'])
-                    ->first();
-
-                if (! $menu) {
-                    continue;
-                }
-
-                $jumlah = max(1, (int) $item['jumlah']);
-                $subtotal = (int) $menu->harga * $jumlah;
-                $total += $subtotal;
-
-                $detailItems[] = [
-                    'menu_id' => $menu->id,
-                    'jumlah' => $jumlah,
-                    'harga' => (int) $menu->harga,
-                    'subtotal' => $subtotal,
-                    'catatan' => null,
-                ];
-            }
-
-            if (empty($detailItems)) {
-                continue;
-            }
-
-            $pesanan = Pesanan::updateOrCreate(
-                [
-                    'vendor_id' => $vendor->id,
-                    'nama_customer' => $seed['nama_customer'],
-                    'status_pesanan' => $seed['status_pesanan'],
-                ],
-                [
-                    'user_id' => $guestUser->id,
-                    'total' => $total,
-                    'catatan' => null,
-                    'waktu_pengambilan' => '15-20 min',
-                ]
-            );
-
-            $pesanan->detailPesanans()->delete();
-            foreach ($detailItems as $detailItem) {
-                $pesanan->detailPesanans()->create($detailItem);
-            }
-
-            Payment::updateOrCreate(
-                ['pesanan_id' => $pesanan->id],
-                [
-                    'snap_token' => 'SEED-SNAP-' . $pesanan->id,
-                    'transaction_id' => $seed['payment_status'] === 'settlement'
-                        ? 'SEED-TRX-' . $pesanan->id
-                        : null,
-                    'payment_type' => 'qris',
-                    'gross_amount' => $total,
-                    'status' => $seed['payment_status'],
-                    'paid_at' => $seed['payment_status'] === 'settlement' ? now() : null,
-                    'midtrans_response' => [
-                        'transaction_status' => $seed['payment_status'],
-                        'source' => 'seeder',
-                    ],
-                ]
-            );
-        }
+        ]);
     }
 }

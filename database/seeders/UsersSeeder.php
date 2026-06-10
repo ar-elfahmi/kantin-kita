@@ -2,38 +2,183 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $users = [
-            ['name' => 'Admin Kantin Kita', 'email' => 'admin@kantinkita.id', 'role' => 'admin'],
-            ['name' => 'Warung Nusantara', 'email' => 'nusantara@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'The Burger Hub', 'email' => 'burgerhub@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Bubble Tea Corner', 'email' => 'bubbletea@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Ramen Station', 'email' => 'ramen@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Fresh & Healthy', 'email' => 'freshhealty@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Campus Brew', 'email' => 'campusbrew@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Warung Bu Sari', 'email' => 'busari@kantinkita.id', 'role' => 'vendor'],
-            ['name' => 'Warung Mbok Sri', 'email' => 'mboksri@kantinkita.id', 'role' => 'vendor'],
-        ];
+        DB::table('users')->insert([
+            [
+                'id' => 1,
+                'name' => 'Admin Kantin Kita',
+                'email' => 'admin@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$rCO5IyZs979yucoMBOEI2OHFQAN4FSdQ8BqGrBUGWhRXaBt.I4IG.',
+                'role' => 'admin',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:56',
+                'updated_at' => '2026-06-07 12:16:56',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 2,
+                'name' => 'Warung Nusantara',
+                'email' => 'nusantara@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$FAUkXdKzWSpEczPZBMpgB.bqHjDOMx6ZJuWbkaOfYu/KEO8yQ57jK',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:56',
+                'updated_at' => '2026-06-07 12:16:56',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 3,
+                'name' => 'The Burger Hub',
+                'email' => 'burgerhub@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$4tP4kIeZctJacErShkcIVukhBY161y3sjhvytHdPa6mLZUvCVp7Uq',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:56',
+                'updated_at' => '2026-06-07 12:16:56',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 4,
+                'name' => 'Bubble Tea Corner',
+                'email' => 'bubbletea@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$6ifgJu9K5s4cqwwndJok3OGwqJ3hTts7R0eAkCU3zmScp8e2JYhqC',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:56',
+                'updated_at' => '2026-06-07 12:16:56',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 5,
+                'name' => 'Ramen Station',
+                'email' => 'ramen@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$gD5usf/pq7cpOLRvD0MF9.o8AFrkm.6K7SVa.DvaGSFfb4Cime95G',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:57',
+                'updated_at' => '2026-06-07 12:16:57',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 6,
+                'name' => 'Fresh & Healthy',
+                'email' => 'freshhealty@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$G5ZFPbl9GX8T5ZBq5bt3ieF2h4Hu8phPkX4PUJGPRNWa7PnkEpE/m',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:57',
+                'updated_at' => '2026-06-07 12:16:57',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 7,
+                'name' => 'Campus Brew',
+                'email' => 'campusbrew@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$V1sNZ94tUkfb9PTsAZKNcuKKmXl.ly6oUVPDQgjK12kb1k0h3GLlG',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:57',
+                'updated_at' => '2026-06-09 04:58:02',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 8,
+                'name' => 'Warung Bu Sari',
+                'email' => 'busari@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$cPKvAtXN0SZV7Cn1lq9H5eCllOPo4EJIfVSgNjQWdl4HCkwttOK1i',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 9,
+                'name' => 'Warung Mbok Sri',
+                'email' => 'mboksri@kantinkita.id',
+                'email_verified_at' => null,
+                'password' => '$2y$12$O5UqH0bjU.2kbQbI0Tf2EOxrJinZvl1zxLjvnqbixd3oeQDqlVwcG',
+                'role' => 'vendor',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 10,
+                'name' => 'Ahmad',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'guest',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 11,
+                'name' => 'Budi',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'guest',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 12,
+                'name' => 'Citra',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'guest',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 13,
+                'name' => 'Dewi',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'guest',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 14,
+                'name' => 'Eka',
+                'email' => null,
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'guest',
+                'remember_token' => null,
+                'created_at' => '2026-06-07 12:16:58',
+                'updated_at' => '2026-06-07 12:16:58',
+                'deleted_at' => null,
+            ],
 
-        foreach ($users as $user) {
-            User::updateOrCreate(
-                ['email' => $user['email']],
-                [
-                    'name' => $user['name'],
-                    'password' => Hash::make('password123'),
-                    'role' => $user['role'],
-                ]
-            );
-        }
+        ]);
     }
 }

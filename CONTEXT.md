@@ -245,6 +245,18 @@
 - Quarter-circle (`top: -40%; right: -20%`) diganti dengan decorative dot subtle (`top: -10px; right: -10px; width: 40px; height: 40px; opacity: .08`) yang lebih profesional dan intentional. Hover hanya tampilkan dot (dari opacity 0 → .08), tanpa scale animation.
 - Tombol "Tambah Produk" dihapus karena fungsi tambah produk sudah ada di halaman manage-menu (sidebar).
 
+## 2026-06-10: Favicon pindah dari public/favicon/ ke public/ root (Vercel compat)
+
+**Files touched:**
+- `public/favicon/*` (8 files) → dipindah ke `public/` root, `public/favicon/` dihapus
+- 20 blade files — ganti `{{ asset('favicon/favicon.ico') }}` → `{{ asset('favicon.ico') }}`, dll (semua `favicon/` prefix dihapus)
+- `vercel.json` — tambah route `"src": "/(.*\\.(?:ico|png|webmanifest))"` sebelum catch-all PHP agar favicon files disajikan sebagai static files, bukan lewat Laravel
+
+**Decisions:**
+- Root-level favicon (`/favicon.ico`) = standar web, browser auto-discover
+- Route regex `.*\.(?:ico|png|webmanifest)` catch semua static file extensions — future-proof untuk file static lain
+- Tests: 67 passed
+
 ## 2026-06-10: Title separator konsistensi + favicon about/artikel
 
 **Files touched:**

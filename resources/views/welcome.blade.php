@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
   <title>Kantin Kita | Pesan Makanan Tanpa Antri</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -99,7 +99,7 @@
       outline-offset: 2px;
     }
 
-    /* â”€â”€â”€ NAV â”€â”€â”€ */
+    /* ─── NAV ─── */
     .nav {
       width: 100%;
       min-height: 72px;
@@ -216,7 +216,7 @@
       box-shadow: none;
     }
 
-    /* â”€â”€â”€ HERO â”€â”€â”€ */
+    /* ─── HERO ─── */
     .hero {
       background: var(--bg-light);
       min-height: auto;
@@ -365,7 +365,7 @@
       border-radius: inherit;
     }
 
-    /* â”€â”€â”€ TESTIMONIAL â”€â”€â”€ */
+    /* ─── TESTIMONIAL ─── */
     .testimonial {
       background: var(--bg-light);
       padding: 92px 40px 84px;
@@ -426,7 +426,7 @@
       line-height: 1.45;
     }
 
-    /* â”€â”€â”€ DARK FEATURE â”€â”€â”€ */
+    /* ─── DARK FEATURE ─── */
     .dark-feature {
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       padding: 80px 100px;
@@ -498,7 +498,7 @@
       margin-top: 2px;
     }
 
-    /* â”€â”€ Carousel Media â”€â”€ */
+    /* ── Carousel Media ── */
     .dark-feature-media {
       flex: 1;
       display: flex;
@@ -618,7 +618,7 @@
       border-color: #fff;
     }
 
-    /* â”€â”€â”€ FEATURE CARDS â”€â”€â”€ */
+    /* ─── FEATURE CARDS ─── */
     .feature-cards {
       background: var(--bg-white);
       padding: 80px;
@@ -705,8 +705,8 @@
       line-height: var(--lh-normal);
     }
 
-    /* â”€â”€â”€ POPULAR MENU â”€â”€â”€ */
-    /* ─── MENU FAVORIT: BENTO GRID (Levels 1-6) ─── */
+    /* ─── POPULAR MENU ─── */
+    /* --- MENU FAVORIT: BENTO GRID (Levels 1-6) --- */
     /* Level 1: typography + spacing + grid */
     /* Level 2: brand colors + custom fonts */
     .menu-bento {
@@ -744,7 +744,7 @@
       margin-bottom: 16px;
     }
 
-    /* Level 3: bento grid — no rigid rows */
+    /* Level 3: bento grid � no rigid rows */
     .menu-bento-grid {
       display: grid;
       grid-template-columns: 2.2fr 1fr 1fr;
@@ -921,7 +921,7 @@
 
 
 
-    /* â”€â”€â”€ CHATBOT SECTION â”€â”€â”€ */
+    /* ─── CHATBOT SECTION ─── */
     .chatbot-section {
       padding: 96px 5%;
       background: var(--bg-white);
@@ -1014,7 +1014,7 @@
       border-color: rgba(255, 255, 255, 0.5);
     }
 
-    /* â”€â”€â”€ CHATBOT UI â”€â”€â”€ */
+    /* ─── CHATBOT UI ─── */
     .chatbot-panel {
       border-radius: var(--radius-lg);
       background: var(--surface-soft);
@@ -1198,7 +1198,7 @@
       white-space: nowrap;
     }
 
-    /* ─── CTA FORM ─── */
+    /* --- CTA FORM --- */
     .cta-form {
       background: var(--bg-light);
       padding: var(--space-11) var(--space-6) var(--space-8);
@@ -1275,7 +1275,7 @@
       box-shadow: none;
     }
 
-    /* ─── TENTANG KAMI / ARTIKEL SECTION ─── */
+    /* --- TENTANG KAMI / ARTIKEL SECTION --- */
     .tentang-kami {
       padding: var(--space-8) var(--space-6) var(--space-11);
       max-width: 1180px;
@@ -1386,7 +1386,7 @@
       transform: translateY(-1px);
     }
 
-    /* ─── FOOTER ─── */
+    /* --- FOOTER --- */
     .footer {
       background: var(--text-main);
       color: var(--bg-white);
@@ -1473,12 +1473,12 @@
       color: #fff;
     }
 
-    /* â”€â”€â”€ UTILITY COLORS â”€â”€â”€ */
+    /* ─── UTILITY COLORS ─── */
     .text-green {
       color: var(--accent);
     }
 
-    /* â”€â”€â”€ SOCIAL LINKS â”€â”€â”€ */
+    /* ─── SOCIAL LINKS ─── */
     .social-link {
       width: 44px;
       height: 44px;
@@ -1507,7 +1507,7 @@
       position: absolute;
     }
 
-    /* â”€â”€â”€ HAMBURGER â”€â”€â”€ */
+    /* ─── HAMBURGER ─── */
     .nav-toggle {
       display: none;
       flex-direction: column;
@@ -1583,7 +1583,7 @@
       padding: 12px 0 !important;
     }
 
-    /* â”€â”€â”€ RESPONSIVE â”€â”€â”€ */
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
       .cards-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1793,7 +1793,7 @@
         scroll-snap-align: center;
       }
 
-      /* Level 6: mobile → horizontal story scroller */
+      /* Level 6: mobile ? horizontal story scroller */
       .menu-bento-grid {
         display: flex;
         overflow-x: auto;
@@ -1910,7 +1910,7 @@
       }
     }
 
-    /* ─── LEVEL 3-5 UPGRADES: BENTO • GLASSMORPHISM • DEPTH ─── */
+    /* --- LEVEL 3-5 UPGRADES: BENTO � GLASSMORPHISM � DEPTH --- */
 
     /* Hero ambient glow + depth-of-field */
     .hero-circle-left {
@@ -1941,7 +1941,7 @@
       pointer-events: none;
     }
 
-    /* ─── DARK FEATURE: CAROUSEL TESTIMONIAL ─── */
+    /* --- DARK FEATURE: CAROUSEL TESTIMONIAL --- */
     .dark-feature {
       padding: 80px clamp(24px, 5vw, 100px);
       position: relative;
@@ -2034,7 +2034,7 @@
       margin-top: 2px;
     }
 
-    /* ── Carousel Media ── */
+    /* -- Carousel Media -- */
     .dark-feature-media {
       flex: 1;
       display: flex;
@@ -2154,7 +2154,7 @@
       border-color: #fff;
     }
 
-    /* ─── FEATURE CARDS: 4-COLUMN GRID ─── */
+    /* --- FEATURE CARDS: 4-COLUMN GRID --- */
     .feature-cards .card {
       background: linear-gradient(180deg, #fff 0%, var(--surface-soft) 130%);
       border: 1px solid rgba(116, 70, 34, 0.08);
@@ -2170,11 +2170,11 @@
     .feature-cards .card:nth-child(2) .feature-icon { background: rgba(255, 255, 255, 0.18); }
     .feature-cards .card:nth-child(2) .feature-icon svg path { fill: #fff; }
 
-    /* ─── MENU CARDS: PREMIUM FOOD PHOTOGRAPHY ─── */
+    /* --- MENU CARDS: PREMIUM FOOD PHOTOGRAPHY --- */
     .menu-card {
       border: 1px solid rgba(116, 70, 34, 0.06);
     }
-    /* ─── MENU BENTO: depth hover glow (Levels 4-5) ─── */
+    /* --- MENU BENTO: depth hover glow (Levels 4-5) --- */
     .menu-bento-card::after {
       content: "";
       position: absolute;
@@ -2188,7 +2188,7 @@
       opacity: 1;
     }
 
-    /* ─── SCROLL REVEAL ─── */
+    /* --- SCROLL REVEAL --- */
     .reveal {
       opacity: 0;
       transform: translateY(28px);
@@ -2314,7 +2314,7 @@
       </figure>
     </section>
 
-    <!-- KENAPA KANTIN KITA — CAROUSEL TESTIMONIAL -->
+    <!-- KENAPA KANTIN KITA � CAROUSEL TESTIMONIAL -->
     <section class="dark-feature" aria-labelledby="dark-feature-title">
       <div class="dark-feature-content">
         <h2 class="dark-feature-title" id="dark-feature-title">Kenapa Kantin Kita?</h2>
@@ -2699,7 +2699,7 @@
       toggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // â”€â”€ Dark Feature Carousel â”€â”€
+    // ── Dark Feature Carousel ──
     (() => {
       const testimonials = [
         {

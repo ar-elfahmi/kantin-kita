@@ -6,6 +6,7 @@
     },
     "routes": [
         { "src": "/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "/(.*\\.(?:ico|png|webmanifest))", "dest": "/public/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
