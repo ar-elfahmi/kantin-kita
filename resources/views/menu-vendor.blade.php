@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Warung Bu Sari – Kantin Kita</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" />
+    <title>Warung Bu Sari | Kantin Kita</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -33,6 +36,15 @@
             --radius-card: 20px;
             --radius-btn: 15px;
             --radius-pill: 9999px;
+
+            /* Canonical card tokens — keep in sync with select-vendor.blade.php
+               (see openspec change: align-vendor-card-clickable). */
+            --card-radius: 20px;
+            --card-image-h: 208px;
+            --card-body-pad: 20px;
+            --card-gap: 24px;
+            --card-shadow-idle: 0 1px 2px rgba(0, 0, 0, .05);
+            --card-shadow-hover: 0 4px 6px rgba(0, 0, 0, .07), 0 10px 20px rgba(0, 0, 0, .06);
         }
 
         html,
@@ -221,27 +233,6 @@
             justify-content: center;
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-pill);
-            background: var(--sage);
-            overflow: hidden;
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: transform .2s, box-shadow .2s;
-        }
-
-        .user-avatar:hover {
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(66, 118, 106, .3);
-        }
-
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
         /* ─── Main Content ───────────────────────────────────────── */
         .main-content {
@@ -486,10 +477,15 @@
             box-shadow: var(--shadow-md);
         }
 
+        .menu-card:focus-visible {
+            outline: 3px solid var(--sage);
+            outline-offset: 2px;
+        }
+
         .menu-card-image-wrap {
             position: relative;
             width: 100%;
-            height: 208px;
+            height: var(--card-image-h);
             overflow: hidden;
             background: #f0ebe3;
         }
@@ -758,6 +754,333 @@
             box-shadow: 0 2px 6px rgba(249, 115, 22, .4);
         }
 
+        /* ─── Menu Detail Modal ─────────────────────────────────── */
+        .menu-detail-modal {
+            border: none;
+            padding: 0;
+            background: transparent;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: visible;
+            margin: auto;
+        }
+
+        .menu-detail-modal::backdrop {
+            background: rgba(31, 17, 7, .55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .menu-detail-card {
+            background: var(--white);
+            border-radius: var(--radius-card);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .menu-detail-header {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #f0ebe3;
+            flex-shrink: 0;
+        }
+
+        .menu-detail-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .menu-detail-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-pill);
+            background: rgba(255, 255, 255, .92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--brown);
+            line-height: 1;
+            cursor: pointer;
+            transition: transform .15s, background .15s;
+        }
+
+        .menu-detail-close:hover {
+            transform: scale(1.08);
+            background: var(--white);
+        }
+
+        .menu-detail-body {
+            padding: 20px 24px 8px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .menu-detail-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--brown);
+            letter-spacing: -.5px;
+            margin-bottom: 4px;
+        }
+
+        .menu-detail-desc {
+            font-size: 14px;
+            color: var(--brown-light);
+            line-height: 1.45;
+            margin-bottom: 8px;
+        }
+
+        .menu-detail-vendor {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--sage);
+            letter-spacing: -.3px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .menu-detail-base-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--sage);
+            margin-bottom: 16px;
+        }
+
+        .menu-detail-section {
+            margin-top: 16px;
+        }
+
+        .menu-detail-section[hidden] {
+            display: none !important;
+        }
+
+        .menu-detail-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brown);
+            letter-spacing: -.3px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .menu-detail-option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-detail-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-btn);
+            background: #f7f1e2;
+            border: 1.5px solid transparent;
+            cursor: pointer;
+            transition: background .15s, border-color .15s;
+        }
+
+        .menu-detail-option:hover {
+            background: #eee4cb;
+        }
+
+        .menu-detail-option input {
+            accent-color: var(--sage);
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .menu-detail-option input:checked ~ .menu-detail-option-label,
+        .menu-detail-option:has(input:checked) {
+            border-color: var(--sage);
+            background: rgba(66, 118, 106, .08);
+        }
+
+        .menu-detail-option-label {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--brown);
+        }
+
+        .menu-detail-option-price {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sage);
+        }
+
+        .menu-detail-note {
+            width: 100%;
+            min-height: 64px;
+            padding: 10px 14px;
+            border-radius: var(--radius-btn);
+            border: 1.5px solid var(--border);
+            background: var(--cream);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: var(--brown);
+            resize: vertical;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .menu-detail-note:focus {
+            border-color: var(--sage);
+            box-shadow: 0 0 0 3px rgba(66, 118, 106, .12);
+        }
+
+        .menu-detail-note-counter {
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            color: var(--brown-light);
+            margin-top: 4px;
+        }
+
+        .menu-detail-footer {
+            padding: 16px 24px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--white);
+            flex-shrink: 0;
+        }
+
+        .menu-detail-qty-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .menu-detail-qty-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brown);
+        }
+
+        .menu-detail-qty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px;
+            background: #f2e9d8;
+            border-radius: var(--radius-pill);
+        }
+
+        .menu-detail-qty button {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brown);
+            background: var(--white);
+            transition: background .15s, transform .15s;
+        }
+
+        .menu-detail-qty button[data-modal-qty="plus"] {
+            background: var(--sage);
+            color: var(--white);
+        }
+
+        .menu-detail-qty button:hover {
+            transform: scale(1.08);
+        }
+
+        .menu-detail-qty button:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .menu-detail-qty-value {
+            min-width: 28px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brown);
+        }
+
+        .menu-detail-subtotal-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .menu-detail-subtotal-label {
+            font-weight: 500;
+            color: var(--brown-light);
+        }
+
+        .menu-detail-subtotal-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--brown);
+        }
+
+        .menu-detail-submit {
+            width: 100%;
+            padding: 14px;
+            border-radius: var(--radius-btn);
+            background: var(--sage);
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -.3px;
+            transition: background .15s, transform .15s, box-shadow .15s;
+        }
+
+        .menu-detail-submit:hover {
+            background: var(--sage-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(66, 118, 106, .35);
+        }
+
+        .menu-detail-submit:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 540px) {
+            .menu-detail-modal {
+                max-width: 100%;
+                max-height: 100vh;
+                margin: 0;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .menu-detail-card {
+                max-height: 100vh;
+                border-radius: 0;
+                height: 100vh;
+            }
+
+            .menu-detail-header {
+                height: 160px;
+            }
+        }
+
         /* ─── Responsive ─────────────────────────────────────────── */
         @media (max-width: 1024px) {
             .menu-grid {
@@ -1024,9 +1347,6 @@
                         </svg>
                         <span class="cart-badge">0</span>
                     </button>
-                    <div class="user-avatar">
-                        <img src="https://api.builder.io/api/v1/image/assets/TEMP/4b742a08a0e2996ba119657d8de2de18ce6703b2?width=80" alt="User profile" />
-                    </div>
                 </div>
             </div>
         </header>
@@ -1138,7 +1458,11 @@
 
                 @forelse ($vendor->menus as $menu)
                 @php
-                $menuImage = $menu->path_gambar ?: ($menuImageFallbacks[$menu->nama_menu] ?? $defaultMenuImage);
+                $rawPath = $menu->path_gambar;
+                $resolvedPath = $rawPath
+                    ? (\Illuminate\Support\Str::startsWith($rawPath, ['http://', 'https://', '/']) ? $rawPath : asset('storage/' . $rawPath))
+                    : null;
+                $menuImage = $resolvedPath ?: ($menuImageFallbacks[$menu->nama_menu] ?? $defaultMenuImage);
                 $menuCategoryId = $menu->kategoriMenu?->id ?? 'other';
                 $menuCategoryName = $menu->kategoriMenu?->nama_kategori ?? 'Lainnya';
                 $isDrink = str_contains(strtolower($menuCategoryName), 'minuman');
@@ -1150,9 +1474,15 @@
                     data-menu-image="{{ $menuImage }}"
                     data-category="{{ $menuCategoryId }}"
                     data-menu-name="{{ strtolower($menu->nama_menu) }}"
-                    data-menu-category="{{ strtolower($menuCategoryName) }}">
+                    data-menu-category="{{ strtolower($menuCategoryName) }}"
+                    data-menu-description="{{ $menu->deskripsi ?: 'Menu favorit kampus dengan porsi pas dan rasa mantap.' }}"
+                    data-menu-variants="{{ $menu->variants->map(fn($v) => ['id' => $v->id, 'nama' => $v->nama, 'harga_tambahan' => (int) $v->harga_tambahan])->values()->toJson() }}"
+                    data-menu-toppings="{{ $menu->toppings->map(fn($t) => ['id' => $t->id, 'nama' => $t->nama, 'harga' => (int) $t->harga])->values()->toJson() }}"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Lihat detail {{ $menu->nama_menu }}">
                     <div class="menu-card-image-wrap">
-                        <img class="menu-card-image" src="{{ $menuImage }}" alt="{{ $menu->nama_menu }}" />
+                        <img class="menu-card-image" src="{{ $menuImage }}" alt="{{ $menu->nama_menu }}" onerror="this.onerror=null;this.src='{{ $defaultMenuImage }}';" />
                         <button class="wishlist-btn" aria-label="Add to wishlist">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M1.4875 9.38742L7.13438 14.6593C7.36875 14.878 7.67812 14.9999 8 14.9999C8.32187 14.9999 8.63125 14.878 8.86563 14.6593L14.5125 9.38742C15.4625 8.50305 16 7.26242 16 5.96555V5.7843C16 3.59992 14.4219 1.73742 12.2688 1.37805C10.8438 1.14055 9.39375 1.60617 8.375 2.62492L8 2.99992L7.625 2.62492C6.60625 1.60617 5.15625 1.14055 3.73125 1.37805C1.57812 1.73742 0 3.59992 0 5.7843V5.96555C0 7.26242 0.5375 8.50305 1.4875 9.38742Z" fill="#9CA3AF" />
@@ -1205,6 +1535,53 @@
 
         </main>
 
+        <!-- Menu Detail Modal -->
+        <dialog id="menuDetailModal" class="menu-detail-modal" aria-labelledby="menuDetailTitle">
+            <div class="menu-detail-card">
+                <div class="menu-detail-header">
+                    <img id="menuDetailImage" src="" alt="" />
+                    <button type="button" class="menu-detail-close" data-modal-close aria-label="Tutup">&times;</button>
+                </div>
+                <div class="menu-detail-body">
+                    <h2 class="menu-detail-title" id="menuDetailTitle"></h2>
+                    <p class="menu-detail-vendor" id="menuDetailVendor"></p>
+                    <p class="menu-detail-desc" id="menuDetailDesc"></p>
+                    <div class="menu-detail-base-price" id="menuDetailBasePrice"></div>
+
+                    <div class="menu-detail-section" id="menuDetailVariantSection" hidden>
+                        <div class="menu-detail-section-title">Ukuran</div>
+                        <div class="menu-detail-option-list" id="menuDetailVariantList" role="radiogroup" aria-label="Pilih ukuran"></div>
+                    </div>
+
+                    <div class="menu-detail-section" id="menuDetailToppingSection" hidden>
+                        <div class="menu-detail-section-title">Topping</div>
+                        <div class="menu-detail-option-list" id="menuDetailToppingList"></div>
+                    </div>
+
+                    <div class="menu-detail-section">
+                        <div class="menu-detail-section-title">Catatan</div>
+                        <textarea id="menuDetailNote" class="menu-detail-note" maxlength="255" placeholder="Contoh: tidak pedas, tanpa bawang, dll."></textarea>
+                        <span class="menu-detail-note-counter"><span id="menuDetailNoteCount">0</span> / 255</span>
+                    </div>
+                </div>
+                <div class="menu-detail-footer">
+                    <div class="menu-detail-qty-row">
+                        <span class="menu-detail-qty-label">Jumlah</span>
+                        <div class="menu-detail-qty">
+                            <button type="button" data-modal-qty="minus" aria-label="Kurangi jumlah">&minus;</button>
+                            <span class="menu-detail-qty-value" id="menuDetailQty">1</span>
+                            <button type="button" data-modal-qty="plus" aria-label="Tambah jumlah">+</button>
+                        </div>
+                    </div>
+                    <div class="menu-detail-subtotal-row">
+                        <span class="menu-detail-subtotal-label">Subtotal</span>
+                        <span class="menu-detail-subtotal-value" id="menuDetailSubtotal">Rp 0</span>
+                    </div>
+                    <button type="button" class="menu-detail-submit" id="menuDetailSubmit">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </dialog>
+
         <!-- Floating Cart -->
         <div class="floating-cart">
             <a class="floating-cart-btn" aria-label="Open cart" href="{{ route('checkout', ['vendor_id' => $vendor->id]) }}">
@@ -1230,6 +1607,19 @@
             id: Number(document.body.dataset.vendorId || 0),
             name: document.body.dataset.vendorName || 'Vendor',
         };
+
+        function formatRupiah(value) {
+            return 'Rp ' + Number(value || 0).toLocaleString('id-ID');
+        }
+
+        function escapeHtml(text) {
+            return String(text ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
 
         // ── Scroll-reveal ──────────────────────────────────────────
         (function() {
@@ -1309,53 +1699,69 @@
             }, 150);
         }
 
-        function setMenuQuantity(menuData, nextQuantity) {
-            if (!menuData || !Number.isFinite(menuData.menu_id) || menuData.menu_id <= 0) {
-                return;
-            }
+        function sortedToppingIds(toppings) {
+            return (Array.isArray(toppings) ? toppings : [])
+                .map((t) => Number(t?.id))
+                .filter((id) => Number.isFinite(id))
+                .sort((a, b) => a - b)
+                .join(',');
+        }
 
-            let cart = getCart();
-            const safeQuantity = Math.max(0, Number(nextQuantity || 0));
+        function matchesLine(item, candidate) {
+            if (Number(item.menu_id) !== Number(candidate.menu_id)) return false;
+            if ((item.ukuran_id ?? null) !== (candidate.ukuran_id ?? null)) return false;
+            if ((item.ukuran ?? null) !== (candidate.ukuran ?? null)) return false;
+            if ((item.catatan ?? '') !== (candidate.catatan ?? '')) return false;
+            return sortedToppingIds(item.toppings) === sortedToppingIds(candidate.toppings);
+        }
 
-            if (safeQuantity > 0 && cart.items.length > 0 && Number(cart.vendor_id) !== currentVendor.id) {
+        function ensureVendorContext(cart) {
+            if (cart.items.length > 0 && Number(cart.vendor_id) !== currentVendor.id) {
                 const shouldReplace = window.confirm('Keranjang berisi menu dari vendor lain. Ganti dengan vendor ini?');
                 if (!shouldReplace) {
-                    return;
+                    return null;
                 }
-                cart = buildEmptyCart();
+                return buildEmptyCart();
             }
-
-            const index = cart.items.findIndex((item) => Number(item.menu_id) === menuData.menu_id);
-
-            if (safeQuantity <= 0) {
-                if (index >= 0) {
-                    cart.items.splice(index, 1);
-                }
-            } else {
-                if (index >= 0) {
-                    cart.items[index].jumlah = safeQuantity;
-                    cart.items[index].harga = Number(menuData.harga || cart.items[index].harga || 0);
-                    cart.items[index].nama_menu = menuData.nama_menu || cart.items[index].nama_menu;
-                    cart.items[index].path_gambar = menuData.path_gambar || cart.items[index].path_gambar || '';
-                } else {
-                    cart.items.push({
-                        menu_id: menuData.menu_id,
-                        nama_menu: menuData.nama_menu,
-                        harga: Number(menuData.harga || 0),
-                        jumlah: safeQuantity,
-                        catatan: '',
-                        path_gambar: menuData.path_gambar,
-                    });
-                }
-            }
-
             cart.vendor_id = currentVendor.id;
             cart.vendor_name = currentVendor.name;
-            saveCart(cart);
+            return cart;
+        }
 
-            if (safeQuantity > 0) {
-                bounceCartBadge();
+        function addLineToCart(line) {
+            let cart = getCart();
+            cart = ensureVendorContext(cart);
+            if (!cart) return false;
+
+            const existingIdx = cart.items.findIndex((it) => matchesLine(it, line));
+            if (existingIdx >= 0) {
+                cart.items[existingIdx].jumlah = Number(cart.items[existingIdx].jumlah || 0) + Number(line.jumlah || 0);
+            } else {
+                cart.items.push(line);
             }
+
+            saveCart(cart);
+            bounceCartBadge();
+            return true;
+        }
+
+        function decrementMenu(menuId) {
+            const cart = getCart();
+            const candidates = cart.items
+                .map((item, idx) => ({ item, idx }))
+                .filter(({ item }) => Number(item.menu_id) === Number(menuId));
+
+            if (candidates.length === 0) return;
+
+            candidates.sort((a, b) => Number(b.item.jumlah || 0) - Number(a.item.jumlah || 0));
+            const target = candidates[0];
+            target.item.jumlah = Number(target.item.jumlah || 0) - 1;
+
+            if (target.item.jumlah <= 0) {
+                cart.items.splice(target.idx, 1);
+            }
+
+            saveCart(cart);
         }
 
         function syncMenuQuantityControls() {
@@ -1365,7 +1771,8 @@
 
             if (isSameVendor) {
                 cart.items.forEach((item) => {
-                    qtyMap.set(Number(item.menu_id), Number(item.jumlah || 0));
+                    const id = Number(item.menu_id);
+                    qtyMap.set(id, (qtyMap.get(id) || 0) + Number(item.jumlah || 0));
                 });
             }
 
@@ -1385,6 +1792,220 @@
                     minusBtn.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
                 }
             });
+        }
+
+        // ── Menu Detail Modal ─────────────────────────────────────
+        const modal = document.getElementById('menuDetailModal');
+        const modalState = {
+            menuId: 0,
+            namaMenu: '',
+            harga: 0,
+            pathGambar: '',
+            variants: [],
+            toppings: [],
+        };
+
+        function safeJsonAttr(value) {
+            try {
+                const parsed = JSON.parse(value || '[]');
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function readModalSelection() {
+            const variantInput = modal.querySelector('input[name="menu-variant"]:checked');
+            const variantId = variantInput ? Number(variantInput.value) : null;
+            const variantData = variantId !== null
+                ? modalState.variants.find((v) => Number(v.id) === variantId)
+                : null;
+
+            const toppingInputs = modal.querySelectorAll('input[name="menu-topping"]:checked');
+            const toppings = Array.from(toppingInputs).map((input) => {
+                const id = Number(input.value);
+                const data = modalState.toppings.find((t) => Number(t.id) === id);
+                return data ? { id: data.id, nama: data.nama, harga: Number(data.harga || 0) } : null;
+            }).filter(Boolean);
+
+            const qty = Math.max(1, Number(document.getElementById('menuDetailQty').textContent || 1));
+            const catatan = (document.getElementById('menuDetailNote').value || '').trim();
+
+            return { variantData, toppings, qty, catatan };
+        }
+
+        function computeModalSubtotal() {
+            const { variantData, toppings, qty } = readModalSelection();
+            const variantExtra = variantData ? Number(variantData.harga_tambahan || 0) : 0;
+            const toppingsTotal = toppings.reduce((sum, t) => sum + Number(t.harga || 0), 0);
+            const perUnit = Number(modalState.harga || 0) + variantExtra + toppingsTotal;
+            return { perUnit, total: perUnit * qty };
+        }
+
+        function refreshModalSubtotal() {
+            const { total } = computeModalSubtotal();
+            document.getElementById('menuDetailSubtotal').textContent = formatRupiah(total);
+        }
+
+        function renderVariantOptions() {
+            const section = document.getElementById('menuDetailVariantSection');
+            const list = document.getElementById('menuDetailVariantList');
+            list.innerHTML = '';
+
+            if (!modalState.variants.length) {
+                section.hidden = true;
+                return;
+            }
+            section.hidden = false;
+
+            modalState.variants.forEach((variant, idx) => {
+                const label = document.createElement('label');
+                label.className = 'menu-detail-option';
+                const extra = Number(variant.harga_tambahan || 0);
+                const priceLabel = extra > 0 ? '+ ' + formatRupiah(extra) : 'Termasuk';
+                label.innerHTML = `
+                    <input type="radio" name="menu-variant" value="${variant.id}" ${idx === 0 ? 'checked' : ''} />
+                    <span class="menu-detail-option-label">${escapeHtml(variant.nama)}</span>
+                    <span class="menu-detail-option-price">${priceLabel}</span>
+                `;
+                list.appendChild(label);
+            });
+        }
+
+        function renderToppingOptions() {
+            const section = document.getElementById('menuDetailToppingSection');
+            const list = document.getElementById('menuDetailToppingList');
+            list.innerHTML = '';
+
+            if (!modalState.toppings.length) {
+                section.hidden = true;
+                return;
+            }
+            section.hidden = false;
+
+            modalState.toppings.forEach((topping) => {
+                const label = document.createElement('label');
+                label.className = 'menu-detail-option';
+                const price = Number(topping.harga || 0);
+                const priceLabel = price > 0 ? '+ ' + formatRupiah(price) : 'Gratis';
+                label.innerHTML = `
+                    <input type="checkbox" name="menu-topping" value="${topping.id}" />
+                    <span class="menu-detail-option-label">${escapeHtml(topping.nama)}</span>
+                    <span class="menu-detail-option-price">${priceLabel}</span>
+                `;
+                list.appendChild(label);
+            });
+        }
+
+        function openMenuDetailModal(card) {
+            modalState.menuId = Number(card.dataset.menuId || 0);
+            modalState.namaMenu = card.dataset.menuLabel || 'Menu';
+            modalState.harga = Number(card.dataset.menuPrice || 0);
+            modalState.pathGambar = card.dataset.menuImage || '';
+            modalState.variants = safeJsonAttr(card.dataset.menuVariants);
+            modalState.toppings = safeJsonAttr(card.dataset.menuToppings);
+
+            // Fallback for browsers without <dialog> support
+            if (!modal || typeof modal.showModal !== 'function') {
+                addLineToCart({
+                    menu_id: modalState.menuId,
+                    nama_menu: modalState.namaMenu,
+                    harga: modalState.harga,
+                    jumlah: 1,
+                    catatan: '',
+                    path_gambar: modalState.pathGambar,
+                    ukuran: null,
+                    toppings: [],
+                    subtotal_per_unit: modalState.harga,
+                });
+                return;
+            }
+
+            document.getElementById('menuDetailImage').src = modalState.pathGambar;
+            document.getElementById('menuDetailImage').alt = modalState.namaMenu;
+            document.getElementById('menuDetailTitle').textContent = modalState.namaMenu;
+            document.getElementById('menuDetailVendor').innerHTML = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="currentColor"/></svg> ' + escapeHtml(currentVendor.name);
+            document.getElementById('menuDetailDesc').textContent = card.dataset.menuDescription || '';
+            document.getElementById('menuDetailBasePrice').textContent = formatRupiah(modalState.harga);
+
+            document.getElementById('menuDetailQty').textContent = '1';
+            document.getElementById('menuDetailNote').value = '';
+            document.getElementById('menuDetailNoteCount').textContent = '0';
+
+            renderVariantOptions();
+            renderToppingOptions();
+            refreshModalSubtotal();
+
+            modal.showModal();
+        }
+
+        function closeMenuDetailModal() {
+            if (modal && modal.open) {
+                modal.close();
+            }
+        }
+
+        function submitModalToCart() {
+            if (!modalState.menuId) return;
+            const { variantData, toppings, qty, catatan } = readModalSelection();
+            const { perUnit } = computeModalSubtotal();
+
+            const ok = addLineToCart({
+                menu_id: modalState.menuId,
+                nama_menu: modalState.namaMenu,
+                harga: Number(modalState.harga || 0),
+                jumlah: qty,
+                catatan,
+                path_gambar: modalState.pathGambar,
+                ukuran_id: variantData ? Number(variantData.id) : null,
+                ukuran: variantData ? variantData.nama : null,
+                toppings,
+                subtotal_per_unit: perUnit,
+            });
+
+            if (ok) {
+                closeMenuDetailModal();
+            }
+        }
+
+        if (modal) {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeMenuDetailModal();
+                    return;
+                }
+                if (event.target.closest('[data-modal-close]')) {
+                    closeMenuDetailModal();
+                    return;
+                }
+                const qtyBtn = event.target.closest('[data-modal-qty]');
+                if (qtyBtn) {
+                    const qtyEl = document.getElementById('menuDetailQty');
+                    const current = Number(qtyEl.textContent || 1);
+                    const next = qtyBtn.dataset.modalQty === 'plus' ? current + 1 : Math.max(1, current - 1);
+                    qtyEl.textContent = String(next);
+                    refreshModalSubtotal();
+                }
+            });
+
+            modal.addEventListener('change', (event) => {
+                if (event.target.matches('input[name="menu-variant"], input[name="menu-topping"]')) {
+                    refreshModalSubtotal();
+                }
+            });
+
+            const noteEl = document.getElementById('menuDetailNote');
+            const noteCount = document.getElementById('menuDetailNoteCount');
+            if (noteEl) {
+                noteEl.addEventListener('input', () => {
+                    noteCount.textContent = String(noteEl.value.length);
+                });
+            }
+
+            const submitBtn = document.getElementById('menuDetailSubmit');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', submitModalToCart);
+            }
         }
 
         // ── Category/search filter ────────────────────────────────
@@ -1438,7 +2059,7 @@
             });
         });
 
-        // ── Realtime menu qty control ─────────────────────────────
+        // ── Menu qty buttons: + opens modal, − decrements directly ─
         document.querySelectorAll('[data-menu-controls]').forEach((control) => {
             control.addEventListener('click', (event) => {
                 const actionBtn = event.target.closest('[data-action]');
@@ -1454,20 +2075,15 @@
                 }
 
                 const menuId = Number(card.dataset.menuId || 0);
-                const currentCart = getCart();
-                const currentQty = Number(
-                    currentCart.items.find((item) => Number(item.menu_id) === menuId)?.jumlah || 0
-                );
 
-                const isIncrease = actionBtn.dataset.action === 'increase';
-                const nextQty = isIncrease ? currentQty + 1 : Math.max(0, currentQty - 1);
+                if (actionBtn.dataset.action === 'increase') {
+                    openMenuDetailModal(card);
+                    return;
+                }
 
-                setMenuQuantity({
-                    menu_id: menuId,
-                    nama_menu: card.dataset.menuLabel || 'Menu',
-                    harga: Number(card.dataset.menuPrice || 0),
-                    path_gambar: card.dataset.menuImage || '',
-                }, nextQty);
+                if (actionBtn.dataset.action === 'decrease') {
+                    decrementMenu(menuId);
+                }
             });
         });
 
@@ -1475,6 +2091,48 @@
         if (checkoutButton) {
             checkoutButton.addEventListener('click', () => {
                 window.location.href = checkoutButton.dataset.checkoutUrl;
+            });
+        }
+
+        /* ── Whole-card click → dispatch menu-card:open ───── */
+        const menuGrid = document.getElementById('menuGrid');
+        if (menuGrid) {
+            const dispatchOpen = (card) => {
+                card.dispatchEvent(new CustomEvent('menu-card:open', {
+                    bubbles: true,
+                    cancelable: true,
+                    detail: {
+                        menuId: Number(card.dataset.menuId || 0),
+                        vendorId: currentVendor.id,
+                        card,
+                    },
+                }));
+            };
+            const isInnerInteractive = (target) =>
+                !!target.closest('a, button, input, textarea, select, [data-menu-controls]');
+
+            menuGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.menu-card[role="button"]');
+                if (!card) return;
+                if (isInnerInteractive(e.target)) return;
+                dispatchOpen(card);
+            });
+            menuGrid.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                const card = e.target.closest('.menu-card[role="button"]');
+                if (!card || card !== e.target) return;
+                e.preventDefault();
+                dispatchOpen(card);
+            });
+
+            // Fallback handler: open detail modal unless another handler
+            // already preventDefault()'d the event (e.g. future overrides).
+            // TODO(align-vendor-card-clickable): once add-product-detail-modal
+            // owns this handler natively, this fallback can be removed.
+            document.addEventListener('menu-card:open', (e) => {
+                if (e.defaultPrevented) return;
+                const card = e.detail && e.detail.card;
+                if (card) openMenuDetailModal(card);
             });
         }
 

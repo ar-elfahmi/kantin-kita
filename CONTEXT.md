@@ -1,5 +1,66 @@
 # CONTEXT.md — Kantin Kita
 
+## 2026-06-09: Hapus button Detail dari card produk dashboard vendor
+
+**Files touched:**
+- `resources/views/dashboard-vendor.blade.php` — hapus `<button class="btn-detail">Detail</button>` dan CSS `.btn-detail` + `.btn-detail:hover`
+
+## 2026-06-10: Fix broken menu images — add onerror fallback
+
+**Files touched:**
+- `resources/views/checkout.blade.php:2259` — tambah `onerror="this.onerror=null;this.src=DEFAULT_MENU_IMAGE"` di cart item `<img>` agar fallback ke default image saat path_gambar broken
+- `resources/views/menu-vendor.blade.php:1482` — tambah `onerror` yang sama di menu card `<img>` (fallback ke `$defaultMenuImage`)
+
+**Gotchas:**
+- Cart menyimpan `path_gambar` dari `data-menu-image` (resolved URL) di localStorage; jika URL tersebut kemudian broken (misal file storage dihapus atau URL eksternal mati), gambar tidak tampil
+- `onerror` dengan `this.onerror=null` mencegah infinite loop jika default image juga broken
+
+## 2026-06-09: Fix broken images (builder.io → local/SVG) di vendor pages
+
+**Files touched:**
+- `resources/views/vendor/_sidebar.blade.php` — logo: builder.io img → inline SVG "KK" badge; avatar: builder.io img → `avatar-initial` div (huruf pertama vendor); CSS: tambah `.avatar-initial` flexbox styles
+- `resources/views/dashboard-vendor.blade.php` — favicon builder.io → `{{ asset('favicon.ico') }}`; header avatar builder.io img → div with `.avatar-initial`; CSS: tambah `.avatar-initial`; fallback `$produkImgFallback` / `$orderThumbFallback` → SVG data URI cream rect
+- `resources/views/vendor/manage-menu.blade.php` — favicon, header avatar, CSS `.avatar-initial`, `$defaultThumb` fallback
+- `resources/views/vendor/manage-orders.blade.php` — favicon, header avatar, CSS `.avatar-initial`
+- `resources/views/vendor/customer/{index,create-blob,create-path}.blade.php` — favicon
+- `resources/views/vendor/scan-tag-harga.blade.php` — favicon
+- `resources/views/vendor/kunjungan/{index,scan,toko-create}.blade.php` — favicon
+
+**Decisions:**
+- Logo sidebar: inline SVG "KK" badge (Poppins 800, white on green #42766A, rounded 12px, 48x48) — zero network dependency
+- Avatar: CSS `avatar-initial` class — first letter of vendor name, brown-10 bg, brown text, flex centered, uppercase
+- Fallback thumbnails: SVG data URI (cream #FBF5E8 rect) — no external dependency
+- `favicon.ico` already existed in `public/` — just needed asset() path
+
+## 2026-06-07: Samakan navbar alur pesan (/vendor, /vendor/{id}/menu, /checkout)
+
+**Files touched:**
+- `resources/views/select-vendor.blade.php` — nav-links: Home · Vendors · Cart (hapus My Orders/Profile); hapus `.header-actions` (notif + avatar); cleanup CSS `.notif-btn`, `.notif-badge`, `.avatar-wrap`, `.avatar-img`, `.header-actions`
+- `resources/views/menu-vendor.blade.php` — hapus `.user-avatar` di navbar-actions (cart-btn dipertahankan); cleanup CSS `.user-avatar*`
+- `resources/views/checkout.blade.php` — nav-links: Home · Vendors · Cart (hapus Orders, ganti "Menu" → "Vendors"); hapus `.nav-actions` (notif + avatar); cleanup CSS `.notif-wrapper`, `.notif-badge`, `.avatar`, `.nav-actions`
+- `openspec/changes/consistent-order-flow-navbar/` — proposal, design, specs (`order-flow-navbar`), tasks
+
+**Catatan:** footer di select-vendor & checkout sengaja TIDAK diubah (user spesifik minta navbar). Active state pakai `request()->routeIs()`.
+
+## 2026-06-07: Samakan dimensi & buat seluruh card clickable di /vendor & /vendor/{id}/menu
+
+**Files touched:**
+- `resources/views/select-vendor.blade.php` — vendor card adopt canonical tokens (radius 20px, image 208px, padding 20px), grid 4→3→horizontal di breakpoint 1024/768, `<article role="link" tabindex="0" data-href aria-label>`, JS click+keydown delegation di `#vendorsGrid`, focus-visible outline sage
+- `resources/views/menu-vendor.blade.php` — `<article role="button" tabindex="0" aria-label>` di menu card, JS dispatch `CustomEvent('menu-card:open')` di `#menuGrid` dengan fallback handler memanggil `openMenuDetailModal(card)`, focus-visible outline sage. Token canonical card di `:root` selaras dengan select-vendor
+- `tests/Feature/KantinFlowTest.php` — 2 test baru memverifikasi atribut a11y/data-href di kedua halaman
+- `openspec/changes/align-vendor-card-clickable/` — proposal, design, specs (`vendor-card-presentation`), tasks
+
+**Konvensi card-as-interactive:** klik area kosong card memicu aksi utama; sub-elemen interaktif (a/button/input/textarea/select/[data-menu-controls]) di-skip via `e.target.closest(...)` di delegated handler — tidak perlu `stopPropagation` ad-hoc per tombol. Keyboard Enter (link/button) dan Space (button) memicu aksi yang sama.
+
+## 2026-06-07: Tambah fitur "Tambah Produk" di /dashboard/menu
+
+**Files touched:**
+- `app/Http/Controllers/DashboardController.php` — `menuList()` kini mengirim `kategoriMenus` ke view supaya dropdown kategori terisi
+- `resources/views/vendor/manage-menu.blade.php` — tombol "Tambah Produk", modal form, CSS, dan JS submit (fetch ke `dashboard.menu.store`) + toast feedback
+- `openspec/changes/add-product-feature-menu/` — proposal, design, specs (`vendor-menu-management`), tasks
+
+**Endpoint:** `POST /dashboard/menu/store` (sudah ada, JSON response). Validasi server tetap otoritatif; klien validasi awal (nama, harga, gambar ≤ 2MB).
+
 ## 2026-05-16: Initial Project Setup & Onboarding
 
 **Files touched:**
@@ -128,3 +189,71 @@
 - Test uses `Schema::getColumnListing` + explicit `DB::insert` to bypass model auto-generation — proves column constraint independently.
 
 **Tests:** 62 passed, 153 assertions.
+
+## 2026-06-09: Unifikasi vendor sidebar — partial tunggal + CSS terpusat
+
+**Files touched:**
+- `resources/views/vendor/_sidebar.blade.php` — Di-rewrite: embed seluruh sidebar CSS (desktop + responsive breakpoints), Scan Barcode button selalu tampil (tidak kondisional), sertakan `@include('vendor.customer._scan_barcode_modal')` di akhir
+- `resources/views/dashboard-vendor.blade.php` — Hapus sidebar CSS + scan modal CSS duplikat + script tag html5-qrcode (sekarang dari partial/@once), update `@include` passing `$vendor`
+- `resources/views/vendor/manage-orders.blade.php` — Hapus sidebar CSS + responsive sidebar
+- `resources/views/vendor/manage-menu.blade.php` — Hapus sidebar CSS + responsive sidebar, hapus standalone `@include('vendor.customer._scan_barcode_modal')`, hapus `showScanBarcode` dari include
+- `resources/views/vendor/customer/index.blade.php` — Hapus sidebar CSS, switch `vendor.customer._sidebar` → `vendor._sidebar`
+- `resources/views/vendor/customer/create-blob.blade.php` — Sama
+- `resources/views/vendor/customer/create-path.blade.php` — Sama
+- `resources/views/vendor/scan-tag-harga.blade.php` — Sama
+- `resources/views/vendor/kunjungan/index.blade.php` — Sama
+- `resources/views/vendor/kunjungan/scan.blade.php` — Sama
+- `resources/views/vendor/kunjungan/toko-create.blade.php` — Sama
+- `resources/views/vendor/customer/_sidebar.blade.php` — Ditandai deprecated (tidak ada lagi `@include` yang merujuk)
+
+**Decisions:**
+- Sidebar CSS dipindah ke partial (`<style>` dalam `<body>`) — HTML5 valid, tradeoff minor untuk eliminasi duplikasi di 10 file
+- `@once` di scan modal mencegah duplikasi CSS/JS jika partial di-include dari konteks berbeda
+- `vendor.customer._sidebar` dipertahankan sebagai file (tidak dihapus) untuk referensi, tapi dideprekasi — semua halaman sudah pakai `vendor._sidebar`
+
+**Gotchas:**
+- `dashboard-vendor.blade.php` punya `</style>` duplikat di baris 1560 — ikut dihapus saat bersihkan scan modal CSS
+- `manage-menu.blade.php` pass `showScanBarcode=true` — parameter ini tidak lagi dibutuhkan karena scan button selalu tampil
+- Semua halaman butuh `$vendor` di view context — dicek via controller bahwa semua route vendor menyediakannya
+
+**Tests:** 110 passed, 281 assertions.
+
+## 2026-06-10: Admin filter form styling + Vendor user creation bug
+
+**Files touched:**
+- `resources/views/admin/layouts/app.blade.php` — tambah CSS `.filter-form input`, `.filter-form select`, `:focus`, `.filter-form label weight`, `.filter-form .btn align`, `.filter-form > div flex: 1` — semua halaman admin filter jadi ter-style konsisten
+- `app/Http/Controllers/Admin/VendorUserController.php` — `store()`: validasi + buat `Vendor` record setelah User; `update()`: `Vendor::updateOrCreate` sinkron profil; `edit()`: `$user->load('vendor')`
+- `resources/views/admin/vendor-users/create.blade.php` — tambah field Nama Vendor, Kategori, Lokasi, Deskripsi
+- `resources/views/admin/vendor-users/edit.blade.php` — tambah field yang sama, pre-fill dari `$user->vendor`
+- `routes/web.php:37` — pindah `POST /logout` ke luar grup middleware `auth` supaya bisa diakses saat error 403
+
+**Decisions:**
+- Vendor profile auto-created via `Vendor::create()` di `store()` — pengguna tidak lagi terjebak 403 setelah login
+- `Vendor::updateOrCreate` di `update()` — handle kasus vendor user lama yg belum punya Vendor record
+- Logout route di luar middleware `auth` — `Auth::logout()` aman dipanggil tanpa autentikasi, jadi semua pengguna bisa logout dari halaman error
+
+**Gotchas:**
+- Vendor seeder `VendorsSeeder.php` memisahkan pembuatan User dan Vendor — tidak terpengaruh oleh perubahan controller (seed tetap work)
+- CSS `flex: 1` di `.filter-form > div` membuat tombol Filter/Reset di transaksi melebar — ditambal dengan `.filter-form .btn { align-self: flex-end }`
+
+## 2026-06-10: Dashboard vendor — hapus Tambah Produk + ganti quarter-circle stat card
+
+**Files touched:**
+- `resources/views/dashboard-vendor.blade.php` — hapus `<button class="btn-primary">Tambah Produk</button>` (lines 1267-1272); ganti `.stat-card::before` dari quarter-circle blob (120px circle, top -40% right -20%) ke subtle green dot decor (40px, top -10px right -10px, opacity 0 → .08 on hover)
+
+**Decisions:**
+- Quarter-circle (`top: -40%; right: -20%`) diganti dengan decorative dot subtle (`top: -10px; right: -10px; width: 40px; height: 40px; opacity: .08`) yang lebih profesional dan intentional. Hover hanya tampilkan dot (dari opacity 0 → .08), tanpa scale animation.
+- Tombol "Tambah Produk" dihapus karena fungsi tambah produk sudah ada di halaman manage-menu (sidebar).
+
+## 2026-06-10: Title separator konsistensi + favicon about/artikel
+
+**Files touched:**
+- Semua `<title>` — ganti separator dari campuran `–` (en dash), `-` (hyphen), `—` (em dash) menjadi `|` (pipe) konsisten di 21 blade files
+- `resources/views/about.blade.php:8` — tambah `<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">`
+- `resources/views/artikel/index.blade.php:8` — sama
+- `resources/views/artikel/show.blade.php:8` — sama
+
+**Decisions:**
+- `|` (pipe) dipilih sebagai separator title karena lebih profesional dan tidak terlihat "AI generic" seperti em dash
+- Favicon standard set dari `public/favicon/` dipasang di semua halaman: `favicon.ico`, `favicon-32x32.png`, `favicon-16x16.png`, `apple-touch-icon.png`
+- Semua halaman (20 file) sekarang konsisten pakai favicon dari folder `public/favicon/` — menggantikan `favicon.svg` (buatan sendiri) dan builder.io PNG URL

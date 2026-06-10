@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\MenuTopping;
+use App\Models\MenuVariant;
 use App\Models\Payment;
 use App\Models\Pesanan;
 use App\Models\User;
@@ -114,6 +116,9 @@ class CheckoutController extends Controller
             'items.*.menu_id' => ['required', 'exists:menus,id'],
             'items.*.jumlah' => ['required', 'integer', 'min:1'],
             'items.*.catatan' => ['nullable', 'string', 'max:500'],
+            'items.*.ukuran_id' => ['nullable', 'integer', 'exists:menu_variants,id'],
+            'items.*.toppings' => ['nullable', 'array'],
+            'items.*.toppings.*' => ['integer', 'exists:menu_toppings,id'],
         ]);
 
         $midtransServerKey = (string) config('midtrans.server_key');
@@ -142,15 +147,47 @@ class CheckoutController extends Controller
                         abort(422, 'Semua item harus berasal dari vendor yang sama.');
                     }
 
-                    $subtotal = (int) $menu->harga * (int) $item['jumlah'];
+                    $variant = null;
+                    if (! empty($item['ukuran_id'])) {
+                        $variant = MenuVariant::query()
+                            ->where('id', (int) $item['ukuran_id'])
+                            ->where('menu_id', (int) $menu->id)
+                            ->first();
+
+                        if (! $variant) {
+                            abort(422, 'Varian ukuran tidak valid untuk menu yang dipilih.');
+                        }
+                    }
+
+                    $toppingIds = array_values(array_unique(array_map('intval', $item['toppings'] ?? [])));
+                    $toppings = collect();
+                    if (! empty($toppingIds)) {
+                        $toppings = MenuTopping::query()
+                            ->whereIn('id', $toppingIds)
+                            ->where('menu_id', (int) $menu->id)
+                            ->get();
+
+                        if ($toppings->count() !== count($toppingIds)) {
+                            abort(422, 'Topping tidak valid untuk menu yang dipilih.');
+                        }
+                    }
+
+                    $unitPrice = (int) $menu->harga
+                        + (int) ($variant?->harga_tambahan ?? 0)
+                        + (int) $toppings->sum('harga');
+                    $subtotal = $unitPrice * (int) $item['jumlah'];
                     $total += $subtotal;
 
                     $itemsData[] = [
                         'menu' => $menu,
                         'jumlah' => (int) $item['jumlah'],
-                        'harga' => (int) $menu->harga,
+                        'harga' => $unitPrice,
                         'subtotal' => $subtotal,
-                        'catatan' => $item['catatan'] ?? null,
+                        'catatan' => $this->composeDetailCatatan(
+                            $variant?->nama,
+                            $toppings->pluck('nama')->all(),
+                            $item['catatan'] ?? null,
+                        ),
                     ];
                 }
 
@@ -402,5 +439,27 @@ class CheckoutController extends Controller
         if (in_array($effectiveStatus, ['cancel', 'deny', 'expire'], true)) {
             $payment->pesanan->update(['status_pesanan' => 'dibatalkan']);
         }
+    }
+
+    private function composeDetailCatatan(?string $ukuran, array $toppings, ?string $customerNote): ?string
+    {
+        $parts = [];
+
+        $ukuran = trim((string) $ukuran);
+        if ($ukuran !== '') {
+            $parts[] = 'Ukuran: ' . $ukuran;
+        }
+
+        $toppings = array_values(array_filter(array_map(fn($t) => trim((string) $t), $toppings), fn($t) => $t !== ''));
+        if (! empty($toppings)) {
+            $parts[] = 'Topping: ' . implode(', ', $toppings);
+        }
+
+        $customerNote = trim((string) $customerNote);
+        if ($customerNote !== '') {
+            $parts[] = 'Catatan: ' . $customerNote;
+        }
+
+        return empty($parts) ? null : implode(' | ', $parts);
     }
 }

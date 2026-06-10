@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Vendor – Kantin Kita</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114">
+    <title>Dashboard Vendor | Kantin Kita</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -59,202 +62,7 @@
             min-height: 100vh;
         }
 
-        /* ─── Sidebar ───────────────────────────────────────── */
-        .sidebar {
-            width: 288px;
-            flex-shrink: 0;
-            background: var(--white);
-            border-right: 1px solid var(--brown-10);
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-            gap: 48px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-            box-shadow: 2px 0 20px rgba(116, 70, 34, .04);
-        }
 
-        /* Logo */
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--green);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(66, 118, 106, .35);
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-
-        .logo-icon:hover {
-            transform: scale(1.07);
-            box-shadow: 0 6px 20px rgba(66, 118, 106, .45);
-        }
-
-        .logo-text-primary {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--brown);
-            letter-spacing: -.5px;
-            line-height: 1.33;
-        }
-
-        .logo-text-secondary {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--brown-60);
-            letter-spacing: -.5px;
-            line-height: 1.33;
-        }
-
-        /* Nav */
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--brown-70);
-            transition: background var(--transition), color var(--transition), transform var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--green-10);
-            opacity: 0;
-            transition: opacity var(--transition);
-            border-radius: inherit;
-        }
-
-        .nav-item:hover::before {
-            opacity: 1;
-        }
-
-        .nav-item:hover {
-            color: var(--green);
-            transform: translateX(3px);
-        }
-
-        .nav-item.active {
-            background: var(--green-10);
-            color: var(--green);
-            font-weight: 600;
-        }
-
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 20%;
-            height: 60%;
-            width: 3px;
-            background: var(--green);
-            border-radius: 2px 0 0 2px;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Sidebar Footer */
-        .sidebar-footer {
-            border-top: 1px solid var(--brown-10);
-            padding-top: 24px;
-        }
-
-        .sidebar-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            transition: background var(--transition);
-            cursor: pointer;
-        }
-
-        .sidebar-user:hover {
-            background: var(--cream);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-pill);
-            object-fit: cover;
-            border: 2px solid var(--brown-10);
-            flex-shrink: 0;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--brown);
-            letter-spacing: -.5px;
-            line-height: 1.43;
-        }
-
-        .user-email {
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--brown-60);
-            letter-spacing: -.5px;
-            line-height: 1.33;
-        }
-
-        .sidebar-logout {
-            margin-left: auto;
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-            opacity: .6;
-            transition: opacity var(--transition);
-        }
-
-        .sidebar-logout-btn {
-            margin-left: auto;
-            border: none;
-            background: transparent;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .sidebar-user:hover .sidebar-logout {
-            opacity: 1;
-        }
 
         /* ─── Main Content ───────────────────────────────────── */
         .main-content {
@@ -297,6 +105,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            position: relative;
         }
 
         .notif-btn {
@@ -367,11 +176,86 @@
             object-fit: cover;
         }
 
+        .avatar-initial {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--brown-10);
+            color: var(--brown);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
         .header-username {
             font-size: 14px;
             font-weight: 600;
             color: var(--brown);
             letter-spacing: -.5px;
+        }
+
+        /* ─── User Dropdown ───────────────────────────────────── */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--brown-10);
+            box-shadow: var(--shadow-lg);
+            min-width: 220px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .user-dropdown-header {
+            padding: 14px 16px;
+        }
+
+        .user-dropdown-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brown);
+            letter-spacing: -.5px;
+        }
+
+        .user-dropdown-email {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--brown-60);
+            letter-spacing: -.5px;
+            margin-top: 2px;
+        }
+
+        .user-dropdown-divider {
+            height: 1px;
+            background: var(--brown-10);
+        }
+
+        .user-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--brown);
+            cursor: pointer;
+            transition: background var(--transition);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--cream);
+        }
+
+        .user-dropdown-logout {
+            color: #B91C1C;
         }
 
         /* ─── Dashboard Body ─────────────────────────────────── */
@@ -436,14 +320,14 @@
         .stat-card::before {
             content: '';
             position: absolute;
-            top: -40%;
-            right: -20%;
-            width: 120px;
-            height: 120px;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: var(--cream);
-            opacity: .6;
-            transition: transform var(--transition);
+            background: var(--green);
+            opacity: 0;
+            transition: opacity var(--transition), transform var(--transition);
         }
 
         .stat-card:hover {
@@ -452,7 +336,8 @@
         }
 
         .stat-card:hover::before {
-            transform: scale(1.3);
+            opacity: .08;
+            transform: scale(1);
         }
 
         .stat-card-top {
@@ -741,25 +626,6 @@
             transform: translateY(-1px);
         }
 
-        .btn-detail {
-            flex: 1;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            background: var(--green);
-            color: var(--white);
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: -.5px;
-            border: none;
-            cursor: pointer;
-            transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-        }
-
-        .btn-detail:hover {
-            background: #355f55;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(66, 118, 106, .35);
-        }
         .btn-cetak {
             flex: 1;
             padding: 8px 16px;
@@ -1092,83 +958,6 @@
         }
 
         @media (max-width: 900px) {
-            .dashboard-shell {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-                padding: 14px 16px 12px;
-                gap: 14px;
-                border-right: none;
-                border-bottom: 1px solid var(--brown-10);
-                box-shadow: 0 2px 10px rgba(116, 70, 34, .08);
-            }
-
-            .sidebar-logo {
-                justify-content: flex-start;
-            }
-
-            .sidebar-nav {
-                flex-direction: row;
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                gap: 8px;
-                padding-bottom: 4px;
-            }
-
-            .sidebar-nav::-webkit-scrollbar {
-                display: none;
-            }
-
-            .nav-item {
-                justify-content: flex-start;
-                padding: 8px 12px;
-                min-height: 36px;
-                min-width: max-content;
-                transform: none;
-            }
-
-            .nav-item::before,
-            .nav-item.active::after {
-                display: none;
-            }
-
-            .nav-item:hover {
-                transform: none;
-            }
-
-            .nav-icon {
-                width: 20px;
-                height: 20px;
-                border-radius: 0;
-                background: transparent;
-                border: none;
-            }
-
-            .nav-icon svg {
-                width: 16px;
-                height: 16px;
-            }
-
-            .nav-item .nav-icon svg path {
-                fill: var(--brown) !important;
-            }
-
-            .nav-item.active {
-                background: rgba(66, 118, 106, .14);
-            }
-
-            .nav-item.active .nav-icon svg path {
-                fill: var(--green) !important;
-            }
-
-            .sidebar-user {
-                padding: 10px 12px;
-            }
-
             .stats-grid,
             .products-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1184,24 +973,6 @@
         }
 
         @media (max-width: 640px) {
-
-            .sidebar {
-                width: 100%;
-                padding: 12px;
-            }
-
-            .sidebar-logo {
-                gap: 8px;
-            }
-
-            .logo-text-primary {
-                font-size: 18px;
-            }
-
-            .logo-text-secondary {
-                display: none;
-            }
-
             .dashboard-body {
                 padding: 16px;
                 gap: 20px;
@@ -1368,130 +1139,6 @@
             }
         }
 
-        .scan-modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,.6);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .scan-modal-overlay.active {
-            display: flex;
-        }
-        .scan-modal {
-            background: #fff;
-            border-radius: 16px;
-            max-width: 520px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,.3);
-            animation: modalIn .25s ease;
-        }
-        @keyframes modalIn {
-            from { transform: scale(.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .scan-modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--brown-10);
-        }
-        .scan-modal-header h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--brown);
-        }
-        .scan-modal-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: var(--brown-60);
-            cursor: pointer;
-            line-height: 1;
-            padding: 0 4px;
-        }
-        .scan-modal-close:hover {
-            color: var(--brown);
-        }
-        .scan-modal-body {
-            padding: 24px;
-            text-align: center;
-        }
-        .scan-modal-body video {
-            border-radius: 10px;
-            max-width: 100%;
-        }
-        .scan-result-card {
-            text-align: left;
-            background: var(--cream);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 16px;
-        }
-        .scan-result-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--brown);
-        }
-        .scan-result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 13px;
-        }
-        .scan-result-item .label {
-            color: var(--brown-60);
-        }
-        .scan-result-item .value {
-            font-weight: 500;
-        }
-        .scan-result-items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-        .scan-result-items-table th {
-            text-align: left;
-            color: var(--brown-50);
-            font-size: 11px;
-            text-transform: uppercase;
-            padding: 6px 8px;
-            border-bottom: 1px solid var(--brown-10);
-        }
-        .scan-result-items-table td {
-            padding: 6px 8px;
-            border-bottom: 1px solid var(--brown-5);
-        }
-        .scan-link-btn {
-            background: none;
-            border: none;
-            color: var(--green);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 8px;
-        }
-        .scan-link-btn:hover {
-            color: #1B5E20;
-        }
-        .scan-manual-toggle {
-            margin-top: 16px;
-        }
-        #scannerContainer canvas {
-            border-radius: 10px;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
     </style>
 </head>
 
@@ -1500,166 +1147,7 @@
     <div class="dashboard-shell">
 
         <!-- ═══════════════ SIDEBAR ═══════════════ -->
-        <aside class="sidebar">
-            <!-- Logo -->
-            <a href="{{ route('dashboard') }}" class="sidebar-logo">
-                <div class="logo-icon">
-                    <img src="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" alt="Kantin Kita Logo" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />
-                </div>
-                <div>
-                    <div class="logo-text-primary">Kantin Kita</div>
-                    <div class="logo-text-secondary">Vendor Dashboard</div>
-                </div>
-            </a>
-
-            <!-- Navigation -->
-            <nav class="sidebar-nav">
-                <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M4.89062 13.9906L4.49687 14.9125C3.9125 14.6156 3.375 14.25 2.8875 13.8219L3.59687 13.1125C3.9875 13.4531 4.42188 13.75 4.89062 13.9906ZM1.26875 8.5H0.265625C0.309375 9.1625 0.434375 9.80313 0.63125 10.4094L1.5625 10.0375C1.40937 9.54688 1.30625 9.03125 1.26875 8.5ZM1.26875 7.5C1.3125 6.9125 1.43125 6.34375 1.61563 5.80937L0.69375 5.41563C0.459375 6.07188 0.3125 6.77187 0.265625 7.5H1.26875ZM2.00938 4.89062C2.25313 4.425 2.54688 3.99062 2.8875 3.59375L2.17812 2.88438C1.75 3.37188 1.38125 3.90938 1.0875 4.49375L2.00938 4.89062ZM12.4062 13.1125C11.9719 13.4875 11.4875 13.8094 10.9656 14.0625L11.3375 14.9937C11.9844 14.6844 12.5813 14.2875 13.1156 13.8188L12.4062 13.1125ZM3.59375 2.8875C4.02813 2.5125 4.5125 2.19062 5.03438 1.9375L4.6625 1.00625C4.01562 1.31562 3.41875 1.7125 2.8875 2.18125L3.59375 2.8875ZM13.9906 11.1094C13.7469 11.575 13.4531 12.0094 13.1125 12.4062L13.8219 13.1156C14.25 12.6281 14.6188 12.0875 14.9125 11.5063L13.9906 11.1094ZM14.7312 8.5C14.6875 9.0875 14.5687 9.65625 14.3844 10.1906L15.3062 10.5844C15.5406 9.925 15.6875 9.225 15.7312 8.49687H14.7312V8.5ZM10.0375 14.4375C9.54688 14.5938 9.03125 14.6937 8.5 14.7312V15.7344C9.1625 15.6906 9.80313 15.5656 10.4094 15.3687L10.0375 14.4375ZM7.5 14.7312C6.9125 14.6875 6.34375 14.5687 5.80937 14.3844L5.41563 15.3062C6.075 15.5406 6.775 15.6875 7.50313 15.7312V14.7312H7.5ZM14.4375 5.9625C14.5938 6.45312 14.6937 6.96875 14.7312 7.5H15.7344C15.6906 6.8375 15.5656 6.19687 15.3687 5.59062L14.4375 5.9625ZM2.8875 12.4062C2.5125 11.9719 2.19062 11.4875 1.9375 10.9656L1.00625 11.3375C1.31562 11.9844 1.7125 12.5813 2.18125 13.1156L2.8875 12.4062ZM8.5 1.26875C9.0875 1.3125 9.65312 1.43125 10.1906 1.61563L10.5844 0.69375C9.92813 0.459375 9.22812 0.3125 8.5 0.265625V1.26875ZM5.9625 1.5625C6.45312 1.40625 6.96875 1.30625 7.5 1.26875V0.265625C6.8375 0.309375 6.19687 0.434375 5.59062 0.63125L5.9625 1.5625ZM13.8219 2.88438L13.1125 3.59375C13.4875 4.02813 13.8094 4.5125 14.0656 5.03438L14.9969 4.6625C14.6875 4.01562 14.2906 3.41875 13.8219 2.88438ZM12.4062 2.8875L13.1156 2.17812C12.6281 1.75 12.0906 1.38125 11.5063 1.0875L11.1125 2.00938C11.575 2.25313 12.0125 2.54688 12.4062 2.8875Z" fill="#42766A" />
-                            <path d="M8 12.25C8.48325 12.25 8.875 11.8582 8.875 11.375C8.875 10.8918 8.48325 10.5 8 10.5C7.51675 10.5 7.125 10.8918 7.125 11.375C7.125 11.8582 7.51675 12.25 8 12.25Z" fill="#42766A" />
-                            <path d="M8.24063 9.75H7.74062C7.53437 9.75 7.36562 9.58125 7.36562 9.375C7.36562 7.15625 9.78437 7.37812 9.78437 6.00625C9.78437 5.38125 9.22812 4.75 7.99062 4.75C7.08125 4.75 6.60625 5.05 6.14062 5.64687C6.01875 5.80312 5.79375 5.83438 5.63437 5.72188L5.225 5.43437C5.05 5.3125 5.00937 5.06562 5.14375 4.89687C5.80625 4.04687 6.59375 3.5 7.99375 3.5C9.62812 3.5 11.0375 4.43125 11.0375 6.00625C11.0375 8.11875 8.61875 7.99062 8.61875 9.375C8.61562 9.58125 8.44688 9.75 8.24063 9.75Z" fill="#42766A" />
-                        </svg>
-                    </span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="{{ route('dashboard.menu') }}" class="nav-item {{ request()->routeIs('dashboard.menu*') ? 'active' : '' }}">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(116,70,34,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-                            <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-                            <path d="M3 17v2a2 2 0 0 0 2 2h2"/>
-                            <path d="M17 21h2a2 2 0 0 0 2-2v-2"/>
-                            <line x1="7" y1="8" x2="7" y2="16"/>
-                            <line x1="10" y1="8" x2="10" y2="16"/>
-                            <line x1="13" y1="8" x2="13" y2="16"/>
-                            <line x1="16" y1="8" x2="16" y2="16"/>
-                        </svg>
-                    </span>
-                    <span>Tag Harga</span>
-                </a>
-                <a href="{{ route('dashboard.customer.index') }}" class="nav-item {{ request()->routeIs('dashboard.customer.*') ? 'active' : '' }}">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <path d="M20 8v6"/>
-                            <path d="M23 11h-6"/>
-                        </svg>
-                    </span>
-                    <span>Customer</span>
-                </a>
-                <a href="{{ route('dashboard.kunjungan.index') }}" class="nav-item {{ request()->routeIs('dashboard.kunjungan.*') ? 'active' : '' }}">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                    </span>
-                    <span>Kunjungan Toko</span>
-                </a>
-                <button type="button" class="nav-item" id="scanBarcodeBtn" style="border:none;background:none;width:100%;cursor:pointer;text-align:left;font:inherit;">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 7V5a2 2 0 0 1 2-2h2" />
-                            <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-                            <path d="M3 17v2a2 2 0 0 0 2 2h2" />
-                            <path d="M17 21h2a2 2 0 0 0 2-2v-2" />
-                            <line x1="7" y1="11" x2="7" y2="14" />
-                            <line x1="11" y1="9" x2="11" y2="14" />
-                            <line x1="15" y1="7" x2="15" y2="14" />
-                        </svg>
-                    </span>
-                    <span>Scan Barcode</span>
-                </button>
-            </nav>
-
-            <!-- Scan Barcode Modal -->
-            <div id="scanModal" class="scan-modal-overlay" style="display:none;">
-                <div class="scan-modal">
-                    <div class="scan-modal-header">
-                        <h2>Scan Barcode Pesanan</h2>
-                        <button type="button" id="scanModalClose" class="scan-modal-close">&times;</button>
-                    </div>
-                    <div class="scan-modal-body">
-                        <div id="scannerContainer" style="width:100%;max-width:400px;margin:0 auto;"></div>
-                        <div id="scanResult" style="display:none;"></div>
-                        <div class="scan-manual-toggle">
-                            <button type="button" id="manualToggle" class="scan-link-btn">Input Manual Order ID</button>
-                        </div>
-                        <div id="manualInput" style="display:none;margin-top:16px;">
-                            <label style="display:block;font-size:13px;margin-bottom:6px;color:var(--brown-70);">Masukkan Order ID</label>
-                            <div style="display:flex;gap:8px;">
-                                <input type="text" id="manualOrderId" placeholder="KK-123-1713100800" style="flex:1;padding:10px 14px;border:1px solid var(--brown-10);border-radius:8px;font-family:inherit;font-size:14px;" />
-                                <button type="button" id="manualLookupBtn" style="padding:10px 20px;background:var(--green);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;">Cari</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-=======
-                <a href="{{ route('dashboard') }}" class="nav-item">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M0 6C0 4.89687 0.896875 4 2 4C2.01562 4 2.03437 4 2.05 4C2.28125 2.85938 3.29063 2 4.5 2C4.96875 2 5.40625 2.12812 5.77812 2.35C6.19375 1.55 7.03438 1 8 1C8.96562 1 9.80625 1.55 10.2219 2.35C10.5938 2.12812 11.0312 2 11.5 2C12.7094 2 13.7188 2.85938 13.95 4C13.9656 4 13.9844 4 14 4C15.1031 4 16 4.89687 16 6C16 6.36562 15.9031 6.70625 15.7312 7H0.26875C0.096875 6.70625 0 6.36562 0 6ZM0 8.85625C0 8.38437 0.384375 8 0.85625 8H15.1438C15.6156 8 16 8.38437 16 8.85625C16 11.0594 14.6125 12.9406 12.6656 13.6719L12.6094 14.125C12.5469 14.625 12.1219 15 11.6156 15H4.38125C3.87812 15 3.45 14.625 3.3875 14.125L3.33125 13.675C1.3875 12.9406 0 11.0594 0 8.85625Z" fill="rgba(116,70,34,0.7)" />
-                        </svg>
-                    </span>
-                    <span>Produk</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="nav-item">
-                    <span class="nav-icon">
-                        <svg width="12" height="16" viewBox="0 0 12 16" fill="none">
-                            <path d="M0.4375 0.0687138C0.703125-0.0531612 1.01562-0.00941122 1.2375 0.181214L2.5 1.26246L3.7625 0.181214C4.04375-0.0594112 4.45938-0.0594112 4.7375 0.181214L6 1.26246L7.2625 0.181214C7.54375-0.0594112 7.95938-0.0594112 8.2375 0.181214L9.5 1.26246L10.7625 0.181214C10.9844-0.00941122 11.2969-0.0531612 11.5625 0.0687138C11.8281 0.190589 12 0.456214 12 0.749964V15.25C12 15.5437 11.8281 15.8093 11.5625 15.9312C11.2969 16.0531 10.9844 16.0093 10.7625 15.8187L9.5 14.7375L8.2375 15.8187C7.95625 16.0593 7.54062 16.0593 7.2625 15.8187L6 14.7375L4.7375 15.8187C4.45625 16.0593 4.04063 16.0593 3.7625 15.8187L2.5 14.7375L1.2375 15.8187C1.01562 16.0093 0.703125 16.0531 0.4375 15.9312C0.171875 15.8093 0 15.5437 0 15.25V0.749964C0 0.456214 0.171875 0.190589 0.4375 0.0687138ZM3 4.49996C2.725 4.49996 2.5 4.72496 2.5 4.99996C2.5 5.27496 2.725 5.49996 3 5.49996H9C9.275 5.49996 9.5 5.27496 9.5 4.99996C9.5 4.72496 9.275 4.49996 9 4.49996H3ZM2.5 11C2.5 11.275 2.725 11.5 3 11.5H9C9.275 11.5 9.5 11.275 9.5 11C9.5 10.725 9.275 10.5 9 10.5H3C2.725 10.5 2.5 10.725 2.5 11ZM3 7.49996C2.725 7.49996 2.5 7.72496 2.5 7.99996C2.5 8.27496 2.725 8.49996 3 8.49996H9C9.275 8.49996 9.5 8.27496 9.5 7.99996C9.5 7.72496 9.275 7.49996 9 7.49996H3Z" fill="rgba(116,70,34,0.7)" />
-                        </svg>
-                    </span>
-                    <span>Pesanan</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="nav-item">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M2 2C2 1.44687 1.55313 1 1 1C0.446875 1 0 1.44687 0 2V12.5C0 13.8813 1.11875 15 2.5 15H15C15.5531 15 16 14.5531 16 14C16 13.4469 15.5531 13 15 13H2.5C2.225 13 2 12.775 2 12.5V2ZM14.7063 4.70625C15.0969 4.31563 15.0969 3.68125 14.7063 3.29063C14.3156 2.9 13.6812 2.9 13.2906 3.29063L10 6.58437L8.20625 4.79063C7.81563 4.4 7.18125 4.4 6.79063 4.79063L3.29063 8.29062C2.9 8.68125 2.9 9.31563 3.29063 9.70625C3.68125 10.0969 4.31563 10.0969 4.70625 9.70625L7.5 6.91563L9.29375 8.70938C9.68437 9.1 10.3188 9.1 10.7094 8.70938L14.7094 4.70937L14.7063 4.70625Z" fill="rgba(116,70,34,0.7)" />
-                        </svg>
-                    </span>
-                    <span>Statistik</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="nav-item">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M2 1C0.896875 1 0 1.89688 0 3V13C0 14.1031 0.896875 15 2 15H14C15.1031 15 16 14.1031 16 13V6C16 4.89687 15.1031 4 14 4H2.5C2.225 4 2 3.775 2 3.5C2 3.225 2.225 3 2.5 3H14C14.5531 3 15 2.55313 15 2C15 1.44687 14.5531 1 14 1H2ZM13 8.5C13.2652 8.5 13.5196 8.60536 13.7071 8.79289C13.8946 8.98043 14 9.23478 14 9.5C14 9.76522 13.8946 10.0196 13.7071 10.2071C13.5196 10.3946 13.2652 10.5 13 10.5C12.7348 10.5 12.4804 10.3946 12.2929 10.2071C12.1054 10.0196 12 9.76522 12 9.5C12 9.23478 12.1054 8.98043 12.2929 8.79289C12.4804 8.60536 12.7348 8.5 13 8.5Z" fill="rgba(116,70,34,0.7)" />
-                        </svg>
-                    </span>
-                    <span>Keuangan</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="nav-item">
-                    <span class="nav-icon">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M15.4969 5.20625C15.5969 5.47813 15.5125 5.78125 15.2969 5.975L13.9438 7.20625C13.9781 7.46563 13.9969 7.73125 13.9969 8C13.9969 8.26875 13.9781 8.53438 13.9438 8.79375L15.2969 10.025C15.5125 10.2188 15.5969 10.5219 15.4969 10.7937C15.3594 11.1656 15.1938 11.5219 15.0031 11.8656L14.8562 12.1187C14.65 12.4625 14.4187 12.7875 14.1656 13.0938C13.9812 13.3188 13.675 13.3937 13.4 13.3062L11.6594 12.7531C11.2406 13.075 10.7781 13.3438 10.2844 13.5469L9.89375 15.3313C9.83125 15.6156 9.6125 15.8406 9.325 15.8875C8.89375 15.9594 8.45 15.9969 7.99687 15.9969C7.54375 15.9969 7.1 15.9594 6.66875 15.8875C6.38125 15.8406 6.1625 15.6156 6.1 15.3313L5.70937 13.5469C5.21562 13.3438 4.75312 13.075 4.33437 12.7531L2.59687 13.3094C2.32187 13.3969 2.01562 13.3188 1.83125 13.0969C1.57812 12.7906 1.34687 12.4656 1.14062 12.1219L0.99375 11.8687C0.803125 11.525 0.6375 11.1687 0.5 10.7969C0.4 10.525 0.484375 10.2219 0.7 10.0281L2.05312 8.79688C2.01875 8.53438 2 8.26875 2 8C2 7.73125 2.01875 7.46563 2.05312 7.20625L0.7 5.975C0.484375 5.78125 0.4 5.47813 0.5 5.20625C0.6375 4.83438 0.803125 4.47813 0.99375 4.13438L1.14062 3.88125C1.34687 3.5375 1.57812 3.2125 1.83125 2.90625C2.01562 2.68125 2.32187 2.60625 2.59687 2.69375L4.3375 3.24688C4.75625 2.925 5.21875 2.65625 5.7125 2.45312L6.10312 0.66875C6.16562 0.384375 6.38437 0.159375 6.67187 0.1125C7.10312 0.0375 7.54687 0 8 0C8.45312 0 8.89688 0.0375 9.32812 0.109375C9.61563 0.15625 9.83438 0.38125 9.89688 0.665625L10.2875 2.45C10.7812 2.65313 11.2438 2.92188 11.6625 3.24375L13.4031 2.69062C13.6781 2.60312 13.9844 2.68125 14.1687 2.90313C14.4219 3.20938 14.6531 3.53437 14.8594 3.87812L15.0063 4.13125C15.1969 4.475 15.3625 4.83125 15.5 5.20312L15.4969 5.20625ZM8 10.5C8.66304 10.5 9.29893 10.2366 9.76777 9.76777C10.2366 9.29893 10.5 8.66304 10.5 8C10.5 7.33696 10.2366 6.70107 9.76777 6.23223C9.29893 5.76339 8.66304 5.5 8 5.5C7.33696 5.5 6.70107 5.76339 6.23223 6.23223C5.76339 6.70107 5.5 7.33696 5.5 8C5.5 8.66304 5.76339 9.29893 6.23223 9.76777C6.70107 10.2366 7.33696 10.5 8 10.5Z" fill="rgba(116,70,34,0.7)" />
-                        </svg>
-                    </span>
-                    <span>Pengaturan</span>
-                </a>
-            </nav>
-            <!-- User Footer -->
-            <div class="sidebar-footer">
-                <div class="sidebar-user">
-                    <img class="user-avatar" src="https://api.builder.io/api/v1/image/assets/TEMP/087ab2dd772577a5a55f3825b36f4260590b6776?width=80" alt="{{ $vendor->nama_vendor }}">
-                    <div style="flex:1;min-width:0;">
-                        <div class="user-name">{{ $vendor->nama_vendor }}</div>
-                        <div class="user-email">{{ auth()->user()?->email ?? 'vendor@kantinkita.id' }}</div>
-                    </div>
-                    <form method="POST" action="{{ route('logout') }}" class="sidebar-logout-btn">
-                        @csrf
-                        <button type="submit" class="sidebar-logout-btn" aria-label="Logout">
-                            <svg class="sidebar-logout" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M11.8094 3.30938L15.6469 7.14687C15.8719 7.37187 16 7.68125 16 8C16 8.31875 15.8719 8.62812 15.6469 8.85312L11.8094 12.6906C11.6094 12.8906 11.3406 13 11.0594 13C10.475 13 10 12.525 10 11.9406V10H6C5.44688 10 5 9.55313 5 9V7C5 6.44688 5.44688 6 6 6H10V4.05937C10 3.475 10.475 3 11.0594 3C11.3406 3 11.6094 3.1125 11.8094 3.30938ZM5 3H3C2.44688 3 2 3.44688 2 4V12C2 12.5531 2.44688 13 3 13H5C5.55312 13 6 13.4469 6 14C6 14.5531 5.55312 15 5 15H3C1.34375 15 0 13.6562 0 12V4C0 2.34375 1.34375 1 3 1H5C5.55312 1 6 1.44687 6 2C6 2.55313 5.55312 3 5 3Z" fill="rgba(116,70,34,0.6)" />
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </aside>
+        @include('vendor._sidebar', ['vendor' => $vendor])
 
         <!-- ═══════════════ MAIN ═══════════════════ -->
         <div class="main-content">
@@ -1677,9 +1165,25 @@
                             <path d="M8.74998 0C8.05858 0 7.49998 0.558594 7.49998 1.25V2C4.64842 2.57812 2.49998 5.10156 2.49998 8.125V8.85938C2.49998 10.6953 1.8242 12.4688 0.605453 13.8438L0.316391 14.168C-0.011734 14.5352-0.0898591 15.0625 0.10936 15.5117C0.308578 15.9609 0.757797 16.25 1.24998 16.25H16.25C16.7422 16.25 17.1875 15.9609 17.3906 15.5117C17.5937 15.0625 17.5117 14.5352 17.1836 14.168L16.8945 13.8438C15.6758 12.4688 15 10.6992 15 8.85938V8.125C15 5.10156 12.8515 2.57812 9.99998 2V1.25C9.99998 0.558594 9.44139 0 8.74998 0ZM10.5195 19.2695C10.9883 18.8008 11.25 18.1641 11.25 17.5H6.24998C6.24998 18.1641 6.5117 18.8008 6.98045 19.2695C7.4492 19.7383 8.08592 20 8.74998 20C9.41405 20 10.0508 19.7383 10.5195 19.2695Z" fill="rgba(116,70,34,0.6)" />
                         </svg>
                     </button>
-                    <div class="header-user-chip">
-                        <img class="header-avatar" src="https://api.builder.io/api/v1/image/assets/TEMP/d2809f4985ab877fe9cc63eb8ac265662cce04ff?width=64" alt="{{ $vendor->nama_vendor }}">
+                    <div class="header-user-chip" id="headerUserChip">
+                        <div class="header-avatar avatar-initial">{{ strtoupper(substr($vendor->nama_vendor, 0, 1)) }}</div>
                         <span class="header-username">{{ $vendor->nama_vendor }}</span>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown" style="display:none;">
+                        <div class="user-dropdown-header">
+                            <div class="user-dropdown-name">{{ $vendor->nama_vendor }}</div>
+                            <div class="user-dropdown-email">{{ auth()->user()?->email ?? 'vendor@kantinkita.id' }}</div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="user-dropdown-item user-dropdown-logout">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                                    <path d="M11.8094 3.30938L15.6469 7.14687C15.8719 7.37187 16 7.68125 16 8C16 8.31875 15.8719 8.62812 15.6469 8.85312L11.8094 12.6906C11.6094 12.8906 11.3406 13 11.0594 13C10.475 13 10 12.525 10 11.9406V10H6C5.44688 10 5 9.55313 5 9V7C5 6.44688 5.44688 6 6 6H10V4.05937C10 3.475 10.475 3 11.0594 3C11.3406 3 11.6094 3.1125 11.8094 3.30938ZM5 3H3C2.44688 3 2 3.44688 2 4V12C2 12.5531 2.44688 13 3 13H5C5.55312 13 6 13.4469 6 14C6 14.5531 5.55312 15 5 15H3C1.34375 15 0 13.6562 0 12V4C0 2.34375 1.34375 1 3 1H5C5.55312 1 6 1.44687 6 2C6 2.55313 5.55312 3 5 3Z" fill="currentColor" />
+                                </svg>
+                                Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </header>
@@ -1761,19 +1265,20 @@
                             <div class="section-title">Produk Terlaris</div>
                             <div class="section-subtitle">Menu favorit pelanggan minggu ini</div>
                         </div>
-                        <button class="btn-primary">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M7 1C7 0.447715 6.55228 0 6 0C5.44772 0 5 0.447715 5 1V5H1C0.447715 5 0 5.44772 0 6C0 6.55228 0.447715 7 1 7H5V11C5 11.5523 5.44772 12 6 12C6.55228 12 7 11.5523 7 11V7H11C11.5523 7 12 6.55228 12 6C12 5.44772 11.5523 5 11 5H7V1Z" fill="white" />
-                            </svg>
-                            Tambah Produk
-                        </button>
+
                     </div>
 
                     <div class="products-grid">
                         @forelse ($produkTerlaris as $produk)
                         <div class="product-card">
                             <div class="product-image-wrap">
-                                <img class="product-img" src="{{ $produk->path_gambar ?: 'https://api.builder.io/api/v1/image/assets/TEMP/ba6382dc578b32751a4c6e03f2066fc64f93e8ce?width=504' }}" alt="{{ $produk->nama_menu }}">
+                                @php
+                                    $produkImgFallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='504' height='504'%3E%3Crect width='504' height='504' fill='%23FBF5E8'/%3E%3C/svg%3E";
+                                    $produkImg = $produk->path_gambar
+                                        ? (\Illuminate\Support\Str::startsWith($produk->path_gambar, ['http://', 'https://', '/']) ? $produk->path_gambar : asset('storage/' . $produk->path_gambar))
+                                        : $produkImgFallback;
+                                @endphp
+                                <img class="product-img" src="{{ $produkImg }}" alt="{{ $produk->nama_menu }}">
                                 @if ($loop->first)
                                 <span class="product-badge green-badge">Best Seller</span>
                                 @elseif ($produk->detail_pesanans_count > 0)
@@ -1795,7 +1300,6 @@
                                 <div class="product-actions">
                                     <button class="btn-edit">{{ $produk->detail_pesanans_count }} terjual</button>
                                     <a href="{{ route('menu.price-tag', $produk) }}" class="btn-cetak">Cetak Tag Harga</a>
-                                    <button class="btn-detail">Detail</button>
                                 </div>
                             </div>
                         </div>
@@ -1837,7 +1341,14 @@
                             };
                             @endphp
                             <li class="order-row">
-                                <img class="order-thumb" src="{{ $firstMenu?->path_gambar ?: 'https://api.builder.io/api/v1/image/assets/TEMP/ba6382dc578b32751a4c6e03f2066fc64f93e8ce?width=128' }}" alt="{{ $firstMenu?->nama_menu ?: 'Pesanan' }}">
+                                @php
+                                    $orderThumbFallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Crect width='128' height='128' fill='%23FBF5E8'/%3E%3C/svg%3E";
+                                    $firstMenuPath = $firstMenu?->path_gambar;
+                                    $orderThumb = $firstMenuPath
+                                        ? (\Illuminate\Support\Str::startsWith($firstMenuPath, ['http://', 'https://', '/']) ? $firstMenuPath : asset('storage/' . $firstMenuPath))
+                                        : $orderThumbFallback;
+                                @endphp
+                                <img class="order-thumb" src="{{ $orderThumb }}" alt="{{ $firstMenu?->nama_menu ?: 'Pesanan' }}">
                                 <div class="order-info">
                                     <div class="order-name">#{{ $pesanan->id }} - {{ $pesanan->nama_customer }}</div>
                                     <div class="order-qty">{{ $totalItem }}x &bull; Rp {{ number_format((int) $pesanan->total, 0, ',', '.') }}</div>
@@ -1899,6 +1410,30 @@
             </div><!-- /dashboard-body -->
         </div><!-- /main-content -->
     </div><!-- /dashboard-shell -->
+
+    <!-- Scan Barcode Modal -->
+    <div id="scanModal" class="scan-modal-overlay" style="display:none;">
+        <div class="scan-modal">
+            <div class="scan-modal-header">
+                <h2>Scan Barcode Pesanan</h2>
+                <button type="button" id="scanModalClose" class="scan-modal-close">&times;</button>
+            </div>
+            <div class="scan-modal-body">
+                <div id="scannerContainer" style="width:100%;max-width:400px;margin:0 auto;"></div>
+                <div id="scanResult" style="display:none;"></div>
+                <div class="scan-manual-toggle">
+                    <button type="button" id="manualToggle" class="scan-link-btn">Input Manual Order ID</button>
+                </div>
+                <div id="manualInput" style="display:none;margin-top:16px;">
+                    <label style="display:block;font-size:13px;margin-bottom:6px;color:var(--brown-70);">Masukkan Order ID</label>
+                    <div style="display:flex;gap:8px;">
+                        <input type="text" id="manualOrderId" placeholder="KK-123-1713100800" style="flex:1;padding:10px 14px;border:1px solid var(--brown-10);border-radius:8px;font-family:inherit;font-size:14px;" />
+                        <button type="button" id="manualLookupBtn" style="padding:10px 20px;background:var(--green);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;">Cari</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         /* ── Scan Barcode ── */

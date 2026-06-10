@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tambah Customer 1 (BLOB) – Kantin Kita</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114">
+    <title>Tambah Customer 1 (BLOB) | Kantin Kita</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,25 +35,7 @@
         body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--brown); min-height: 100vh; }
         .dashboard-shell { display: flex; min-height: 100vh; }
 
-        .sidebar { width: 288px; flex-shrink: 0; background: var(--white); border-right: 1px solid var(--brown-10); display: flex; flex-direction: column; padding: 24px; gap: 48px; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 100; box-shadow: 2px 0 20px rgba(116, 70, 34, .04); }
-        .sidebar-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 48px; height: 48px; background: var(--green); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
-        .logo-text-primary { font-size: 24px; font-weight: 700; color: var(--brown); }
-        .logo-text-secondary { font-size: 12px; color: var(--brown-60); }
-        .sidebar-nav { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); text-decoration: none; font-size: 16px; font-weight: 500; color: var(--brown-70); transition: background var(--transition), color var(--transition), transform var(--transition); position: relative; overflow: hidden; }
-        .nav-item::before { content: ''; position: absolute; inset: 0; background: var(--green-10); opacity: 0; transition: opacity var(--transition); border-radius: inherit; }
-        .nav-item:hover::before { opacity: 1; }
-        .nav-item:hover { color: var(--green); transform: translateX(3px); }
-        .nav-item.active { background: var(--green-10); color: var(--green); font-weight: 600; }
-        .nav-item.active::after { content: ''; position: absolute; right: 0; top: 20%; height: 60%; width: 3px; background: var(--green); border-radius: 2px 0 0 2px; }
-        .nav-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-        .sidebar-footer { border-top: 1px solid var(--brown-10); padding-top: 24px; }
-        .sidebar-user { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-md); }
-        .user-avatar { width: 40px; height: 40px; border-radius: var(--radius-pill); object-fit: cover; border: 2px solid var(--brown-10); }
-        .user-name { font-size: 14px; font-weight: 600; color: var(--brown); }
-        .user-email { font-size: 12px; color: var(--brown-60); }
-        .sidebar-logout-btn { margin-left: auto; border: none; background: transparent; cursor: pointer; padding: 0; }
+
 
         .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
         .page-header { background: var(--white); border-bottom: 1px solid var(--brown-10); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
@@ -100,13 +85,6 @@
         .alert-error ul { margin: 4px 0 0 18px; }
 
         @media (max-width: 900px) {
-            .dashboard-shell { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: static; padding: 14px 16px; gap: 14px; border-right: none; border-bottom: 1px solid var(--brown-10); }
-            .sidebar-nav { flex-direction: row; overflow-x: auto; flex-wrap: nowrap; gap: 8px; }
-            .sidebar-nav::-webkit-scrollbar { display: none; }
-            .nav-item { padding: 8px 12px; min-width: max-content; }
-            .nav-item::before, .nav-item.active::after { display: none; }
-            .nav-item.active { background: rgba(66, 118, 106, .14); }
             .dashboard-body { padding: 20px; }
             .page-header { padding: 16px 20px; }
         }
@@ -117,7 +95,7 @@
 
 <div class="dashboard-shell">
 
-    @include('vendor.customer._sidebar', ['vendor' => $vendor])
+    @include('vendor._sidebar', ['vendor' => $vendor])
 
     <div class="main-content">
 

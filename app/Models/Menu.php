@@ -56,4 +56,14 @@ class Menu extends Model
     {
         return $this->hasMany(DetailPesanan::class);
     }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(MenuVariant::class)->orderBy('urutan');
+    }
+
+    public function toppings(): HasMany
+    {
+        return $this->hasMany(MenuTopping::class)->orderBy('urutan');
+    }
 }

@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Select Your Vendor — Kantin Kita</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" />
+    <title>Select Your Vendor | Kantin Kita</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -23,6 +26,15 @@
             --radius-card: 24px;
             --radius-btn: 16px;
             --radius-pill: 9999px;
+
+            /* Canonical card tokens — keep in sync with menu-vendor.blade.php
+               (see openspec change: align-vendor-card-clickable). */
+            --card-radius: 20px;
+            --card-image-h: 208px;
+            --card-body-pad: 20px;
+            --card-gap: 24px;
+            --card-shadow-idle: 0 1px 2px rgba(0, 0, 0, .05);
+            --card-shadow-hover: 0 4px 6px rgba(0, 0, 0, .07), 0 10px 20px rgba(0, 0, 0, .06);
         }
 
         /* ─── Reset & Base ──────────────────────────────────── */
@@ -247,64 +259,6 @@
             color: var(--sage);
         }
 
-        /* Header actions */
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .notif-btn {
-            position: relative;
-            width: 18px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-
-        .notif-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .notif-badge {
-            position: absolute;
-            top: -4px;
-            right: -6px;
-            width: 20px;
-            height: 20px;
-            background: var(--sage);
-            border-radius: var(--radius-pill);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--white);
-            letter-spacing: -0.5px;
-        }
-
-        .avatar-wrap {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-pill);
-            border: 2px solid var(--sage);
-            overflow: hidden;
-            padding: 2px;
-            transition: box-shadow 0.25s;
-        }
-
-        .avatar-wrap:hover {
-            box-shadow: 0 0 0 3px rgba(66, 118, 106, 0.25);
-        }
-
-        .avatar-img {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-pill);
-            object-fit: cover;
-        }
 
         /* ─── Page Wrapper ──────────────────────────────────── */
         .page-body {
@@ -467,30 +421,37 @@
         /* ─── Vendor Grid ───────────────────────────────────── */
         .vendors-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--card-gap);
         }
 
         /* ─── Vendor Card ───────────────────────────────────── */
         .vendor-card {
             background: var(--white);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
+            border-radius: var(--card-radius);
+            box-shadow: var(--card-shadow-idle);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            touch-action: manipulation;
             transition: box-shadow 0.30s ease, transform 0.30s ease;
         }
 
         .vendor-card:hover {
-            box-shadow: var(--shadow-lift);
+            box-shadow: var(--card-shadow-hover);
             transform: translateY(-6px);
+        }
+
+        .vendor-card:focus-visible {
+            outline: 3px solid var(--sage);
+            outline-offset: 2px;
         }
 
         /* Card image */
         .card-image-wrap {
             position: relative;
-            height: 256px;
+            height: var(--card-image-h);
             overflow: hidden;
         }
 
@@ -571,19 +532,19 @@
 
         /* Card body */
         .card-body {
-            padding: 24px;
+            padding: var(--card-body-pad);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             flex: 1;
         }
 
         .vendor-name {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--brown);
             letter-spacing: -0.5px;
-            line-height: 32px;
+            line-height: 1.4;
         }
 
         .vendor-location {
@@ -862,13 +823,49 @@
                 padding-bottom: 48px;
             }
 
-            .vendors-grid,
             .vendors-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .footer-cols {
                 grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .vendors-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .vendor-card {
+                flex-direction: row;
+                align-items: stretch;
+                min-height: 126px;
+                border-radius: 16px;
+            }
+
+            .card-image-wrap {
+                width: 126px;
+                min-width: 126px;
+                height: auto;
+                min-height: 126px;
+            }
+
+            .card-body {
+                padding: 12px;
+                gap: 8px;
+                min-width: 0;
+            }
+
+            .vendor-name {
+                font-size: 16px;
+            }
+
+            .vendor-card:hover {
+                transform: none;
+                box-shadow: var(--card-shadow-idle);
             }
         }
 
@@ -901,18 +898,9 @@
                 line-height: 1.2;
             }
 
-            .header-actions {
-                display: none;
-            }
-
             .page-body {
                 padding: 32px 16px 48px;
                 gap: 18px;
-            }
-
-            .vendors-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 12px;
             }
 
             .footer-cols {
@@ -954,7 +942,9 @@
             }
 
             .card-image-wrap {
-                height: 116px;
+                width: 110px;
+                min-width: 110px;
+                min-height: 110px;
             }
 
             .card-badges {
@@ -978,8 +968,8 @@
             }
 
             .card-body {
-                padding: 12px;
-                gap: 8px;
+                padding: 10px;
+                gap: 6px;
             }
 
             .vendor-name {
@@ -990,7 +980,6 @@
                 -webkit-box-orient: vertical;
                 line-clamp: 2;
                 overflow: hidden;
-                min-height: 40px;
             }
 
             .vendor-location {
@@ -1013,22 +1002,14 @@
                 display: none;
             }
 
-            .card-footer-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-
             .price-group {
                 display: none;
             }
 
             .order-btn {
-                width: 100%;
-                justify-content: center;
-                min-height: 40px;
-                font-size: 13px;
-                padding: 0 10px;
+                min-height: 36px;
+                font-size: 12px;
+                padding: 0 12px;
             }
 
             .site-footer {
@@ -1087,10 +1068,9 @@
 
             <!-- Navigation -->
             <nav class="main-nav">
-                <a href="{{ route('home') }}" class="nav-link">Home</a>
-                <a href="{{ route('vendor') }}" class="nav-link">Vendors</a>
-                <a href="{{ route('login') }}" class="nav-link">My Orders</a>
-                <a href="{{ route('login') }}" class="nav-link">Profile</a>
+                <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+                <a href="{{ route('vendor') }}" class="nav-link {{ request()->routeIs('vendor') || request()->routeIs('menu') ? 'active' : '' }}">Vendors</a>
+                <a href="{{ route('vendor') }}" class="nav-link {{ request()->routeIs('checkout') ? 'active' : '' }}" title="Pilih kantin dulu untuk melihat keranjang">Cart</a>
             </nav>
 
             <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
@@ -1099,19 +1079,6 @@
                 <span></span>
             </button>
 
-            <!-- Actions -->
-            <div class="header-actions">
-                <button class="notif-btn" aria-label="Notifications">
-                    <span class="notif-badge">3</span>
-                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-                        <path d="M8.75002 0C8.05861 0 7.50001 0.558594 7.50001 1.25V2C4.64845 2.57812 2.50002 5.10156 2.50002 8.125V8.85938C2.50002 10.6953 1.82423 12.4688 0.605484 13.8438L0.316421 14.168C-0.0117035 14.5352-0.0898286 15.0625 0.10939 15.5117C0.308609 15.9609 0.757828 16.25 1.25002 16.25H16.25C16.7422 16.25 17.1875 15.9609 17.3906 15.5117C17.5938 15.0625 17.5117 14.5352 17.1836 14.168L16.8945 13.8438C15.6758 12.4688 15 10.6992 15 8.85938V8.125C15 5.10156 12.8516 2.57812 10 2V1.25C10 0.558594 9.44142 0 8.75002 0ZM10.5195 19.2695C10.9883 18.8008 11.25 18.1641 11.25 17.5H6.25001C6.25001 18.1641 6.51173 18.8008 6.98048 19.2695C7.44923 19.7383 8.08595 20 8.75002 20C9.41408 20 10.0508 19.7383 10.5195 19.2695Z" fill="#744622" />
-                    </svg>
-                </button>
-                <div class="avatar-wrap">
-                    <img src="https://api.builder.io/api/v1/image/assets/TEMP/0a270abbdf4371c1193a8877d596cf906b3bf52c?width=72" alt="Profile" class="avatar-img" />
-                </div>
-            </div>
-
         </div>
     </header>
 
@@ -1119,8 +1086,7 @@
         <nav class="mobile-nav-links" aria-label="Quick links">
             <a href="{{ route('home') }}" class="mobile-nav-link">Home</a>
             <a href="{{ route('vendor') }}" class="mobile-nav-link">Vendors</a>
-            <a href="{{ route('login') }}" class="mobile-nav-link">My Orders</a>
-            <a href="{{ route('login') }}" class="mobile-nav-link">Profile</a>
+            <a href="{{ route('vendor') }}" class="mobile-nav-link">Cart</a>
         </nav>
     </div>
 
@@ -1195,7 +1161,11 @@
                 @endphp
                 <article class="vendor-card reveal reveal-delay-{{ ($loop->index % 3) + 1 }}"
                     data-vendor-name="{{ strtolower($vendorName) }}"
-                    data-vendor-category="{{ strtolower($vendorCategory) }}">
+                    data-vendor-category="{{ strtolower($vendorCategory) }}"
+                    data-href="{{ route('menu', ['id' => $vendor->id]) }}"
+                    role="link"
+                    tabindex="0"
+                    aria-label="Buka menu {{ $vendorName }}">
                     <div class="card-image-wrap">
                         <img src="{{ $vendorImage }}" alt="{{ $vendorName }}" class="card-food-img" />
                         <div class="card-badges">
@@ -1421,6 +1391,33 @@
         });
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        /* ── Whole-card click → navigate to vendor menu ───── */
+        const vendorsGrid = document.getElementById('vendorsGrid');
+        if (vendorsGrid) {
+            const navigateCard = (card) => {
+                const href = card.dataset.href;
+                if (href) {
+                    window.location.href = href;
+                }
+            };
+            const isInnerInteractive = (target) =>
+                !!target.closest('a, button, input, textarea, select');
+
+            vendorsGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.vendor-card[data-href]');
+                if (!card) return;
+                if (isInnerInteractive(e.target)) return;
+                navigateCard(card);
+            });
+            vendorsGrid.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                const card = e.target.closest('.vendor-card[data-href]');
+                if (!card || card !== e.target) return;
+                e.preventDefault();
+                navigateCard(card);
+            });
+        }
 
         const searchInput = document.querySelector('.search-input');
         if (searchInput) {

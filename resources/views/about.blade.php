@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kantin Kita - Tentang, FAQ, dan Kontak</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+  <title>Kantin Kita | Tentang, FAQ, dan Kontak</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -855,9 +859,10 @@
         <li><a href="{{ route('home') }}">Beranda</a></li>
         <li><a href="{{ route('home') }}#menu-title">Menu</a></li>
         <li><a href="{{ route('about') }}" class="active">Tentang</a></li>
+        <li><a href="{{ route('artikel.index') }}">Artikel</a></li>
         <li><a href="{{ route('about') }}#kontak">Kontak</a></li>
       </ul>
-      <a href="{{ route('login') }}" class="btn-signup">Daftar</a>
+      <a href="{{ route('login') }}" class="btn-signup">Login</a>
       <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-mobile"
         id="nav-toggle">
         <span></span>
@@ -869,8 +874,9 @@
       <a href="{{ route('home') }}">Beranda</a>
       <a href="{{ route('home') }}#menu-title">Menu</a>
       <a href="{{ route('about') }}">Tentang</a>
+      <a href="{{ route('artikel.index') }}">Artikel</a>
       <a href="{{ route('about') }}#kontak">Kontak</a>
-      <a href="{{ route('login') }}" class="nav-mobile-cta">Daftar</a>
+      <a href="{{ route('login') }}" class="nav-mobile-cta">Login</a>
     </div>
   </header>
 
@@ -1069,6 +1075,7 @@
         <a href="{{ route('home') }}" class="footer-wordmark">Kantin Kita</a>
         <div class="footer-nav-group">
           <a href="{{ route('about') }}" class="footer-nav-link">Tentang</a>
+          <a href="{{ route('artikel.index') }}" class="footer-nav-link">Artikel</a>
           <a href="{{ route('about') }}#faq" class="footer-nav-link">FAQ</a>
           <a href="{{ route('about') }}#kontak" class="footer-nav-link">Kontak</a>
         </div>

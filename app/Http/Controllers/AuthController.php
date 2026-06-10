@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-        if (! $user || $user->role !== 'vendor') {
+        if (! $user || ! in_array($user->role, ['admin', 'vendor'], true)) {
             Auth::logout();
 
             return back()->withErrors([
@@ -39,7 +39,9 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/dashboard');
+        $redirectTo = $user->role === 'admin' ? '/admin' : '/dashboard';
+
+        return redirect()->intended($redirectTo);
     }
 
     public function logout(Request $request)

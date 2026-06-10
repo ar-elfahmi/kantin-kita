@@ -1,15 +1,8 @@
 {{--
-    Vendor dashboard sidebar partial.
-    Required vars:
-      - $vendor  (App\Models\Vendor)
+    DEPRECATED — use vendor._sidebar instead.
 
-    Active state is derived from the current route via request()->routeIs(...).
-    Used by:
-      - vendor/customer/index.blade.php
-      - vendor/customer/create-blob.blade.php
-      - vendor/customer/create-path.blade.php
-    NOT yet used by dashboard-vendor.blade.php or vendor/manage-menu.blade.php
-    (those still inline the sidebar; deferred refactor).
+    All vendor pages now use the canonical vendor._sidebar partial.
+    This file is kept for reference only and will be removed in a future cleanup.
 --}}
 
 <aside class="sidebar">

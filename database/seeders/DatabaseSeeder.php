@@ -2,13 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
@@ -16,10 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersSeeder::class,
+            AdminUserSeeder::class,
             VendorsSeeder::class,
             KategoriMenusSeeder::class,
             MenusSeeder::class,
             PesanansSeeder::class,
+            ArtikelSeeder::class,
         ]);
     }
 }

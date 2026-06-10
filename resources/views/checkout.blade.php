@@ -5,8 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>Your Cart — Kantin Kita</title>
-    <link rel="icon" type="image/png" href="https://api.builder.io/api/v1/image/assets/TEMP/10a82c5c6d87de97d3583b6c8564df77f595f954?width=1114" />
+    <title>Your Cart | Kantin Kita</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -246,13 +249,6 @@
             width: 100%;
         }
 
-        /* Nav actions */
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
         .hamburger-btn {
             width: 42px;
             height: 42px;
@@ -315,40 +311,6 @@
             letter-spacing: -.3px;
             line-height: 38px;
             padding: 0 12px;
-        }
-
-        .notif-wrapper {
-            position: relative;
-        }
-
-        .notif-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 16px;
-            height: 16px;
-            background: var(--green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--green-20);
-            object-fit: cover;
-            transition: transform .2s ease, border-color .2s ease;
-        }
-
-        .avatar:hover {
-            transform: scale(1.05);
-            border-color: var(--green);
         }
 
         /* ════════════════════════════════════════════════
@@ -584,6 +546,34 @@
             font-size: 14px;
             color: var(--brown-60);
             letter-spacing: -.5px;
+        }
+
+        .cart-item-size {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: var(--radius-pill, 999px);
+            background: var(--green-10);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -.3px;
+        }
+
+        .cart-item-toppings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .cart-item-topping-chip {
+            padding: 2px 8px;
+            border-radius: 8px;
+            background: var(--cream-mid);
+            color: var(--brown-70);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: -.3px;
         }
 
         .remove-btn {
@@ -1323,8 +1313,7 @@
                 width: 100%;
             }
 
-            .nav-links,
-            .nav-actions {
+            .nav-links {
                 display: none;
             }
 
@@ -1418,10 +1407,6 @@
             }
 
             .nav-links {
-                display: none;
-            }
-
-            .nav-actions {
                 display: none;
             }
 
@@ -1707,9 +1692,8 @@
 
                     <div class="nav-links">
                         <a href="/" class="nav-link">Home</a>
-                        <a href="{{ route('vendor') }}" class="nav-link">Menu</a>
+                        <a href="{{ route('vendor') }}" class="nav-link">Vendors</a>
                         <a href="{{ route('checkout', ['vendor_id' => $vendor?->id]) }}" class="nav-link active">Cart</a>
-                        <a href="{{ route('login') }}" class="nav-link">Orders</a>
                     </div>
 
                     <button class="hamburger-btn" id="mobileNavToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobileNavPanel">
@@ -1717,18 +1701,6 @@
                         <span></span>
                         <span></span>
                     </button>
-
-                    <div class="nav-actions">
-                        <div class="notif-wrapper">
-                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.74998 0C8.05858 0 7.49998.558594 7.49998 1.25V2C4.64842 2.57812 2.49998 5.10156 2.49998 8.125V8.85938C2.49998 10.6953 1.8242 12.4688.605453 13.8438L.316391 14.168C-.011734 14.5352-.0898591 15.0625.10936 15.5117C.308578 15.9609.757797 16.25 1.24998 16.25H16.25C16.7422 16.25 17.1875 15.9609 17.3906 15.5117C17.5937 15.0625 17.5117 14.5352 17.1836 14.168L16.8945 13.8438C15.6758 12.4688 15 10.6992 15 8.85938V8.125C15 5.10156 12.8515 2.57812 9.99998 2V1.25C9.99998.558594 9.44139 0 8.74998 0ZM10.5195 19.2695C10.9883 18.8008 11.25 18.1641 11.25 17.5H6.24998C6.24998 18.1641 6.5117 18.8008 6.98045 19.2695C7.4492 19.7383 8.08592 20 8.74998 20C9.41405 20 10.0508 19.7383 10.5195 19.2695Z" fill="#744622" />
-                            </svg>
-                            <span class="notif-badge">2</span>
-                        </div>
-                        <img class="avatar"
-                            src="https://api.builder.io/api/v1/image/assets/TEMP/027b8f59f02131e9cd0e00db9c70ffe34d5a2a22?width=80"
-                            alt="User avatar" />
-                    </div>
                 </nav>
             </div>
         </header>
@@ -1736,9 +1708,8 @@
         <div class="mobile-nav-panel" id="mobileNavPanel" aria-hidden="true">
             <div class="container-wide mobile-nav-inner">
                 <a href="/" class="mobile-nav-link">Home</a>
-                <a href="{{ route('vendor') }}" class="mobile-nav-link">Menu</a>
+                <a href="{{ route('vendor') }}" class="mobile-nav-link">Vendors</a>
                 <a href="{{ route('checkout', ['vendor_id' => $vendor?->id]) }}" class="mobile-nav-link">Cart</a>
-                <a href="{{ route('login') }}" class="mobile-nav-link">Orders</a>
             </div>
         </div>
 
@@ -2128,14 +2099,33 @@
                 return {
                     vendor_id: parsed.vendor_id ? Number(parsed.vendor_id) : null,
                     vendor_name: parsed.vendor_name || '',
-                    items: parsed.items.map((item) => ({
-                        menu_id: Number(item.menu_id),
-                        nama_menu: item.nama_menu || 'Menu',
-                        harga: Number(item.harga || 0),
-                        jumlah: Math.max(1, Number(item.jumlah || 1)),
-                        catatan: item.catatan || '',
-                        path_gambar: item.path_gambar || '',
-                    })).filter((item) => Number.isFinite(item.menu_id) && item.menu_id > 0),
+                    items: parsed.items.map((item) => {
+                        const toppings = Array.isArray(item.toppings)
+                            ? item.toppings.map((t) => ({
+                                id: Number(t?.id) || 0,
+                                nama: t?.nama || '',
+                                harga: Number(t?.harga || 0),
+                            }))
+                            : [];
+                        const harga = Number(item.harga || 0);
+                        const fallbackPerUnit = harga + toppings.reduce((sum, t) => sum + Number(t.harga || 0), 0);
+                        return {
+                            menu_id: Number(item.menu_id),
+                            nama_menu: item.nama_menu || 'Menu',
+                            harga,
+                            jumlah: Math.max(1, Number(item.jumlah || 1)),
+                            catatan: item.catatan || '',
+                            path_gambar: item.path_gambar || '',
+                            ukuran_id: Number.isFinite(Number(item.ukuran_id)) && Number(item.ukuran_id) > 0
+                                ? Number(item.ukuran_id)
+                                : null,
+                            ukuran: item.ukuran ?? null,
+                            toppings,
+                            subtotal_per_unit: Number.isFinite(Number(item.subtotal_per_unit))
+                                ? Number(item.subtotal_per_unit)
+                                : fallbackPerUnit,
+                        };
+                    }).filter((item) => Number.isFinite(item.menu_id) && item.menu_id > 0),
                 };
             } catch (error) {
                 return null;
@@ -2209,10 +2199,18 @@
             document.getElementById('backToMenuBtn').setAttribute('href', menuUrl);
         }
 
+        function lineUnitPrice(item) {
+            if (Number.isFinite(Number(item.subtotal_per_unit)) && Number(item.subtotal_per_unit) > 0) {
+                return Number(item.subtotal_per_unit);
+            }
+            const toppingsTotal = (item.toppings || []).reduce((sum, t) => sum + Number(t.harga || 0), 0);
+            return Number(item.harga || 0) + toppingsTotal;
+        }
+
         function updateSummary() {
             const items = state.cart.items;
             const qty = items.reduce((sum, item) => sum + Number(item.jumlah), 0);
-            const subtotal = items.reduce((sum, item) => sum + Number(item.harga) * Number(item.jumlah), 0);
+            const subtotal = items.reduce((sum, item) => sum + lineUnitPrice(item) * Number(item.jumlah), 0);
             const serviceFee = 0;
             const tax = 0;
             const total = subtotal + serviceFee + tax;
@@ -2246,20 +2244,29 @@
                 placeOrderBtn.style.opacity = '1';
 
                 container.innerHTML = state.cart.items.map((item, index) => {
-                    const subtotal = Number(item.harga) * Number(item.jumlah);
+                    const unitPrice = lineUnitPrice(item);
+                    const subtotal = unitPrice * Number(item.jumlah);
+                    const sizeBadge = item.ukuran
+                        ? `<span class="cart-item-size">Ukuran: ${escapeHtml(item.ukuran)}</span>`
+                        : '';
+                    const toppings = Array.isArray(item.toppings) ? item.toppings : [];
+                    const toppingChips = toppings.length
+                        ? `<div class="cart-item-toppings">${toppings.map((t) => `<span class="cart-item-topping-chip">${escapeHtml(t.nama)}</span>`).join('')}</div>`
+                        : '';
 
                     return `
-                        <li class="card cart-item-card reveal visible" data-menu-id="${item.menu_id}">
+                        <li class="card cart-item-card reveal visible" data-line-index="${index}" data-menu-id="${item.menu_id}">
                             <span class="cart-item-index">${index + 1}</span>
                             <div class="cart-item-body">
                                 <div class="cart-item-img-wrap">
-                                    <img class="cart-item-photo" src="${escapeHtml(item.path_gambar || DEFAULT_MENU_IMAGE)}" alt="${escapeHtml(item.nama_menu)}" />
+                                    <img class="cart-item-photo" src="${escapeHtml(item.path_gambar || DEFAULT_MENU_IMAGE)}" alt="${escapeHtml(item.nama_menu)}" onerror="this.onerror=null;this.src='${DEFAULT_MENU_IMAGE}';" />
                                 </div>
                                 <div class="cart-item-info">
                                     <div class="cart-item-top">
                                         <div class="cart-item-meta">
                                             <div class="cart-item-name">${escapeHtml(item.nama_menu)}</div>
-                                            <div class="cart-item-desc">Menu pilihan Anda</div>
+                                            ${sizeBadge}
+                                            ${toppingChips}
                                         </div>
                                         <button class="remove-btn" type="button" data-action="remove" aria-label="Remove item">
                                             <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2283,7 +2290,7 @@
                                         </div>
                                         <div class="item-price-block">
                                             <div class="item-price">${formatRupiah(subtotal)}</div>
-                                            <div class="item-unit-price">${formatRupiah(item.harga)} each</div>
+                                            <div class="item-unit-price">${formatRupiah(unitPrice)} each</div>
                                         </div>
                                     </div>
                                 </div>
@@ -2301,9 +2308,9 @@
             renderVendorHeader();
         }
 
-        function updateItem(menuId, updater) {
-            const index = state.cart.items.findIndex((item) => Number(item.menu_id) === Number(menuId));
-            if (index < 0) {
+        function updateItemAt(lineIndex, updater) {
+            const index = Number(lineIndex);
+            if (!Number.isInteger(index) || index < 0 || index >= state.cart.items.length) {
                 return;
             }
 
@@ -2313,8 +2320,9 @@
             renderCartItems();
         }
 
-        function updateItemNote(menuId, noteValue) {
-            const item = state.cart.items.find((entry) => Number(entry.menu_id) === Number(menuId));
+        function updateItemNoteAt(lineIndex, noteValue) {
+            const index = Number(lineIndex);
+            const item = state.cart.items[index];
             if (!item) {
                 return;
             }
@@ -2373,11 +2381,18 @@
                 nama_customer: customerName,
                 vendor_id: Number(vendor.id),
                 waktu_pengambilan: pickupTime || null,
-                items: state.cart.items.map((item) => ({
-                    menu_id: Number(item.menu_id),
-                    jumlah: Number(item.jumlah),
-                    catatan: item.catatan || null,
-                })),
+                items: state.cart.items.map((item) => {
+                    const toppingIds = Array.isArray(item.toppings)
+                        ? item.toppings.map((t) => Number(t?.id)).filter((id) => Number.isInteger(id) && id > 0)
+                        : [];
+                    return {
+                        menu_id: Number(item.menu_id),
+                        jumlah: Number(item.jumlah),
+                        catatan: item.catatan || null,
+                        ukuran_id: Number.isInteger(item.ukuran_id) && item.ukuran_id > 0 ? item.ukuran_id : null,
+                        toppings: toppingIds,
+                    };
+                }),
             };
 
             placeOrderBtn.disabled = true;
@@ -2484,28 +2499,28 @@
                     return;
                 }
 
-                const card = actionButton.closest('[data-menu-id]');
+                const card = actionButton.closest('[data-line-index]');
                 if (!card) {
                     return;
                 }
 
-                const menuId = Number(card.dataset.menuId);
+                const lineIndex = Number(card.dataset.lineIndex);
                 const action = actionButton.dataset.action;
 
                 if (action === 'remove') {
-                    updateItem(menuId, (item) => {
+                    updateItemAt(lineIndex, (item) => {
                         item.jumlah = 0;
                     });
                 }
 
                 if (action === 'increase') {
-                    updateItem(menuId, (item) => {
+                    updateItemAt(lineIndex, (item) => {
                         item.jumlah = Number(item.jumlah) + 1;
                     });
                 }
 
                 if (action === 'decrease') {
-                    updateItem(menuId, (item) => {
+                    updateItemAt(lineIndex, (item) => {
                         item.jumlah = Math.max(1, Number(item.jumlah) - 1);
                     });
                 }
@@ -2517,13 +2532,13 @@
                     return;
                 }
 
-                const card = noteInput.closest('[data-menu-id]');
+                const card = noteInput.closest('[data-line-index]');
                 if (!card) {
                     return;
                 }
 
-                const menuId = Number(card.dataset.menuId);
-                updateItemNote(menuId, noteInput.value);
+                const lineIndex = Number(card.dataset.lineIndex);
+                updateItemNoteAt(lineIndex, noteInput.value);
             });
         }
 

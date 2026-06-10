@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kantin Kita â€” Pesan Makanan Tanpa Antri</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+  <title>Kantin Kita | Pesan Makanan Tanpa Antri</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -702,145 +706,217 @@
     }
 
     /* â”€â”€â”€ POPULAR MENU â”€â”€â”€ */
-    .menu-section {
-      padding: 48px 48px;
+    /* ─── MENU FAVORIT: BENTO GRID (Levels 1-6) ─── */
+    /* Level 1: typography + spacing + grid */
+    /* Level 2: brand colors + custom fonts */
+    .menu-bento {
+      padding: 80px clamp(24px, 5vw, 80px);
       background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
     }
-
-    .menu-section .section-header {
-      padding: 0 40px;
-      margin-bottom: 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      text-align: left;
+    .menu-bento::before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent-10), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
     }
-
-    .menu-header-text {
-      text-align: left;
+    .menu-bento-header {
+      margin-bottom: var(--space-9);
+      position: relative;
+      z-index: 2;
     }
-
-    .btn-detail {
-      font-size: 0.9rem;
+    .menu-bento-header .section-eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
       font-weight: var(--fw-bold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--accent);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.2s ease;
+      background: var(--accent-10);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 16px;
     }
 
-    .btn-detail:hover {
-      color: var(--accent-dark);
-      text-decoration: underline;
+    /* Level 3: bento grid — no rigid rows */
+    .menu-bento-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
-
-    .menu-card {
-      background: var(--bg-white);
+    .menu-bento-card {
+      position: relative;
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 10px 24px rgba(116, 70, 34, 0.08);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
+      border: 1px solid rgba(116, 70, 34, 0.08);
+      cursor: pointer;
+      min-height: 200px;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+      box-shadow:
+        0 4px 16px rgba(116, 70, 34, 0.06),
+        0 1px 0 rgba(255, 255, 255, 0.4) inset;
     }
-
-    .menu-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 32px rgba(116, 70, 34, 0.12);
+    .menu-bento-featured {
+      grid-column: 1;
+      grid-row: span 2;
+      min-height: 420px;
     }
-
-    .menu-card-img {
-      position: relative;
-      height: 180px;
+    .menu-bento-secondary {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+    .menu-bento-wide {
+      grid-column: 2 / -1;
+      grid-row: span 1;
+    }
+    .menu-bento-bg {
+      position: absolute;
+      inset: 0;
       overflow: hidden;
-      background: var(--bg-light);
     }
-
-    .menu-card-img img {
+    .menu-bento-bg img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+      will-change: transform;
     }
 
-    .menu-card:hover .menu-card-img img {
-      transform: scale(1.08);
-    }
-
-    .menu-badge {
+    /* Level 5: overlay depth gradient */
+    .menu-bento-overlay {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: var(--fw-bold);
-      color: var(--bg-white);
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(116, 70, 34, 0.3) 70%, rgba(66, 118, 106, 0.6) 100%);
+      transition: opacity 0.4s ease;
     }
-
-    .badge-bestseller {
-      background: var(--accent);
+    .menu-bento-secondary .menu-bento-overlay {
+      background: linear-gradient(180deg, transparent 20%, rgba(116, 70, 34, 0.4) 100%);
     }
-
-    .badge-promo {
-      background: var(--text-main);
-    }
-
-    .menu-card-body {
-      padding: 20px;
+    .menu-bento-content {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      flex: 1;
+      justify-content: flex-end;
+      padding: 24px;
+      height: 100%;
+      color: #fff;
+      gap: 4px;
     }
 
-    .menu-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
+    /* Level 4: micro-interactions on hover */
+    .menu-bento-card:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 20px 40px rgba(116, 70, 34, 0.14),
+        0 8px 20px rgba(66, 118, 106, 0.10),
+        0 1px 0 rgba(255, 255, 255, 0.4) inset;
     }
-
-    .menu-card-name {
-      font-size: 1.1rem;
+    .menu-bento-card:hover .menu-bento-bg img {
+      transform: scale(1.08);
+      filter: saturate(1.1) brightness(1.05);
+    }
+    .menu-bento-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
       font-weight: var(--fw-bold);
-      color: var(--text-main);
-      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--accent);
+      color: #fff;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
     }
-
-    .menu-rating {
+    .menu-bento-card:hover .menu-bento-badge {
+      transform: scale(1.05);
+    }
+    .badge-promo {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+    .menu-bento-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: var(--fw-bold);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    .menu-bento-featured .menu-bento-name {
+      font-size: 1.7rem;
+    }
+    .menu-bento-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.4;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 4px;
+      max-width: 90%;
+    }
+    .menu-bento-footer {
       display: flex;
       align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
-
-    .menu-rating svg {
+    .menu-bento-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.88rem;
+      font-weight: var(--fw-semibold);
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .menu-bento-rating svg {
       width: 14px;
       height: 14px;
-      fill: var(--accent);
+      fill: #f1c40f;
     }
-
-    .rating-value {
+    .menu-bento-cta {
+      font-size: 0.82rem;
       font-weight: var(--fw-bold);
-      color: var(--accent);
-      font-size: 0.9rem;
-    }
-
-    .menu-card-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-      flex: 1;
-    }
-
-    .menu-card-footer {
-      display: flex;
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.3s ease;
+    }
+    .menu-bento-cta:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(66, 118, 106, 0.4);
+    }
+    .menu-bento-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .menu-bento-cta:hover .menu-bento-arrow {
+      transform: translateX(4px);
     }
 
 
@@ -1122,14 +1198,13 @@
       white-space: nowrap;
     }
 
-    /* â”€â”€â”€ CTA FORM â”€â”€â”€ */
+    /* ─── CTA FORM ─── */
     .cta-form {
       background: var(--bg-light);
-      padding: 80px 40px;
+      padding: var(--space-11) var(--space-6) var(--space-8);
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 568px;
       justify-content: center;
     }
 
@@ -1141,7 +1216,7 @@
       line-height: var(--lh-tight);
       letter-spacing: -0.01em;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: var(--space-7);
     }
 
     .cta-form form {
@@ -1200,13 +1275,124 @@
       box-shadow: none;
     }
 
-    /* â”€â”€â”€ FOOTER â”€â”€â”€ */
+    /* ─── TENTANG KAMI / ARTIKEL SECTION ─── */
+    .tentang-kami {
+      padding: var(--space-8) var(--space-6) var(--space-11);
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .tentang-kami-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-heading-lg);
+      color: var(--text-main);
+      margin-bottom: var(--space-7);
+      text-align: center;
+    }
+
+    .tentang-kami-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .tentang-kami-card {
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 2px 14px var(--brown-10);
+      display: flex;
+      flex-direction: column;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .tentang-kami-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 22px var(--brown-10);
+    }
+
+    .tentang-kami-cover {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .tentang-kami-cover-placeholder {
+      width: 100%;
+      height: 180px;
+      background: var(--surface-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .tentang-kami-body {
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      flex: 1;
+    }
+
+    .tentang-kami-card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    .tentang-kami-card-summary {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .tentang-kami-card-meta {
+      margin-top: auto;
+      padding-top: var(--space-3);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tentang-kami-read-more {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .tentang-kami-cta-wrap {
+      text-align: center;
+      margin-top: var(--space-7);
+    }
+
+    .tentang-kami-cta {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg-white);
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color .15s ease, transform .15s ease;
+    }
+
+    .tentang-kami-cta:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ─── FOOTER ─── */
     .footer {
       background: var(--text-main);
       color: var(--bg-white);
       position: relative;
       overflow: hidden;
-      padding: 52px 0 36px;
+      padding: var(--space-10) 0 var(--space-9);
     }
 
     .footer-inner {
@@ -1218,13 +1404,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 80px;
-      padding: 0 40px 40px;
+      gap: var(--space-10);
+      padding: 0 var(--space-6) var(--space-9);
     }
 
     .footer-nav-group {
       display: flex;
-      gap: 48px;
+      gap: var(--space-9);
     }
 
     .footer-wordmark {
@@ -1257,14 +1443,14 @@
     .footer-divider {
       border: none;
       border-top: 1px solid rgba(255, 255, 255, 0.24);
-      margin: 0 80px;
+      margin: 0 var(--space-10);
     }
 
     .footer-social {
       display: flex;
       justify-content: center;
       gap: 28px;
-      padding: 40px 0;
+      padding: var(--space-9) 0;
     }
 
     .social-icon-placeholder {
@@ -1278,7 +1464,7 @@
       display: flex;
       justify-content: center;
       gap: 48px;
-      padding-bottom: 32px;
+      padding-bottom: 0;
     }
 
     .footer-legal-text {
@@ -1574,7 +1760,7 @@
       }
 
       .feature-cards .section-header,
-      .menu-section .section-header {
+      .menu-bento-header {
         padding: 0 24px;
         margin-bottom: 24px;
       }
@@ -1592,7 +1778,6 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         padding: 12px 24px 32px;
-        /* Bottom padding for scroll and shadow */
         gap: 16px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -1608,6 +1793,29 @@
         scroll-snap-align: center;
       }
 
+      /* Level 6: mobile → horizontal story scroller */
+      .menu-bento-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding: 0 24px 32px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .menu-bento-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .menu-bento-card {
+        flex: 0 0 78%;
+        scroll-snap-align: center;
+        min-height: 320px;
+      }
+      .menu-bento-featured {
+        min-height: 380px;
+        flex: 0 0 85%;
+      }
+
       .chatbot-section {
         padding: 64px 5%;
       }
@@ -1621,13 +1829,24 @@
       }
 
       .cta-form {
-        padding: 48px 24px;
-        min-height: 0;
+        padding: var(--space-9) var(--space-6) var(--space-7);
       }
 
       .cta-form-title {
         font-size: 1.65rem;
-        margin-bottom: 28px;
+        margin-bottom: var(--space-6);
+      }
+
+      .tentang-kami {
+        padding: var(--space-7) var(--space-6) var(--space-9);
+      }
+
+      .tentang-kami-title {
+        margin-bottom: var(--space-6);
+      }
+
+      .tentang-kami-cta-wrap {
+        margin-top: var(--space-6);
       }
 
       .form-input {
@@ -1644,13 +1863,13 @@
       }
 
       .footer {
-        padding: 48px 0 32px;
+        padding: var(--space-9) 0 var(--space-7);
       }
 
       .footer-nav {
         flex-direction: column;
-        gap: 24px;
-        padding: 0 24px 32px;
+        gap: var(--space-6);
+        padding: 0 var(--space-6) var(--space-7);
       }
 
       .footer-nav-group {
@@ -1660,12 +1879,12 @@
       }
 
       .footer-divider {
-        margin: 0 24px;
+        margin: 0 var(--space-6);
       }
 
       .footer-social {
         gap: 20px;
-        padding: 28px 0;
+        padding: var(--space-7) 0;
       }
 
       .social-link {
@@ -1674,10 +1893,10 @@
       }
 
       .footer-legal {
-        gap: 24px;
+        gap: var(--space-6);
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 24px 32px;
+        padding: 0 var(--space-6);
       }
 
       .footer-shapes {
@@ -1689,6 +1908,335 @@
       .hero-headline {
         font-size: 1.75rem;
       }
+    }
+
+    /* ─── LEVEL 3-5 UPGRADES: BENTO • GLASSMORPHISM • DEPTH ─── */
+
+    /* Hero ambient glow + depth-of-field */
+    .hero-circle-left {
+      filter: blur(2px);
+      opacity: 0.92;
+    }
+    .hero-circle-right {
+      animation: maskot-float 6s ease-in-out infinite;
+      filter: drop-shadow(0 18px 28px rgba(116, 70, 34, 0.18));
+    }
+    @keyframes maskot-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(-1.5deg); }
+    }
+    .hero-mockup {
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.7) inset,
+        0 30px 60px -20px rgba(66, 118, 106, 0.35),
+        0 18px 42px rgba(116, 70, 34, 0.18);
+    }
+    .hero-mockup::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse at center, rgba(66, 118, 106, 0.22), transparent 65%);
+      z-index: -1;
+      filter: blur(20px);
+      pointer-events: none;
+    }
+
+    /* ─── DARK FEATURE: CAROUSEL TESTIMONIAL ─── */
+    .dark-feature {
+      padding: 80px clamp(24px, 5vw, 100px);
+      position: relative;
+    }
+    .dark-feature::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 8%;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .dark-feature::after {
+      content: "";
+      position: absolute;
+      bottom: 8%;
+      right: 6%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(251, 245, 232, 0.16), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+
+    .dark-feature-content {
+      flex: 0 0 420px;
+      max-width: 420px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .dark-feature-eyebrow {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(251, 245, 232, 0.78);
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+
+    .dark-feature-testimonial {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.88);
+      margin-top: var(--space-7);
+      line-height: var(--lh-relaxed);
+      font-style: italic;
+      min-height: 80px;
+      transition: opacity 0.4s ease;
+    }
+
+    .dark-feature-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      transition: opacity 0.4s ease;
+    }
+
+    .dark-feature-author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .dark-feature-author-name {
+      font-size: 0.95rem;
+      font-weight: var(--fw-semibold);
+      color: #fff;
+    }
+
+    .dark-feature-author-role {
+      font-size: 0.82rem;
+      font-weight: var(--fw-medium);
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    /* ── Carousel Media ── */
+    .dark-feature-media {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 420px;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .dark-feature-media:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 420px;
+    }
+
+    .carousel-card {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+    }
+
+    .carousel-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-card.active {
+      width: 280px;
+      height: 380px;
+      z-index: 3;
+      transform: translateX(0) scale(1);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .carousel-card.prev {
+      width: 220px;
+      height: 300px;
+      z-index: 2;
+      transform: translateX(-180px) scale(0.88);
+      opacity: 0.7;
+      filter: brightness(0.75);
+    }
+
+    .carousel-card.next {
+      width: 220px;
+      height: 300px;
+      z-index: 2;
+      transform: translateX(180px) scale(0.88);
+      opacity: 0.7;
+      filter: brightness(0.75);
+    }
+
+    .carousel-card.far-prev {
+      width: 180px;
+      height: 240px;
+      z-index: 1;
+      transform: translateX(-300px) scale(0.75);
+      opacity: 0.35;
+      filter: brightness(0.6);
+    }
+
+    .carousel-card.far-next {
+      width: 180px;
+      height: 240px;
+      z-index: 1;
+      transform: translateX(300px) scale(0.75);
+      opacity: 0.35;
+      filter: brightness(0.6);
+    }
+
+    .carousel-card.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(0) scale(0.6);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: #fff;
+      border-color: #fff;
+      transform: scale(1.2);
+    }
+
+    .carousel-dot:hover {
+      border-color: #fff;
+    }
+
+    /* ─── FEATURE CARDS: 4-COLUMN GRID ─── */
+    .feature-cards .card {
+      background: linear-gradient(180deg, #fff 0%, var(--surface-soft) 130%);
+      border: 1px solid rgba(116, 70, 34, 0.08);
+    }
+    .feature-cards .card:nth-child(2) {
+      background: linear-gradient(140deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #fff;
+      border-color: transparent;
+    }
+    .feature-cards .card:nth-child(2) .card-title,
+    .feature-cards .card:nth-child(2) .card-desc { color: #fff; }
+    .feature-cards .card:nth-child(2) .card-desc { color: rgba(255, 255, 255, 0.85); }
+    .feature-cards .card:nth-child(2) .feature-icon { background: rgba(255, 255, 255, 0.18); }
+    .feature-cards .card:nth-child(2) .feature-icon svg path { fill: #fff; }
+
+    /* ─── MENU CARDS: PREMIUM FOOD PHOTOGRAPHY ─── */
+    .menu-card {
+      border: 1px solid rgba(116, 70, 34, 0.06);
+    }
+    /* ─── MENU BENTO: depth hover glow (Levels 4-5) ─── */
+    .menu-bento-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .menu-bento-card:hover::after {
+      opacity: 1;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal[data-reveal-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-reveal-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-reveal-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-reveal-delay="4"] { transition-delay: 0.32s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-circle-right { animation: none; }
+      .menu-card:hover .menu-card-img img { transform: none; }
+    }
+
+    /* Responsive carousel & cards */
+    @media (max-width: 1024px) {
+      .dark-feature { flex-direction: column; padding: 60px; gap: 48px; }
+      .dark-feature-content { max-width: 100%; flex: unset; }
+      .carousel-card.active { width: 240px; height: 320px; }
+      .carousel-card.prev,
+      .carousel-card.next { width: 180px; height: 250px; transform: translateX(-140px) scale(0.85); }
+      .carousel-card.next { transform: translateX(140px) scale(0.85); }
+      .carousel-card.far-prev,
+      .carousel-card.far-next { opacity: 0; pointer-events: none; }
+      .menu-bento-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .dark-feature { flex-direction: column; padding: 48px 24px; gap: 40px; }
+      .dark-feature-content { max-width: 100%; flex: unset; }
+      .dark-feature-title { font-size: 1.8rem; }
+      .dark-feature-description { font-size: 1rem; }
+      .dark-feature-media { min-height: 320px; width: 100%; justify-content: center; align-items: center; }
+      .carousel-track { height: 320px; width: 100%; justify-content: center; }
+      .carousel-card.active { width: 200px; height: 280px; }
+      .carousel-card.prev,
+      .carousel-card.next { width: 140px; height: 200px; transform: translateX(-110px) scale(0.82); }
+      .carousel-card.next { transform: translateX(110px) scale(0.82); }
+      .carousel-card.far-prev,
+      .carousel-card.far-next { opacity: 0; pointer-events: none; }
+      .menu-bento-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1705,9 +2253,10 @@
         <li><a href="{{ route('home') }}">Beranda</a></li>
         <li><a href="{{ route('home') }}#menu-title">Menu</a></li>
         <li><a href="{{ route('about') }}">Tentang</a></li>
+        <li><a href="{{ route('artikel.index') }}">Artikel</a></li>
         <li><a href="{{ route('about') }}#kontak">Kontak</a></li>
       </ul>
-      <a href="{{ route('login') }}" class="btn-signup">Daftar</a>
+      <a href="{{ route('login') }}" class="btn-signup">Login</a>
       <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-mobile"
         id="nav-toggle">
         <span></span>
@@ -1719,8 +2268,9 @@
       <a href="{{ route('home') }}">Beranda</a>
       <a href="{{ route('home') }}#menu-title">Menu</a>
       <a href="{{ route('about') }}">Tentang</a>
+      <a href="{{ route('artikel.index') }}">Artikel</a>
       <a href="{{ route('about') }}#kontak">Kontak</a>
-      <a href="{{ route('login') }}" class="nav-mobile-cta">Daftar</a>
+      <a href="{{ route('login') }}" class="nav-mobile-cta">Login</a>
     </div>
   </header>
 
@@ -1732,12 +2282,12 @@
         <img src="https://i.postimg.cc/3J316KB9/maskot.png" class="hero-circle-right" alt="" />
         <img src="https://i.postimg.cc/SR9KfFXb/image-background.png" class="hero-circle-left" alt="" />
       </div>
-      <h1 class="hero-headline" id="hero-title"><span class="headline-brown">Pesan Makanan</span> <span
+      <h1 class="hero-headline reveal" id="hero-title"><span class="headline-brown">Pesan Makanan</span> <span
           class="headline-green">Tanpa Antri</span></h1>
-      <p class="hero-subheadline">Nikmati hidangan lezat dari kantin kampus favorit kamu. Pesan sekarang, ambil nanti.
+      <p class="hero-subheadline reveal" data-reveal-delay="1">Nikmati hidangan lezat dari kantin kampus favorit kamu. Pesan sekarang, ambil nanti.
         Hemat waktu, lebih praktis!</p>
-      <a href="{{ route('vendor') }}" class="btn-primary">Mulai Pesan</a>
-      <div class="hero-mockup" role="img" aria-label="Pratinjau aplikasi Kantin Kita">
+      <a href="{{ route('vendor') }}" class="btn-primary reveal" data-reveal-delay="2">Mulai Pesan</a>
+      <div class="hero-mockup reveal" data-reveal-delay="3" role="img" aria-label="Pratinjau aplikasi Kantin Kita">
         <div class="mockup-bar" aria-hidden="true">
           <div class="mockup-dot"></div>
           <div class="mockup-dot"></div>
@@ -1764,7 +2314,7 @@
       </figure>
     </section>
 
-    <!-- DARK FEATURE / SOCIAL PROOF -->
+    <!-- KENAPA KANTIN KITA — CAROUSEL TESTIMONIAL -->
     <section class="dark-feature" aria-labelledby="dark-feature-title">
       <div class="dark-feature-content">
         <h2 class="dark-feature-title" id="dark-feature-title">Kenapa Kantin Kita?</h2>
@@ -1811,7 +2361,7 @@
         <p class="section-tagline">Solusi praktis untuk makan siang yang sibuk di kampus</p>
       </header>
       <ul class="cards-grid" role="list">
-        <li class="card">
+        <li class="card reveal">
           <div class="feature-icon" aria-hidden="true">
             <svg width="30" height="30" viewBox="0 0 23 30" fill="none">
               <path
@@ -1822,7 +2372,7 @@
           <h3 class="card-title">Pesan Online</h3>
           <p class="card-desc">Pesan dari mana saja, kapan saja melalui aplikasi</p>
         </li>
-        <li class="card">
+        <li class="card reveal" data-reveal-delay="1">
           <div class="feature-icon" aria-hidden="true">
             <svg width="26" height="30" viewBox="0 0 27 30" fill="none">
               <path
@@ -1833,7 +2383,7 @@
           <h3 class="card-title">Cepat &amp; Mudah</h3>
           <p class="card-desc">Proses pemesanan hanya dalam hitungan detik</p>
         </li>
-        <li class="card">
+        <li class="card reveal" data-reveal-delay="2">
           <div class="feature-icon" aria-hidden="true">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
               <path
@@ -1844,7 +2394,7 @@
           <h3 class="card-title">Cashless</h3>
           <p class="card-desc">Pembayaran digital yang aman dan praktis</p>
         </li>
-        <li class="card">
+        <li class="card reveal" data-reveal-delay="3">
           <div class="feature-icon" aria-hidden="true">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
               <path
@@ -1858,114 +2408,93 @@
       </ul>
     </section>
 
-    <!-- POPULAR MENU -->
-    <section class="menu-section" aria-labelledby="menu-title">
-      <header class="section-header">
-        <div class="menu-header-text">
-          <h2 class="section-title" id="menu-title">Menu <span class="text-green">Populer</span></h2>
-          <p class="section-tagline">Pilihan favorit mahasiswa setiap hari</p>
-        </div>
+    <!-- MENU FAVORIT: BENTO GRID (Levels 1-6) -->
+    <section class="menu-bento" aria-labelledby="menu-title">
+      <header class="section-header menu-bento-header">
+        <span class="section-eyebrow">Pilihan Mahasiswa</span>
+        <h2 class="section-title" id="menu-title">Menu <span class="text-green">Favorit</span></h2>
+        <p class="section-tagline">Paling laris dan jadi favorit mahasiswa setiap hari</p>
       </header>
 
-      <ul class="cards-grid" role="list">
-        <!-- Nasi Goreng -->
-        <li class="menu-card">
-          <div class="menu-card-img">
-            <img src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop"
-              alt="Nasi Goreng Special">
-            <span class="menu-badge badge-bestseller">Terlaris</span>
+      <div class="menu-bento-grid">
+        <!-- Featured: Nasi Goreng -->
+        <article class="menu-bento-card menu-bento-featured reveal" data-reveal-delay="0">
+          <div class="menu-bento-bg">
+            <img src="https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?q=80&w=2070&auto=format&fit=crop" alt="Nasi Goreng Special" loading="lazy" />
           </div>
-          <div class="menu-card-body">
-            <div class="menu-card-header">
-              <span class="menu-card-name">Nasi Goreng Special</span>
-              <div class="menu-rating">
-                <svg viewBox="0 0 16 14" fill="none">
-                  <path
-                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
-                </svg>
-                <span class="rating-value">4.9</span>
+          <div class="menu-bento-overlay"></div>
+          <div class="menu-bento-content">
+            <span class="menu-bento-badge">Terlaris</span>
+            <h3 class="menu-bento-name">Nasi Goreng Special</h3>
+            <p class="menu-bento-desc">Nasi goreng dengan ayam, telur mata sapi, dan sayuran segar</p>
+            <div class="menu-bento-footer">
+              <div class="menu-bento-rating">
+                <svg viewBox="0 0 16 14" fill="none"><path d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z"/></svg>
+                <span>4.9</span>
               </div>
-            </div>
-            <p class="menu-card-desc">Nasi goreng dengan ayam, telur mata sapi, dan sayuran segar</p>
-            <div class="menu-card-footer">
-              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+              <a href="{{ route('vendor') }}" class="menu-bento-cta">Pesan <span class="menu-bento-arrow">&rarr;</span></a>
             </div>
           </div>
-        </li>
-
-        <!-- Mie Goreng -->
-        <li class="menu-card">
-          <div class="menu-card-img">
-            <img src="https://images.unsplash.com/photo-1680675494363-75bbf9838a09?q=80&w=2070&auto=format&fit=crop"
-              alt="Mie Goreng Jawa">
-          </div>
-          <div class="menu-card-body">
-            <div class="menu-card-header">
-              <span class="menu-card-name">Mie Goreng Jawa</span>
-              <div class="menu-rating">
-                <svg viewBox="0 0 16 14" fill="none">
-                  <path
-                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
-                </svg>
-                <span class="rating-value">4.8</span>
-              </div>
-            </div>
-            <p class="menu-card-desc">Mie goreng dengan bumbu khas Jawa yang gurih dan pedas</p>
-            <div class="menu-card-footer">
-              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
-            </div>
-          </div>
-        </li>
+        </article>
 
         <!-- Ayam Geprek -->
-        <li class="menu-card">
-          <div class="menu-card-img">
-            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80&auto=format&fit=crop"
-              alt="Ayam Geprek">
-            <span class="menu-badge badge-promo">Promo</span>
+        <article class="menu-bento-card menu-bento-secondary reveal" data-reveal-delay="1">
+          <div class="menu-bento-bg">
+            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80&auto=format&fit=crop" alt="Ayam Geprek" loading="lazy" />
           </div>
-          <div class="menu-card-body">
-            <div class="menu-card-header">
-              <span class="menu-card-name">Ayam Geprek</span>
-              <div class="menu-rating">
-                <svg viewBox="0 0 16 14" fill="none">
-                  <path
-                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
-                </svg>
-                <span class="rating-value">4.7</span>
+          <div class="menu-bento-overlay"></div>
+          <div class="menu-bento-content">
+            <span class="menu-bento-badge badge-promo">Promo</span>
+            <h3 class="menu-bento-name">Ayam Geprek</h3>
+            <p class="menu-bento-desc">Ayam crispy dengan sambal level pilihan</p>
+            <div class="menu-bento-footer">
+              <div class="menu-bento-rating">
+                <svg viewBox="0 0 16 14" fill="none"><path d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z"/></svg>
+                <span>4.7</span>
               </div>
-            </div>
-            <p class="menu-card-desc">Ayam crispy dengan sambal level pilihan dan nasi hangat</p>
-            <div class="menu-card-footer">
-              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+              <a href="{{ route('vendor') }}" class="menu-bento-cta">Pesan <span class="menu-bento-arrow">&rarr;</span></a>
             </div>
           </div>
-        </li>
+        </article>
 
-        <!-- Soto Ayam Lamongan -->
-        <li class="menu-card">
-          <div class="menu-card-img">
-            <img src="https://images.unsplash.com/photo-1652088079703-38f4a8d6b981?q=80&w=995&auto=format&fit=crop"
-              alt="Soto Ayam Lamongan">
+        <!-- Mie Goreng Jawa -->
+        <article class="menu-bento-card menu-bento-secondary reveal" data-reveal-delay="2">
+          <div class="menu-bento-bg">
+            <img src="https://images.unsplash.com/photo-1680675494363-75bbf9838a09?q=80&w=2070&auto=format&fit=crop" alt="Mie Goreng Jawa" loading="lazy" />
           </div>
-          <div class="menu-card-body">
-            <div class="menu-card-header">
-              <span class="menu-card-name">Soto Ayam</span>
-              <div class="menu-rating">
-                <svg viewBox="0 0 16 14" fill="none">
-                  <path
-                    d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z" />
-                </svg>
-                <span class="rating-value">4.9</span>
+          <div class="menu-bento-overlay"></div>
+          <div class="menu-bento-content">
+            <h3 class="menu-bento-name">Mie Goreng Jawa</h3>
+            <p class="menu-bento-desc">Bumbu khas Jawa yang gurih dan pedas</p>
+            <div class="menu-bento-footer">
+              <div class="menu-bento-rating">
+                <svg viewBox="0 0 16 14" fill="none"><path d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z"/></svg>
+                <span>4.8</span>
               </div>
-            </div>
-            <p class="menu-card-desc">Soto ayam khas Jawa Timur dengan kuah kuning yang segar</p>
-            <div class="menu-card-footer">
-              <a href="{{ route('vendor') }}" class="btn-detail">Lihat Detail &rarr;</a>
+              <a href="{{ route('vendor') }}" class="menu-bento-cta">Pesan <span class="menu-bento-arrow">&rarr;</span></a>
             </div>
           </div>
-        </li>
-      </ul>
+        </article>
+
+        <!-- Soto Ayam -->
+        <article class="menu-bento-card menu-bento-wide reveal" data-reveal-delay="3">
+          <div class="menu-bento-bg">
+            <img src="https://images.unsplash.com/photo-1652088079703-38f4a8d6b981?q=80&w=995&auto=format&fit=crop" alt="Soto Ayam Lamongan" loading="lazy" />
+          </div>
+          <div class="menu-bento-overlay"></div>
+          <div class="menu-bento-content">
+            <h3 class="menu-bento-name">Soto Ayam Lamongan</h3>
+            <p class="menu-bento-desc">Soto ayam khas Jawa Timur dengan kuah kuning yang segar</p>
+            <div class="menu-bento-footer">
+              <div class="menu-bento-rating">
+                <svg viewBox="0 0 16 14" fill="none"><path d="M8.66525 0.492188C8.52032 0.191406 8.21407 0 7.87775 0C7.54142 0 7.2379 0.191406 7.09025 0.492188L5.33204 4.10977L1.40548 4.68945C1.07736 4.73867 0.803918 4.96836 0.702746 5.28281C0.601574 5.59727 0.683605 5.94453 0.918761 6.17695L3.76798 8.99609L3.09532 12.9801C3.04064 13.3082 3.17736 13.6418 3.44806 13.8359C3.71876 14.0301 4.07696 14.0547 4.37228 13.8988L7.88048 12.0258L11.3887 13.8988C11.684 14.0547 12.0422 14.0328 12.3129 13.8359C12.5836 13.6391 12.7203 13.3082 12.6656 12.9801L11.9902 8.99609L14.8395 6.17695C15.0746 5.94453 15.1594 5.59727 15.0555 5.28281C14.9516 4.96836 14.6809 4.73867 14.3527 4.68945L10.4234 4.10977L8.66525 0.492188Z"/></svg>
+                <span>4.9</span>
+              </div>
+              <a href="{{ route('vendor') }}" class="menu-bento-cta">Pesan <span class="menu-bento-arrow">&rarr;</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- CHATBOT SECTION -->
@@ -2035,6 +2564,36 @@
       </form>
     </section>
 
+    @if (!empty($tentangKamiArticles) && $tentangKamiArticles->count() > 0)
+    <section class="tentang-kami" aria-labelledby="tentang-kami-title">
+      <h2 id="tentang-kami-title" class="tentang-kami-title">Artikel</h2>
+      <div class="tentang-kami-grid">
+        @foreach ($tentangKamiArticles as $artikel)
+          <a href="{{ route('artikel.show', $artikel->slug) }}" class="tentang-kami-card">
+            @if ($artikel->gambar_sampul)
+              <img src="{{ asset('storage/' . $artikel->gambar_sampul) }}" alt="{{ $artikel->judul }}" class="tentang-kami-cover">
+            @else
+              <div class="tentang-kami-cover-placeholder">Tanpa gambar</div>
+            @endif
+            <div class="tentang-kami-body">
+              <h3 class="tentang-kami-card-title">{{ $artikel->judul }}</h3>
+              @if ($artikel->ringkasan)
+                <p class="tentang-kami-card-summary">{{ $artikel->ringkasan }}</p>
+              @endif
+              <div class="tentang-kami-card-meta">
+                <span>{{ $artikel->published_at?->format('d M Y') }}</span>
+                <span class="tentang-kami-read-more">Baca selengkapnya &rarr;</span>
+              </div>
+            </div>
+          </a>
+        @endforeach
+      </div>
+      <div class="tentang-kami-cta-wrap">
+        <a href="{{ route('artikel.index') }}" class="tentang-kami-cta">Lihat semua artikel</a>
+      </div>
+    </section>
+    @endif
+
   </main>
 
   <!-- FOOTER -->
@@ -2074,6 +2633,7 @@
         <a href="{{ route('home') }}" class="footer-wordmark">Kantin Kita</a>
         <div class="footer-nav-group">
           <a href="{{ route('about') }}" class="footer-nav-link">Tentang</a>
+          <a href="{{ route('artikel.index') }}" class="footer-nav-link">Artikel</a>
           <a href="{{ route('about') }}#faq" class="footer-nav-link">FAQ</a>
           <a href="{{ route('about') }}#kontak" class="footer-nav-link">Kontak</a>
         </div>
@@ -2188,11 +2748,10 @@
       let activeIndex = 0;
       const totalCards = cards.length;
 
-      // Create dots
       for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('button');
         dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
         dot.addEventListener('click', () => goToSlide(i));
         dotsContainer.appendChild(dot);
       }
@@ -2201,13 +2760,12 @@
 
       function getPosition(index) {
         const diff = index - activeIndex;
-        // Handle wrapping
         const wrappedDiff = ((diff + Math.floor(totalCards / 2)) % totalCards + totalCards) % totalCards - Math.floor(totalCards / 2);
         if (wrappedDiff === 0) return 'active';
-        if (wrappedDiff === -1) return 'prev';
-        if (wrappedDiff === 1) return 'next';
-        if (wrappedDiff === -2) return 'far-prev';
-        if (wrappedDiff === 2) return 'far-next';
+        if (wrappedDiff === -1 || wrappedDiff === totalCards - 1) return 'prev';
+        if (wrappedDiff === 1 || wrappedDiff === -(totalCards - 1)) return 'next';
+        if (wrappedDiff === -2 || wrappedDiff === totalCards - 2) return 'far-prev';
+        if (wrappedDiff === 2 || wrappedDiff === -(totalCards - 2)) return 'far-next';
         return 'hidden';
       }
 
@@ -2221,7 +2779,6 @@
           dot.classList.toggle('active', i === activeIndex);
         });
 
-        // Fade out, update text, fade in
         testimonialEl.style.opacity = '0';
         authorEl.style.opacity = '0';
         setTimeout(() => {
@@ -2245,7 +2802,6 @@
         updateCarousel();
       }
 
-      // Click on card to activate it
       cards.forEach(card => {
         card.addEventListener('click', () => {
           const idx = parseInt(card.dataset.index, 10);
@@ -2253,7 +2809,6 @@
         });
       });
 
-      // Swipe / drag support
       let startX = 0;
       let isDragging = false;
 
@@ -2265,7 +2820,6 @@
 
       carouselEl.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
-        // Prevent scroll while swiping
         e.preventDefault();
       });
 
@@ -2274,11 +2828,8 @@
         isDragging = false;
         const delta = e.clientX - startX;
         if (Math.abs(delta) > 50) {
-          if (delta < 0) {
-            goToSlide(activeIndex + 1);
-          } else {
-            goToSlide(activeIndex - 1);
-          }
+          if (delta < 0) goToSlide(activeIndex + 1);
+          else goToSlide(activeIndex - 1);
         }
       });
 
@@ -2286,16 +2837,78 @@
         isDragging = false;
       });
 
-      // Auto-play every 5s
       let autoplayInterval = setInterval(() => goToSlide(activeIndex + 1), 5000);
 
-      carouselEl.addEventListener('pointerenter', () => clearInterval(autoplayInterval));
+      carouselEl.addEventListener('pointermove', () => clearInterval(autoplayInterval));
       carouselEl.addEventListener('pointerleave', () => {
         autoplayInterval = setInterval(() => goToSlide(activeIndex + 1), 5000);
       });
 
-      // Initial layout
       updateCarousel();
+    })();
+
+    // Scroll Reveal: IntersectionObserver (respects reduced-motion)
+    (() => {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll('.reveal');
+      if (!targets.length) return;
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        targets.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      targets.forEach(el => io.observe(el));
+    })();
+
+    // Level 6: scroll parallax on bento menu images
+    (() => {
+      const cards = document.querySelectorAll('.menu-bento-bg img');
+      if (!cards.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let raf = null;
+      const update = () => {
+        const sy = window.scrollY;
+        cards.forEach(img => {
+          const rect = img.closest('.menu-bento-card').getBoundingClientRect();
+          const visible = rect.top < window.innerHeight && rect.bottom > 0;
+          if (!visible) return;
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -0.06;
+          img.style.transform = `translate3d(0, ${Math.max(-20, Math.min(20, offset))}px, 0)`;
+        });
+        raf = null;
+      };
+      window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    })();
+
+    // Hero parallax: subtle pointer-tilt on decorative shapes
+    (() => {
+      const hero = document.querySelector('.hero');
+      const maskot = document.querySelector('.hero-circle-right');
+      const blob = document.querySelector('.hero-circle-left');
+      if (!hero || !maskot) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let raf = null;
+      hero.addEventListener('pointermove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          maskot.style.transform = `translate(${x * -12}px, ${y * -8}px)`;
+          if (blob) blob.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
+        });
+      });
+      hero.addEventListener('pointerleave', () => {
+        maskot.style.transform = '';
+        if (blob) blob.style.transform = '';
+      });
     })();
 
     // Chatbot interaction

@@ -901,18 +901,18 @@ class KantinFlowTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_login_fails_for_non_vendor_role(): void
+    public function test_login_fails_for_non_panel_role(): void
     {
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@kantinkita.id',
-            'password' => 'adminpass',
-            'role' => 'admin',
+            'name' => 'Customer',
+            'email' => 'customer@kantinkita.id',
+            'password' => 'custpass',
+            'role' => 'customer',
         ]);
 
         $response = $this->post('/login', [
-            'email' => 'admin@kantinkita.id',
-            'password' => 'adminpass',
+            'email' => 'customer@kantinkita.id',
+            'password' => 'custpass',
         ]);
 
         $response->assertSessionHasErrors('email');
@@ -1394,6 +1394,212 @@ class KantinFlowTest extends TestCase
             'vendor_id' => $vendor->id,
             'nama_menu' => 'Test Null',
             'harga' => 10000,
+        ]);
+    }
+
+    public function test_vendor_card_is_clickable_with_a11y_attrs(): void
+    {
+        $vendor = $this->createVendorUser('clickable@kantinkita.id', 'Warung Click');
+
+        $response = $this->get('/vendor');
+
+        $response->assertOk();
+        $expectedHref = route('menu', ['id' => $vendor->vendor->id]);
+        $response->assertSee('data-href="' . e($expectedHref) . '"', false);
+        $response->assertSee('role="link"', false);
+        $response->assertSee('tabindex="0"', false);
+        $response->assertSee('aria-label="Buka menu ' . e($vendor->vendor->nama_vendor) . '"', false);
+    }
+
+    public function test_menu_card_is_clickable_with_a11y_attrs(): void
+    {
+        $vendor = $this->createVendorUser('menu-click@kantinkita.id', 'Warung Menu Click');
+
+        $menu = Menu::create([
+            'vendor_id' => $vendor->vendor->id,
+            'kategori_menu_id' => null,
+            'nama_menu' => 'Menu Click Test',
+            'deskripsi' => 'Menu untuk uji klik',
+            'harga' => 15000,
+            'is_available' => true,
+        ]);
+
+        $response = $this->get("/vendor/{$vendor->vendor->id}/menu");
+
+        $response->assertOk();
+        $response->assertSee('role="button"', false);
+        $response->assertSee('tabindex="0"', false);
+        $response->assertSee('aria-label="Lihat detail ' . e($menu->nama_menu) . '"', false);
+    }
+
+    public function test_manage_orders_page_requires_authentication(): void
+    {
+        $this->get('/dashboard/pesanan')->assertRedirect('/login');
+    }
+
+    public function test_manage_orders_page_forbidden_for_non_vendor(): void
+    {
+        $guest = User::create([
+            'name' => 'Bukan Vendor',
+            'email' => 'bukan-vendor@kantinkita.id',
+            'password' => 'password',
+            'role' => 'guest',
+        ]);
+
+        $this->actingAs($guest)
+            ->get('/dashboard/pesanan')
+            ->assertStatus(403);
+    }
+
+    public function test_manage_orders_page_shows_only_paid_orders_for_vendor(): void
+    {
+        $vendorUser = $this->createVendorUser('vendor-orders@kantinkita.id', 'Vendor Orders');
+        $vendor = $vendorUser->vendor;
+
+        $menu = Menu::create([
+            'vendor_id' => $vendor->id,
+            'kategori_menu_id' => null,
+            'nama_menu' => 'Menu Kelola Pesanan',
+            'deskripsi' => 'Menu uji',
+            'harga' => 17000,
+            'is_available' => true,
+        ]);
+
+        $guestPaid = User::create([
+            'name' => 'Customer Bayar',
+            'email' => null,
+            'password' => null,
+            'role' => 'guest',
+        ]);
+
+        $paidOrder = Pesanan::create([
+            'user_id' => $guestPaid->id,
+            'vendor_id' => $vendor->id,
+            'nama_customer' => 'Customer Bayar',
+            'total' => 34000,
+            'status_pesanan' => 'diproses',
+        ]);
+
+        DetailPesanan::create([
+            'pesanan_id' => $paidOrder->id,
+            'menu_id' => $menu->id,
+            'jumlah' => 2,
+            'harga' => 17000,
+            'subtotal' => 34000,
+        ]);
+
+        Payment::create([
+            'pesanan_id' => $paidOrder->id,
+            'gross_amount' => 34000,
+            'status' => 'settlement',
+            'payment_type' => 'qris',
+        ]);
+
+        $guestUnpaid = User::create([
+            'name' => 'Customer Belum Bayar',
+            'email' => null,
+            'password' => null,
+            'role' => 'guest',
+        ]);
+
+        $unpaidOrder = Pesanan::create([
+            'user_id' => $guestUnpaid->id,
+            'vendor_id' => $vendor->id,
+            'nama_customer' => 'Customer Belum Bayar',
+            'total' => 17000,
+            'status_pesanan' => 'pending',
+        ]);
+
+        Payment::create([
+            'pesanan_id' => $unpaidOrder->id,
+            'gross_amount' => 17000,
+            'status' => 'pending',
+            'payment_type' => 'qris',
+        ]);
+
+        $response = $this->actingAs($vendorUser)->get('/dashboard/pesanan');
+
+        $response->assertOk();
+        $response->assertSee('Kelola Pesanan');
+        $response->assertSee('Customer Bayar');
+        $response->assertDontSee('Customer Belum Bayar');
+        $response->assertSee('Selesaikan');
+    }
+
+    public function test_manage_orders_page_filters_by_selesai_status(): void
+    {
+        $vendorUser = $this->createVendorUser('vendor-orders-filter@kantinkita.id', 'Vendor Orders Filter');
+        $vendor = $vendorUser->vendor;
+
+        foreach ([
+            ['nama' => 'Customer Diproses', 'status' => 'diproses'],
+            ['nama' => 'Customer Selesai', 'status' => 'selesai'],
+        ] as $seed) {
+            $guest = User::create([
+                'name' => $seed['nama'],
+                'email' => null,
+                'password' => null,
+                'role' => 'guest',
+            ]);
+            $order = Pesanan::create([
+                'user_id' => $guest->id,
+                'vendor_id' => $vendor->id,
+                'nama_customer' => $seed['nama'],
+                'total' => 20000,
+                'status_pesanan' => $seed['status'],
+            ]);
+            Payment::create([
+                'pesanan_id' => $order->id,
+                'gross_amount' => 20000,
+                'status' => 'settlement',
+                'payment_type' => 'qris',
+            ]);
+        }
+
+        $response = $this->actingAs($vendorUser)->get('/dashboard/pesanan?status=selesai');
+
+        $response->assertOk();
+        $response->assertSee('Customer Selesai');
+        $response->assertDontSee('Customer Diproses');
+    }
+
+    public function test_mark_as_done_from_manage_orders_redirects_back_with_success(): void
+    {
+        $vendorUser = $this->createVendorUser('vendor-orders-done@kantinkita.id', 'Vendor Orders Done');
+        $vendor = $vendorUser->vendor;
+
+        $guest = User::create([
+            'name' => 'Customer Selesaikan',
+            'email' => null,
+            'password' => null,
+            'role' => 'guest',
+        ]);
+
+        $pesanan = Pesanan::create([
+            'user_id' => $guest->id,
+            'vendor_id' => $vendor->id,
+            'nama_customer' => 'Customer Selesaikan',
+            'total' => 21000,
+            'status_pesanan' => 'diproses',
+        ]);
+
+        Payment::create([
+            'pesanan_id' => $pesanan->id,
+            'gross_amount' => 21000,
+            'status' => 'settlement',
+            'payment_type' => 'qris',
+        ]);
+
+        $response = $this->actingAs($vendorUser)
+            ->from('/dashboard/pesanan')
+            ->post(route('dashboard.orders.complete', ['pesanan' => $pesanan->id]));
+
+        $response->assertRedirect('/dashboard/pesanan');
+        $response->assertSessionHas('orderSuccess');
+
+        $this->assertDatabaseHas('pesanans', [
+            'id' => $pesanan->id,
+            'status_pesanan' => 'selesai',
         ]);
     }
 

@@ -54,6 +54,10 @@ Format ini bersifat terbuka (bukan proprietary). Jika bermanfaat, silakan diadop
     - `resources/views/menu-vendor.blade.php`
     - `resources/views/checkout.blade.php`
     - `resources/views/dashboard-vendor.blade.php`
+- Tabel pendukung opsional per menu (ukuran & topping untuk product-detail modal):
+    - `menu_variants` (model `App\Models\MenuVariant`, kolom: `menu_id`, `nama`, `harga_tambahan`, `urutan`)
+    - `menu_toppings` (model `App\Models\MenuTopping`, kolom: `menu_id`, `nama`, `harga`, `urutan`)
+    - Relasi: `Menu::variants()` & `Menu::toppings()` (HasMany, terurut `urutan`).
 - Feature tests utama alur bisnis:
     - `tests/Feature/KantinFlowTest.php`
 
@@ -90,6 +94,12 @@ Format ini bersifat terbuka (bukan proprietary). Jika bermanfaat, silakan diadop
     - `kantin_cart`
     - `kantin_customer_name`
     - `kantin_pickup_time`
+- Skema `kantin_cart.items[]` saat ini:
+    - Field inti: `menu_id`, `nama_menu`, `harga` (harga dasar menu, integer), `jumlah`, `catatan`, `path_gambar`.
+    - Field tambahan (sejak product-detail modal): `ukuran_id` (int|null), `ukuran` (string|null nama varian), `toppings` (array of `{id, nama, harga}`), `subtotal_per_unit` (integer = harga + varian + Σ topping).
+    - Identitas line item = kombinasi `(menu_id, ukuran_id, sorted(toppings.id), catatan)`. Konfigurasi sama → merge jumlah; berbeda → entri baru.
+    - **Backward compatible**: cart lama tanpa field tambahan tetap valid (`ukuran_id`/`ukuran` di-default `null`, `toppings` di-default `[]`, `subtotal_per_unit` di-fallback ke `harga + Σ topping.harga`).
+- Payload `POST /api/checkout` ikut membawa `items[].ukuran_id` (nullable) dan `items[].toppings` (array of `menu_topping.id`); server hitung ulang unit price dan menulis ringkasan ke `detail_pesanans.catatan` (`Ukuran: X | Topping: A, B | Catatan: ...`).
 - Jika mengubah struktur cart atau key localStorage, update semua halaman terkait (`menu-vendor` dan `checkout`) serta test yang terdampak.
 
 ## Konvensi perubahan kode

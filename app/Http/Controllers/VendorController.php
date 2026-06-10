@@ -21,8 +21,11 @@ class VendorController extends Controller
 
     public function showMenu($id)
     {
-        $vendor = Vendor::with(['menus.kategoriMenu'])
-            ->findOrFail($id);
+        $vendor = Vendor::with([
+            'menus.kategoriMenu',
+            'menus.variants',
+            'menus.toppings',
+        ])->findOrFail($id);
 
         $kategoris = KategoriMenu::orderBy('nama_kategori')->get();
 
