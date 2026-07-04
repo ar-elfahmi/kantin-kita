@@ -28,14 +28,19 @@ Thumbs.db
 
 /chatbot
 /views-kantin-kita
- # opencode agent config
- /.opencode
 
- # OpenSpec change files
- /openspec
+# Agentic / AI config files
+.opencode/node_modules
+.opencode/package.json
+.opencode/package-lock.json
+.claude/
 
- # Agent context memory
- CONTEXT.md
+# Akademik / laporan
+/BAB1.md
+/LAPORAN.md
 
- # VS Code workspace
- *.code-workspace
+# Website images (source assets)
+/public/images/images of website/
+
+# VS Code workspace
+*.code-workspace

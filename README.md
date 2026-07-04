@@ -1,59 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg">
+    <img src="public/images/maskot.png" width="120" alt="Kantin Kita">
+  </picture>
 </p>
 
-## About Laravel
+<p align="center">
+  <strong>Kantin Kita</strong> — Platform pemesanan makanan kampus tanpa antri.
+  Pesan dari vendor favorit, bayar via QRIS, dan ambil tanpa menunggu.
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <a href="https://kantin-kita.vercel.app">
+    <img src="https://img.shields.io/badge/demo-vercel-000?logo=vercel" alt="Vercel">
+  </a>
+  <a href="https://github.com/ar-elfahmi/kantin-kita">
+    <img src="https://img.shields.io/github/license/ar-elfahmi/kantin-kita" alt="License">
+  </a>
+  <a href="https://packagist.org/packages/laravel/framework">
+    <img src="https://img.shields.io/packagist/v/laravel/framework" alt="Laravel">
+  </a>
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Pesan makanan** — Pilih vendor, lihat menu, atur ukuran & topping, checkout.
+- **Pembayaran QRIS** — Midtrans Snap popup, bayar pindai langsung dari HP.
+- **Dashboard Vendor** — Kelola menu, lihat pesanan masuk, cetak tag harga, scan barcode pesanan.
+- **Panel Admin** — Kelola pengguna vendor, artikel, pantau transaksi.
+- **Artikel** — Publikasi info & promo kampus.
+- **Chatbot** — Tanya menu, jam operasional, rekomendasi (embedded di halaman vendor).
 
-## Learning Laravel
+## Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Lapisan     | Teknologi                                         |
+|-------------|---------------------------------------------------|
+| Backend     | Laravel 13, PHP 8.3                               |
+| Frontend    | Blade, Tailwind CSS 4, Vite 8                     |
+| Database    | MySQL (runtime), SQLite (test)                    |
+| Payment     | Midtrans Snap (QRIS / virtual account)            |
+| Deployment  | Vercel (PHP runtime via `vercel-php`)             |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Screenshot
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+<p align="center">
+  <img src="public/images/welcome/image-background.png" width="600" alt="Kantin Kita">
+</p>
 
-## Agentic Development
+## Demo
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**URL:** [https://kantin-kita.vercel.app](https://kantin-kita.vercel.app)
+
+> Catatan: Database production terpisah. Untuk menjalankan lokal, ikuti panduan di bawah.
+
+## Setup Lokal
 
 ```bash
-composer require laravel/boost --dev
+# Clone
+git clone https://github.com/ar-elfahmi/kantin-kita.git
+cd kantin-kita
 
-php artisan boost:install
+# Backend dependencies
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# Frontend dependencies
+npm install
+
+# Database (pastikan MySQL aktif)
+php artisan migrate --seed
+
+# Development fullstack
+composer run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Testing
 
-## Contributing
+```bash
+php artisan test
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Deployment
 
-## Code of Conduct
+Project ini di-deploy ke **Vercel** menggunakan runtime `vercel-php@0.9.0` dengan build command `vite build`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Konfigurasi deployment ada di `vercel.json`. Environment production diatur via Vercel Dashboard — file `.env` tidak pernah dikomit.
 
-## Security Vulnerabilities
+## Lisensi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# kantin-kita-
+[MIT](LICENSE)

@@ -1,5 +1,13 @@
 # CONTEXT.md — Kantin Kita
 
+## 2026-07-04: Hapus section artikel dari landing page
+
+**Files touched:**
+- `resources/views/welcome.blade.php` — hapus HTML section `.tentang-kami` (artikel grid + CTA) + hapus CSS `.tentang-kami*` desktop (13 rules) dan responsive (3 rules)
+- `app/Http/Controllers/HomeController.php` — hapus query `$tentangKamiArticles` dan pass ke view (unused)
+
+
+
 ## 2026-06-09: Hapus button Detail dari card produk dashboard vendor
 
 **Files touched:**

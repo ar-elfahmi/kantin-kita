@@ -744,7 +744,7 @@
       margin-bottom: 16px;
     }
 
-    /* Level 3: bento grid — no rigid rows */
+    /* Level 3: bento grid ï¿½ no rigid rows */
     .menu-bento-grid {
       display: grid;
       grid-template-columns: 2.2fr 1fr 1fr;
@@ -1275,117 +1275,6 @@
       box-shadow: none;
     }
 
-    /* --- TENTANG KAMI / ARTIKEL SECTION --- */
-    .tentang-kami {
-      padding: var(--space-8) var(--space-6) var(--space-11);
-      max-width: 1180px;
-      margin: 0 auto;
-    }
-
-    .tentang-kami-title {
-      font-family: var(--font-display);
-      font-size: var(--fs-heading-lg);
-      color: var(--text-main);
-      margin-bottom: var(--space-7);
-      text-align: center;
-    }
-
-    .tentang-kami-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-6);
-    }
-
-    .tentang-kami-card {
-      text-decoration: none;
-      color: inherit;
-      background: var(--bg-white);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: 0 2px 14px var(--brown-10);
-      display: flex;
-      flex-direction: column;
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-
-    .tentang-kami-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 22px var(--brown-10);
-    }
-
-    .tentang-kami-cover {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .tentang-kami-cover-placeholder {
-      width: 100%;
-      height: 180px;
-      background: var(--surface-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .tentang-kami-body {
-      padding: var(--space-5);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      flex: 1;
-    }
-
-    .tentang-kami-card-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--text-main);
-    }
-
-    .tentang-kami-card-summary {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.55;
-    }
-
-    .tentang-kami-card-meta {
-      margin-top: auto;
-      padding-top: var(--space-3);
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .tentang-kami-read-more {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .tentang-kami-cta-wrap {
-      text-align: center;
-      margin-top: var(--space-7);
-    }
-
-    .tentang-kami-cta {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--bg-white);
-      padding: 12px 28px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background-color .15s ease, transform .15s ease;
-    }
-
-    .tentang-kami-cta:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
-    }
-
     /* --- FOOTER --- */
     .footer {
       background: var(--text-main);
@@ -1837,18 +1726,6 @@
         margin-bottom: var(--space-6);
       }
 
-      .tentang-kami {
-        padding: var(--space-7) var(--space-6) var(--space-9);
-      }
-
-      .tentang-kami-title {
-        margin-bottom: var(--space-6);
-      }
-
-      .tentang-kami-cta-wrap {
-        margin-top: var(--space-6);
-      }
-
       .form-input {
         width: 100%;
         max-width: 360px;
@@ -1910,7 +1787,7 @@
       }
     }
 
-    /* --- LEVEL 3-5 UPGRADES: BENTO • GLASSMORPHISM • DEPTH --- */
+    /* --- LEVEL 3-5 UPGRADES: BENTO ï¿½ GLASSMORPHISM ï¿½ DEPTH --- */
 
     /* Hero ambient glow + depth-of-field */
     .hero-circle-left {
@@ -2314,7 +2191,7 @@
       </figure>
     </section>
 
-    <!-- KENAPA KANTIN KITA — CAROUSEL TESTIMONIAL -->
+    <!-- KENAPA KANTIN KITA ï¿½ CAROUSEL TESTIMONIAL -->
     <section class="dark-feature" aria-labelledby="dark-feature-title">
       <div class="dark-feature-content">
         <h2 class="dark-feature-title" id="dark-feature-title">Kenapa Kantin Kita?</h2>
@@ -2563,36 +2440,6 @@
         <button class="btn-cta" type="submit">Daftar Sekarang</button>
       </form>
     </section>
-
-    @if (!empty($tentangKamiArticles) && $tentangKamiArticles->count() > 0)
-    <section class="tentang-kami" aria-labelledby="tentang-kami-title">
-      <h2 id="tentang-kami-title" class="tentang-kami-title">Artikel</h2>
-      <div class="tentang-kami-grid">
-        @foreach ($tentangKamiArticles as $artikel)
-          <a href="{{ route('artikel.show', $artikel->slug) }}" class="tentang-kami-card">
-            @if ($artikel->gambar_sampul)
-              <img src="{{ asset('storage/' . $artikel->gambar_sampul) }}" alt="{{ $artikel->judul }}" class="tentang-kami-cover">
-            @else
-              <div class="tentang-kami-cover-placeholder">Tanpa gambar</div>
-            @endif
-            <div class="tentang-kami-body">
-              <h3 class="tentang-kami-card-title">{{ $artikel->judul }}</h3>
-              @if ($artikel->ringkasan)
-                <p class="tentang-kami-card-summary">{{ $artikel->ringkasan }}</p>
-              @endif
-              <div class="tentang-kami-card-meta">
-                <span>{{ $artikel->published_at?->format('d M Y') }}</span>
-                <span class="tentang-kami-read-more">Baca selengkapnya &rarr;</span>
-              </div>
-            </div>
-          </a>
-        @endforeach
-      </div>
-      <div class="tentang-kami-cta-wrap">
-        <a href="{{ route('artikel.index') }}" class="tentang-kami-cta">Lihat semua artikel</a>
-      </div>
-    </section>
-    @endif
 
   </main>
 
