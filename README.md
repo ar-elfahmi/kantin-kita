@@ -44,7 +44,7 @@
 ## Screenshot
 
 <p align="center">
-  <img src="public/images/welcome/image-background.png" width="600" alt="Kantin Kita">
+  <img src="public\images\images of website\image20.png" width="600" alt="Kantin Kita">
 </p>
 
 ## Demo
