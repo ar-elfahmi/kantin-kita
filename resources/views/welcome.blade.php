@@ -1281,7 +1281,7 @@
       color: var(--bg-white);
       position: relative;
       overflow: hidden;
-      padding: var(--space-10) 0 var(--space-9);
+      padding: var(--space-7) 0 var(--space-6);
     }
 
     .footer-inner {
@@ -1293,18 +1293,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: var(--space-10);
-      padding: 0 var(--space-6) var(--space-9);
+      gap: var(--space-7);
+      padding: 0 var(--space-6) var(--space-6);
     }
 
     .footer-nav-group {
       display: flex;
-      gap: var(--space-9);
+      gap: var(--space-6);
     }
 
     .footer-wordmark {
       font-family: var(--font-display);
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: var(--fw-bold);
       color: #fff;
       text-decoration: none;
@@ -1338,8 +1338,8 @@
     .footer-social {
       display: flex;
       justify-content: center;
-      gap: 28px;
-      padding: var(--space-9) 0;
+      gap: 16px;
+      padding: var(--space-6) 0;
     }
 
     .social-icon-placeholder {
@@ -1352,7 +1352,7 @@
     .footer-legal {
       display: flex;
       justify-content: center;
-      gap: 48px;
+      gap: var(--space-6);
       padding-bottom: 0;
     }
 
@@ -1369,8 +1369,8 @@
 
     /* ─── SOCIAL LINKS ─── */
     .social-link {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
       display: flex;
@@ -1740,28 +1740,28 @@
       }
 
       .footer {
-        padding: var(--space-9) 0 var(--space-7);
+        padding: 28px 0 20px;
       }
 
       .footer-nav {
         flex-direction: column;
-        gap: var(--space-6);
-        padding: 0 var(--space-6) var(--space-7);
+        gap: 16px;
+        padding: 0 var(--space-6) 20px;
       }
 
       .footer-nav-group {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
+        gap: 16px;
       }
 
       .footer-divider {
-        margin: 0 var(--space-6);
+        margin: 0 20px;
       }
 
       .footer-social {
-        gap: 20px;
-        padding: var(--space-7) 0;
+        gap: 14px;
+        padding: 20px 0;
       }
 
       .social-link {
@@ -1770,10 +1770,10 @@
       }
 
       .footer-legal {
-        gap: var(--space-6);
+        gap: 16px;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 var(--space-6);
+        padding: 0 20px;
       }
 
       .footer-shapes {
