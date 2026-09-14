@@ -1,0 +1,58 @@
+name: Deploy Watcher
+
+on:
+  workflow_run:
+    workflows:
+      - Vercel Deploy
+    types:
+      - completed
+  schedule:
+    - cron: */30 * * * *
+  workflow_dispatch:
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Only auto-run after deploy workflow; scheduled/manual runs always proceed
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Wait for Vercel alias to settle
+        if: github.event_name == 'workflow_run'
+        run: sleep 60
+
+      - name: Check production deployment
+        run: |
+          set -e
+          BASE="https://kantin-kita.vercel.app"
+          FAIL=0
+          for p in "/" "/vendor" "/login" "/artikel" "/about"; do
+            CODE=$(curl -sS -m 30 -o /tmp/out.html -w "%{http_code}" "$BASE$p" || echo "000")
+            SIZE=$(wc -c < /tmp/out.html 2>/dev/null || echo 0)
+            echo "$p -> HTTP:$CODE SIZE:$SIZE"
+            if [ "$CODE" != "200" ]; then
+              echo "::error ::$p returned HTTP $CODE (expected 200)"
+              FAIL=1
+            fi
+            if grep -qiE "500|something went wrong|server error|laravel.*error|exception" /tmp/out.html 2>/dev/null; then
+              # Only flag if page is an error page, not normal content mentioning the words
+              if grep -qiE "<title>[^<]*(500|server error|error)[^<]*</title>" /tmp/out.html; then
+                echo "::error ::$p looks like an error page"
+                FAIL=1
+              fi
+            fi
+          done
+          if [ "$FAIL" = "1" ]; then
+            echo "DEPLOYMENT CHECK FAILED"
+            exit 1
+          fi
+          echo "DEPLOYMENT CHECK PASSED"
+
+      - name: Report triggering deploy status
+        if: github.event_name == 'workflow_run'
+        run: |
+          echo "Triggering workflow: ${{ github.event.workflow_run.name }}"
+          echo "Conclusion: ${{ github.event.workflow_run.conclusion }}"
+          echo "Head SHA: ${{ github.event.workflow_run.head_sha }}"

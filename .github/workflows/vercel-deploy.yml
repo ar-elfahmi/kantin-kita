@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -33,3 +33,23 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Verify production deployment (watcher)
+        run: |
+          BASE="https://kantin-kita.vercel.app"
+          echo "Waiting 45s for Vercel alias to settle..."
+          sleep 45
+          FAIL=0
+          for p in "/" "/vendor" "/login" "/artikel"; do
+            CODE=$(curl -sS -m 30 -o /tmp/out.html -w "%{http_code}" "$BASE$p" || echo "000")
+            echo "$p -> HTTP:$CODE"
+            if [ "$CODE" != "200" ]; then
+              echo "::error ::$p returned HTTP $CODE (expected 200)"
+              FAIL=1
+            fi
+          done
+          if [ "$FAIL" = "1" ]; then
+            echo "Production verification FAILED"
+            exit 1
+          fi
+          echo "Production verification PASSED"
